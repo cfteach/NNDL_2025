@@ -1,15 +1,15 @@
-# Welcome to DATA621 - Neural Networks and Deep Learning
+# Welcome to Neural Networks and Deep Learning 2025 (NNDL-2025)
 
-(last update 1/22/2025)
+(last update 1/23/2025)
 
-This is the landing page for the course on Neural Networks and Deep Learning held at William & Mary during Fall 2024
+This is the landing page for the course on Neural Networks and Deep Learning held at William & Mary during Spring 2025
 
 ```{figure} images/neural_network_vignette_effect.png
  
 ```
 
 ```{important}
-The lectures will take place at the Integrated Science Center, room 2291
+The lectures will take place at the Integrated Science Center, room 1291
 ```
 
 
