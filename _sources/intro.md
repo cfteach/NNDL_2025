@@ -1,6 +1,6 @@
 # Welcome to Neural Networks and Deep Learning 2025 (NNDL-2025)
 
-(last update 1/23/2025)
+(last update 1/27/2025)
 
 This is the landing page for the course on Neural Networks and Deep Learning held at William & Mary during Spring 2025
 
