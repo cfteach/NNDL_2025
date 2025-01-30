@@ -28,7 +28,7 @@ Last update: (1/23/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | | **Lecture:** Implementing a perceptron learning algorithm in Python  <br> **What to learn:**  Training a perceptron model  |  |  **Lecture:** Machine Learning classifier for supervised learning <br> **What to learn:** Logistic regression, loss function, intro to overfitting and ways to tackle it  <br> **What to submit (due Sep 6):**  (Bonus) Assignment 0 - example activity on HPC| |
+| 2:00pm-3:20pm  | | **Lecture:** Implementing a perceptron learning algorithm in Python  <br> **What to learn:**  Training a perceptron model  |  |  **Lecture:** Machine Learning classifier for supervised learning <br> **What to learn:** Logistic regression, loss function, intro to overfitting and ways to tackle it  <br> **What to submit (due Feb 2):**  (Bonus) Assignment 0 - example activity on HPC| |
 <table>
 <tr>
 <td colspan="7" align="center"><span style="color:red"><strong>Assignment 0 (assigned Jan 28; due Jan 31)</strong></span></td>
@@ -86,7 +86,7 @@ Last update: (1/23/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | |  **Lecture:** Parallelizing a NN with PyTorch <br> **What to learn:** Manipulating tensors, DataLoader, model training, optimization  |  | **Lecture:** PyTorch Computation Graphs  <br>  **What to learn:** Understanding computation graphs; creating a graph in PyTorch; computing gradients; understanding autodifferentiation. <br> **What to submit (due Sep 29):** Assignment 1 - Building a NN from Scratch | |
+| 2:00pm-3:20pm  | |  **Lecture:** Parallelizing a NN with PyTorch <br> **What to learn:** Manipulating tensors, DataLoader, model training, optimization  |  | **Lecture:** PyTorch Computation Graphs  <br>  **What to learn:** Understanding computation graphs; creating a graph in PyTorch; computing gradients; understanding autodifferentiation. <br> **What to submit (...):** Assignment 1 - Building a NN from Scratch | |
 <table>
 <tr>
 <td colspan="7" align="center"><span style="color:purple"><strong>Readings for Feb 18 and 20 Lectures: Based on Raschka, Chap. 12; Chap. 13 pages 410-412, 415-417, 417-430, 436-439</strong></span></td>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. Adaline (Adaptive Linear Neuron) &#8212; Neural Networks and Deep Learning - Spring 2025</title>
+    <title>7. Introducing Stochastic Gradient Descent with Adaline - comparing different training schemes &#8212; Neural Networks and Deep Learning - Spring 2025</title>
   
   
   
@@ -94,13 +94,13 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '01_25_2025_lec2b_NNDL_adaline';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '01_30_2025_lec3_NNDL_gradient_descent';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/01_25_2025_lec2b_NNDL_adaline.html" />
+    <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/01_30_2025_lec3_NNDL_gradient_descent.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="7. Introducing Stochastic Gradient Descent with Adaline - comparing different training schemes" href="01_30_2025_lec3_NNDL_gradient_descent.html" />
-    <link rel="prev" title="5. Implementation of a Perceptron in Python" href="01_25_2025_lec2_NNDL_perceptron.html" />
+    <link rel="next" title="References" href="referencesmc.html" />
+    <link rel="prev" title="6. Adaline (Adaptive Linear Neuron)" href="01_25_2025_lec2b_NNDL_adaline.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -273,17 +273,17 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l1"><a class="reference external" href="https://github.com/D8A-SCIENCE/hpc-gitbook">Other Resources: Student Manual for using the HPC @ W&amp;M for Data Science</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/28/2025] Linear Classifiers</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1ihKM2j-tiXrbty8Btvn0QlHNX4WUd3XSR6_40HPBK6Q/edit?usp=sharing">Perceptrons (lecture slides)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1mU67w6GAhIWNFoO98AF7u8in2C-Op4Ag/view?usp=sharing">Perceptron - Proof of Convergence (PDF)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2_NNDL_perceptron.html">5. Training a Perceptron (Jupyter notebook)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1uWc1e_sLKnafzEq0NLC9xup_orxQaaFmDHV1i0S5ZvQ/edit?usp=sharing">Adaline (lecture slides)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Training Adaline (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2b_NNDL_adaline.html">6. Training Adaline (Jupyter notebook)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/30/2024] Gradient Descent, stochastic GD, Logistic Regression and Other classifiers</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/13GMGu7k5PQtn4QsOYRgAMiUcuZyA2xREq16HjWzW2W4/edit?usp=sharing">Stochastic Gradient Descent, Logistic Regression (lecture slides)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3_NNDL_gradient_descent.html">7. Gradient Descent, Stochastic Gradient Descent, Mini-batch GD (Jupyter notebook)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. Gradient Descent, Stochastic Gradient Descent, Mini-batch GD (Jupyter notebook)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional resources</span></p>
 <ul class="nav bd-sidenav">
@@ -342,7 +342,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="https://colab.research.google.com/github/cfteach/NNDL_2025/blob/webpage-src/NNDL_2025/NNDL_2025/01_25_2025_lec2b_NNDL_adaline.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/cfteach/NNDL_2025/blob/webpage-src/NNDL_2025/NNDL_2025/01_30_2025_lec3_NNDL_gradient_descent.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -408,7 +408,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="https://github.com/cfteach/NNDL_2025/edit/webpage-src/NNDL_2025/NNDL_2025/01_25_2025_lec2b_NNDL_adaline.ipynb" target="_blank"
+      <li><a href="https://github.com/cfteach/NNDL_2025/edit/webpage-src/NNDL_2025/NNDL_2025/01_30_2025_lec3_NNDL_gradient_descent.ipynb" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -425,7 +425,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="https://github.com/cfteach/NNDL_2025/issues/new?title=Issue%20on%20page%20%2F01_25_2025_lec2b_NNDL_adaline.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/cfteach/NNDL_2025/issues/new?title=Issue%20on%20page%20%2F01_30_2025_lec3_NNDL_gradient_descent.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -455,7 +455,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="_sources/01_25_2025_lec2b_NNDL_adaline.ipynb" target="_blank"
+      <li><a href="_sources/01_30_2025_lec3_NNDL_gradient_descent.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -539,7 +539,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Adaline (Adaptive Linear Neuron)</h1>
+    <h1>Introducing Stochastic Gradient Descent with Adaline -  comparing different training schemes</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -549,12 +549,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">6.1. Using the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">6.2. Plotting the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-adaline-model">6.3. Training the Adaline model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">6.4. Standardize Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-decision-regions">6.5. Plotting decision regions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy">6.6. Accuracy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">7.1. Using the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">7.2. Plotting the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">7.3. Standardize Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-methods">7.4. Gradient Descent Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-gradient-descent">7.5. 1. (Batch) Gradient Descent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent">7.6. 2. Stochastic Gradient Descent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mini-batch-sgd-implementation">7.7. 3. Mini-batch SGD Implementation</a></li>
 </ul>
             </nav>
         </div>
@@ -568,15 +569,15 @@ document.write(`
                   
   <p>Reference:</p>
 <ul class="simple">
-<li><p>Sebastian Raschka, Yuxi Hayden Liu, and Vahid Mirjalili. Machine Learning with PyTorch and Scikit-Learn: Develop machine learning and deep learning models with Python. Packt Publishing Ltd, 2022.</p></li>
+<li><p>Sebastian Raschka, et al. Machine Learning with PyTorch and Scikit-Learn: Develop machine learning and deep learning models with Python. Packt Publishing Ltd, 2022.</p></li>
 </ul>
-<section id="adaline-adaptive-linear-neuron">
-<h1><span class="section-number">6. </span>Adaline (Adaptive Linear Neuron)<a class="headerlink" href="#adaline-adaptive-linear-neuron" title="Link to this heading">#</a></h1>
+<section id="introducing-stochastic-gradient-descent-with-adaline-comparing-different-training-schemes">
+<h1><span class="section-number">7. </span>Introducing Stochastic Gradient Descent with Adaline -  comparing different training schemes<a class="headerlink" href="#introducing-stochastic-gradient-descent-with-adaline-comparing-different-training-schemes" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
-
+<span class="c1">#----- ADALINE -----#</span>
 <span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://raw.githubusercontent.com/cfteach/NNDL_2025/webpage-src/NNDL_2025/NNDL_2025/images/adaline_flowchart.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -584,89 +585,8 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output text_html"><img src="https://raw.githubusercontent.com/cfteach/NNDL_2025/webpage-src/NNDL_2025/NNDL_2025/images/adaline_flowchart.png" width="700"/></div></div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-
-<span class="k">class</span> <span class="nc">Adaline</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perceptron classifier.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ------------</span>
-<span class="sd">    eta : float</span>
-<span class="sd">      Learning rate (between 0.0 and 1.0)</span>
-<span class="sd">    n_iter : int</span>
-<span class="sd">      Passes over the training dataset.</span>
-<span class="sd">    random_state : int</span>
-<span class="sd">      Random number generator seed for random weight</span>
-<span class="sd">      initialization.</span>
-
-<span class="sd">    Attributes</span>
-<span class="sd">    -----------</span>
-<span class="sd">    w_ : 1d-array</span>
-<span class="sd">      Weights after fitting.</span>
-<span class="sd">    b_ : Scalar</span>
-<span class="sd">      Bias unit after fitting.</span>
-<span class="sd">    losses_ : list</span>
-<span class="sd">      Mean squared error loss values at each epoch</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">=</span> <span class="n">eta</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
-
-    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit training data.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        X : {array-like}, shape = [n_examples, n_features]</span>
-<span class="sd">          Training vectors, where n_examples is the number of examples and</span>
-<span class="sd">          n_features is the number of features.</span>
-<span class="sd">        y : array-like, shape = [n_examples]</span>
-<span class="sd">          Target values.</span>
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        self : object</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">rgen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">=</span> <span class="n">rgen</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">b_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span> <span class="o">=</span> <span class="p">[]</span>
-
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">):</span>
-          <span class="n">net_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-          <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">net_input</span><span class="p">)</span>
-          <span class="n">errors</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">output</span><span class="p">)</span>
-          <span class="c1"># the following is vectorized</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">/</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">#[n_features,n_examples]*[n_examples] = [n_features]</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">b_</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-          <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">errors</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-          <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">net_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate net input&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_</span>
-
-    <span class="k">def</span> <span class="nf">activation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute linear activation&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">X</span>
-
-    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return class label after unit step&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
 <section id="using-the-iris-data">
-<h2><span class="section-number">6.1. </span>Using the Iris data<a class="headerlink" href="#using-the-iris-data" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.1. </span>Using the Iris data<a class="headerlink" href="#using-the-iris-data" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -695,7 +615,7 @@ document.write(`
 </pre></div>
 </div>
 <div class="output text_html">
-  <div id="df-9486b517-c479-4394-ac91-97b9ded9afe3" class="colab-df-container">
+  <div id="df-cccf0c80-ad65-4d14-84cb-2ab7d81f6d86" class="colab-df-container">
     <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -768,7 +688,7 @@ document.write(`
     <div class="colab-df-buttons">
 
   <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-9486b517-c479-4394-ac91-97b9ded9afe3')"
+    <button class="colab-df-convert" onclick="convertToInteractive('df-cccf0c80-ad65-4d14-84cb-2ab7d81f6d86')"
             title="Convert this dataframe to an interactive table."
             style="display:none;">
 
@@ -820,12 +740,12 @@ document.write(`
 
     <script>
       const buttonEl =
-        document.querySelector('#df-9486b517-c479-4394-ac91-97b9ded9afe3 button.colab-df-convert');
+        document.querySelector('#df-cccf0c80-ad65-4d14-84cb-2ab7d81f6d86 button.colab-df-convert');
       buttonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
 
       async function convertToInteractive(key) {
-        const element = document.querySelector('#df-9486b517-c479-4394-ac91-97b9ded9afe3');
+        const element = document.querySelector('#df-cccf0c80-ad65-4d14-84cb-2ab7d81f6d86');
         const dataTable =
           await google.colab.kernel.invokeFunction('convertToInteractive',
                                                     [key], {});
@@ -845,8 +765,8 @@ document.write(`
   </div>
 
 
-<div id="df-44591ef4-6f8b-48d4-bb9c-e0641d8c9bad">
-  <button class="colab-df-quickchart" onclick="quickchart('df-44591ef4-6f8b-48d4-bb9c-e0641d8c9bad')"
+<div id="df-55668a9c-fd90-47fe-9eaf-222ef03ffe5a">
+  <button class="colab-df-quickchart" onclick="quickchart('df-55668a9c-fd90-47fe-9eaf-222ef03ffe5a')"
             title="Suggest charts"
             style="display:none;">
 
@@ -965,7 +885,7 @@ document.write(`
     }
     (() => {
       let quickchartButtonEl =
-        document.querySelector('#df-44591ef4-6f8b-48d4-bb9c-e0641d8c9bad button');
+        document.querySelector('#df-55668a9c-fd90-47fe-9eaf-222ef03ffe5a button');
       quickchartButtonEl.style.display =
         google.colab.kernel.accessAllowed ? 'block' : 'none';
     })();
@@ -978,7 +898,7 @@ document.write(`
 </div>
 </section>
 <section id="plotting-the-iris-data">
-<h2><span class="section-number">6.2. </span>Plotting the Iris data<a class="headerlink" href="#plotting-the-iris-data" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">7.2. </span>Plotting the Iris data<a class="headerlink" href="#plotting-the-iris-data" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
@@ -991,7 +911,7 @@ document.write(`
 <span class="c1">#y = df.iloc[0:100, 4].values</span>
 
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># extract sepal length and petal length</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>  <span class="c1"># extract sepal length and petal length</span>
 
 <span class="c1"># Map y values to 0, 1, or -1</span>
 <span class="n">y_mapped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">(</span>
@@ -1038,44 +958,28 @@ document.write(`
 (50, 2)
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7bfe0e8dad50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x79fb34391990&gt;
 </pre></div>
 </div>
-<img alt="_images/fa602c2db91421d0a10e5ba0147911ec373d7f7da6d2cbdccc20adc596327db2.png" src="_images/fa602c2db91421d0a10e5ba0147911ec373d7f7da6d2cbdccc20adc596327db2.png" />
+<img alt="_images/c61650466a24b857a1ef9a3a0b355d0f36c61b8e772601703a42496b0b374198.png" src="_images/c61650466a24b857a1ef9a3a0b355d0f36c61b8e772601703a42496b0b374198.png" />
 </div>
 </div>
-</section>
-<section id="training-the-adaline-model">
-<h2><span class="section-number">6.3. </span>Training the Adaline model<a class="headerlink" href="#training-the-adaline-model" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
-
-<span class="n">ada1</span> <span class="o">=</span> <span class="n">Adaline</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_filtered</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ada1</span><span class="o">.</span><span class="n">losses_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ada1</span><span class="o">.</span><span class="n">losses_</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;log(Mean squared error)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Adaline - Learning rate 0.1&#39;</span><span class="p">)</span>
-
-<span class="n">ada2</span> <span class="o">=</span> <span class="n">Adaline</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_filtered</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ada2</span><span class="o">.</span><span class="n">losses_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ada2</span><span class="o">.</span><span class="n">losses_</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean squared error&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Adaline - Learning rate 0.0001&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">X</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/297460f441b12a3dd427337210804af03eb5af4e06e161fca69226e398aa0664.png" src="_images/297460f441b12a3dd427337210804af03eb5af4e06e161fca69226e398aa0664.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;numpy.ndarray&#39;&gt; (150, 2)
+</pre></div>
 </div>
 </div>
-<p>Plot on the left shows that the learning rate is too high, the one on the right that the learning rate is too low.</p>
+</div>
 </section>
 <section id="standardize-data">
-<h2><span class="section-number">6.4. </span>Standardize Data<a class="headerlink" href="#standardize-data" title="Link to this heading">#</a></h2>
-<p>This can be very helpful: gradient descent is one of many algorithms that benefit from feature scaling.</p>
+<h2><span class="section-number">7.3. </span>Standardize Data<a class="headerlink" href="#standardize-data" title="Link to this heading">#</a></h2>
+<p>This can be very helpful: as we already saw, gradient descent is one of many algorithms that benefit from feature scaling.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X_filtered</span><span class="p">)</span>
@@ -1085,9 +989,114 @@ document.write(`
 </div>
 </div>
 </div>
+</section>
+<section id="gradient-descent-methods">
+<h2><span class="section-number">7.4. </span>Gradient Descent Methods<a class="headerlink" href="#gradient-descent-methods" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Gradient Descent</strong>: (also known as batch gradient descent): updates based on entire dataset - computationally quite expensive especially for large datasets; stable updates and smooth convergence, but can be very slow. Can leverage vectorization as we saw in lecture 2.</p></li>
+<li><p><strong>Stochastic Gradient Descent (SGD)</strong>: updates the model after each individual data point; more noise/stochasticity, possibility of escaping local minima, faster updates but could lead to unstable convergence</p></li>
+<li><p><strong>Mini-batch GD</strong>: compromise between the above two cases; updates every mini-batch. Can leverage vectorization.</p></li>
+</ol>
+</section>
+<section id="batch-gradient-descent">
+<h2><span class="section-number">7.5. </span>1. (Batch) Gradient Descent<a class="headerlink" href="#batch-gradient-descent" title="Link to this heading">#</a></h2>
+<p>(the following code is inherited from the previous lecture 2)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ada_gd</span> <span class="o">=</span> <span class="n">Adaline</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_std</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">class</span> <span class="nc">AdalineGD</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Perceptron classifier.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ------------</span>
+<span class="sd">    eta : float</span>
+<span class="sd">      Learning rate (between 0.0 and 1.0)</span>
+<span class="sd">    n_iter : int</span>
+<span class="sd">      Passes over the training dataset.</span>
+<span class="sd">    random_state : int</span>
+<span class="sd">      Random number generator seed for random weight</span>
+<span class="sd">      initialization.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    -----------</span>
+<span class="sd">    w_ : 1d-array</span>
+<span class="sd">      Weights after fitting.</span>
+<span class="sd">    b_ : Scalar</span>
+<span class="sd">      Bias unit after fitting.</span>
+<span class="sd">    losses_ : list</span>
+<span class="sd">      Mean squared error loss values at each epoch</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">=</span> <span class="n">eta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit training data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like}, shape = [n_examples, n_features]</span>
+<span class="sd">          Training vectors, where n_examples is the number of examples and</span>
+<span class="sd">          n_features is the number of features.</span>
+<span class="sd">        y : array-like, shape = [n_examples]</span>
+<span class="sd">          Target values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rgen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">=</span> <span class="n">rgen</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">):</span>
+          <span class="n">net_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+          <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="n">net_input</span><span class="p">)</span>
+          <span class="n">errors</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="n">output</span><span class="p">)</span>
+          <span class="c1"># Remember the formula for w&#39;s updates and complete:</span>
+          <span class="c1"># Delta w_j = -eta* dL/dw_j</span>
+          <span class="c1"># dL/dw_j = -2/n * \Sum_i errors_i* x_j</span>
+          <span class="c1"># Use vectorization:</span>
+          <span class="c1"># [n_features,n_examples]*[n_examples] = [n_features]</span>
+
+          <span class="c1"># self.w_ +=</span>
+
+          <span class="c1"># Remember the formula for b update and complete:</span>
+          <span class="c1"># Delta b = -eta* dL/b</span>
+          <span class="c1"># dL/db = -2/n * \Sum_i errors_i</span>
+
+          <span class="c1"># self.b_ +=</span>
+
+          <span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">errors</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+          <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">net_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate net input&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_</span>
+
+    <span class="k">def</span> <span class="nf">activation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute linear activation&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">X</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return class label after unit step&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Training the Adaline model</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ada_gd</span> <span class="o">=</span> <span class="n">AdalineGD</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_std</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1104,12 +1113,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a6b9e1d5d37ef0c858c25cff7608f10242a4567d00cfbf5e7aa72fca44897bf4.png" src="_images/a6b9e1d5d37ef0c858c25cff7608f10242a4567d00cfbf5e7aa72fca44897bf4.png" />
+<img alt="_images/e1f2b6ae511ae6ab5006d5d5abd6668ae626ffcb6e68c812fddb78a9e62e138f.png" src="_images/e1f2b6ae511ae6ab5006d5d5abd6668ae626ffcb6e68c812fddb78a9e62e138f.png" />
 </div>
 </div>
-</section>
-<section id="plotting-decision-regions">
-<h2><span class="section-number">6.5. </span>Plotting decision regions<a class="headerlink" href="#plotting-decision-regions" title="Link to this heading">#</a></h2>
+<p><strong>Plotting decision regions</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">ListedColormap</span>
@@ -1159,12 +1166,10 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/d49bfd897d3dba317407f76fd7bff9a210d1877a97e0ebd6dac8a7915dd86932.png" src="_images/d49bfd897d3dba317407f76fd7bff9a210d1877a97e0ebd6dac8a7915dd86932.png" />
+<img alt="_images/6ad9c0f35cff68bd77e8b77a43eff80c87b435d82d4a521a4200ab8f43aaf389.png" src="_images/6ad9c0f35cff68bd77e8b77a43eff80c87b435d82d4a521a4200ab8f43aaf389.png" />
 </div>
 </div>
-</section>
-<section id="accuracy">
-<h2><span class="section-number">6.6. </span>Accuracy<a class="headerlink" href="#accuracy" title="Link to this heading">#</a></h2>
+<p><strong>Accuracy</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">ada_gd</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_std</span><span class="p">)</span>
@@ -1175,9 +1180,259 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 72.00%
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 100.00%
 </pre></div>
 </div>
+</div>
+</div>
+</section>
+<section id="stochastic-gradient-descent">
+<h2><span class="section-number">7.6. </span>2. Stochastic Gradient Descent<a class="headerlink" href="#stochastic-gradient-descent" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">AdalineSGD</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;ADAptive LInear NEuron classifier.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ------------</span>
+<span class="sd">    eta : float</span>
+<span class="sd">      Learning rate (between 0.0 and 1.0)</span>
+<span class="sd">    n_iter : int</span>
+<span class="sd">      Passes over the training dataset.</span>
+<span class="sd">    shuffle : bool (default: True)</span>
+<span class="sd">      Shuffles training data every epoch if True to prevent cycles.</span>
+<span class="sd">    random_state : int</span>
+<span class="sd">      Random number generator seed for random weight</span>
+<span class="sd">      initialization.</span>
+
+
+<span class="sd">    Attributes</span>
+<span class="sd">    -----------</span>
+<span class="sd">    w_ : 1d-array</span>
+<span class="sd">      Weights after fitting.</span>
+<span class="sd">    b_ : Scalar</span>
+<span class="sd">        Bias unit after fitting.</span>
+<span class="sd">    losses_ : list</span>
+<span class="sd">      Mean squared error loss function value averaged over all</span>
+<span class="sd">      training examples in each epoch.</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">=</span> <span class="n">eta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_initialized</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="n">shuffle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>        <span class="c1">#-------- this is for SGD training from scratch</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Fit training data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : {array-like}, shape = [n_examples, n_features]</span>
+<span class="sd">          Training vectors, where n_examples is the number of examples and</span>
+<span class="sd">          n_features is the number of features.</span>
+<span class="sd">        y : array-like, shape = [n_examples]</span>
+<span class="sd">          Target values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_weights</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">:</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">xi</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+                <span class="c1">#complete the following using the _update_weights</span>
+                <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">()</span>
+            <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">losses</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">avg_loss</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Shuffle training data&quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgen</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_initialize_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize weights to small random numbers&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgen</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_update_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xi</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply Adaline learning rule to update the weights&quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">xi</span><span class="p">))</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="n">output</span><span class="p">)</span>
+        <span class="c1"># Please complete the following updates, at the example level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">+=</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b_</span> <span class="o">+=</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">error</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="k">def</span> <span class="nf">net_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate net input&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_</span>
+
+    <span class="k">def</span> <span class="nf">activation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute linear activation&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">X</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return class label after unit step&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1">#def partial_fit(self, X, y):          #-------- this is for online learning</span>
+    <span class="c1">#    &quot;&quot;&quot;Fit training data without reinitializing the weights&quot;&quot;&quot;</span>
+    <span class="c1">#    if not self.w_initialized:</span>
+    <span class="c1">#        self._initialize_weights(X.shape[1])</span>
+    <span class="c1">#    if y.ravel().shape[0] &gt; 1:</span>
+    <span class="c1">#        for xi, target in zip(X, y):</span>
+    <span class="c1">#            self._update_weights(xi, target)</span>
+    <span class="c1">#    else:</span>
+    <span class="c1">#        self._update_weights(X, y)</span>
+    <span class="c1">#    return self</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ada_sgd</span> <span class="o">=</span> <span class="n">AdalineSGD</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ada_sgd</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_std</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">)</span>
+
+<span class="n">plot_decision_regions</span><span class="p">(</span><span class="n">X_std</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="n">ada_sgd</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Adaline - Stochastic gradient descent&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sepal length [standardized]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Petal length [standardized]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ada_sgd</span><span class="o">.</span><span class="n">losses_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ada_sgd</span><span class="o">.</span><span class="n">losses_</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Average loss&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ee549cdb901a88a0f306e7937e52e135a477fd5c72c2a9071293ae8b8dad9051.png" src="_images/ee549cdb901a88a0f306e7937e52e135a477fd5c72c2a9071293ae8b8dad9051.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Average loss&#39;)
+</pre></div>
+</div>
+<img alt="_images/7dfb49eac9a888f183cd5acf931706a64778233398eeead5391462e2a896dc08.png" src="_images/7dfb49eac9a888f183cd5acf931706a64778233398eeead5391462e2a896dc08.png" />
+</div>
+</div>
+</section>
+<section id="mini-batch-sgd-implementation">
+<h2><span class="section-number">7.7. </span>3. Mini-batch SGD Implementation<a class="headerlink" href="#mini-batch-sgd-implementation" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># here we combine all we have seen so far...</span>
+
+<span class="k">class</span> <span class="nc">AdalineMiniBatchSGD</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">=</span> <span class="n">eta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span> <span class="o">=</span> <span class="n">shuffle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">random_state</span> <span class="o">=</span> <span class="n">random_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_initialized</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Fit training data using mini-batch gradient descent.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_weights</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle</span><span class="p">:</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_shuffle</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="c1"># Process each mini-batch</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">):</span>
+                <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span>
+                <span class="n">X_mini</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+                <span class="n">y_mini</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+                <span class="c1"># Update weights for mini-batch</span>
+                <span class="n">tmploss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_update_weights_mini_batch</span><span class="p">(</span><span class="n">X_mini</span><span class="p">,</span> <span class="n">y_mini</span><span class="p">)</span>
+                <span class="n">loss</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmploss</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">losses_</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">loss</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_update_weights_mini_batch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X_mini</span><span class="p">,</span> <span class="n">y_mini</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Vectorized update for weights using a mini-batch.&quot;&quot;&quot;</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X_mini</span><span class="p">))</span>  <span class="c1"># (m, 1) output for mini-batch</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_mini</span> <span class="o">-</span> <span class="n">output</span><span class="p">)</span>  <span class="c1"># (m, 1) vector of errors for mini-batch</span>
+
+        <span class="c1"># Update weights (Vectorized form)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">X_mini</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">errors</span><span class="p">)</span> <span class="o">/</span> <span class="n">X_mini</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># (n, m) dot (m, 1) =&gt; (n, 1)</span>
+        <span class="c1">#self.b_ += self.eta * 2.0 * np.sum(errors) / X_mini.shape[0]  # Scalar update for bias</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b_</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">*</span> <span class="mf">2.0</span> <span class="o">*</span> <span class="n">errors</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+        <span class="c1"># Mean squared error for the mini-batch</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">errors</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="k">def</span> <span class="nf">_initialize_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize weights.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rgen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgen</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float_</span><span class="p">(</span><span class="mf">0.</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w_initialized</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">def</span> <span class="nf">_shuffle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Shuffle training data.&quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rgen</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">net_input</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate net input (linear activation).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">w_</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b_</span>
+
+    <span class="k">def</span> <span class="nf">activation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Linear activation (no transformation).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">X</span>
+
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return class label after unit step&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">activation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">net_input</span><span class="p">(</span><span class="n">X</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ada_mb_sgd</span> <span class="o">=</span> <span class="n">AdalineMiniBatchSGD</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">eta</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">)</span>
+<span class="n">ada_mb_sgd</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_std</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">)</span>
+
+<span class="n">plot_decision_regions</span><span class="p">(</span><span class="n">X_std</span><span class="p">,</span> <span class="n">y_filtered</span><span class="p">,</span> <span class="n">classifier</span><span class="o">=</span><span class="n">ada_mb_sgd</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Adaline - Mini-Batch Stochastic gradient descent&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sepal length [standardized]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Petal length [standardized]&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">ada_mb_sgd</span><span class="o">.</span><span class="n">losses_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="n">ada_mb_sgd</span><span class="o">.</span><span class="n">losses_</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Average loss&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6906060a055fc44d88f1cfed743d855ba375d881cbf66137654b3518dc0cc10b.png" src="_images/6906060a055fc44d88f1cfed743d855ba375d881cbf66137654b3518dc0cc10b.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Average loss&#39;)
+</pre></div>
+</div>
+<img alt="_images/0c2c7f286977cf74f228cdc65383013e65cb1aa037637044f924fb67b5dd3ea9.png" src="_images/0c2c7f286977cf74f228cdc65383013e65cb1aa037637044f924fb67b5dd3ea9.png" />
 </div>
 </div>
 </section>
@@ -1214,20 +1469,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_25_2025_lec2_NNDL_perceptron.html"
+       href="01_25_2025_lec2b_NNDL_adaline.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>Implementation of a Perceptron in Python</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>Adaline (Adaptive Linear Neuron)</p>
       </div>
     </a>
     <a class="right-next"
-       href="01_30_2025_lec3_NNDL_gradient_descent.html"
+       href="referencesmc.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Introducing Stochastic Gradient Descent with Adaline -  comparing different training schemes</p>
+        <p class="prev-next-title">References</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1247,12 +1502,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">6.1. Using the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">6.2. Plotting the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-the-adaline-model">6.3. Training the Adaline model</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">6.4. Standardize Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-decision-regions">6.5. Plotting decision regions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy">6.6. Accuracy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">7.1. Using the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">7.2. Plotting the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">7.3. Standardize Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descent-methods">7.4. Gradient Descent Methods</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-gradient-descent">7.5. 1. (Batch) Gradient Descent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stochastic-gradient-descent">7.6. 2. Stochastic Gradient Descent</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mini-batch-sgd-implementation">7.7. 3. Mini-batch SGD Implementation</a></li>
 </ul>
   </nav></div>
 
