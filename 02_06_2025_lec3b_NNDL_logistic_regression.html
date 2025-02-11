@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>8. Logistic Regression &#8212; Neural Networks and Deep Learning - Spring 2025</title>
+    <title>10. Logistic Regression &#8212; Neural Networks and Deep Learning - Spring 2025</title>
   
   
   
@@ -94,13 +94,13 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = '01_30_2025_lec3b_NNDL_logistic_regression';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '02_06_2025_lec3b_NNDL_logistic_regression';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/01_30_2025_lec3b_NNDL_logistic_regression.html" />
+    <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/02_06_2025_lec3b_NNDL_logistic_regression.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="9. Code examples for Data Preprocessing" href="02_04_2025_lec4_datapreprocessing.html" />
-    <link rel="prev" title="7. Introducing Stochastic Gradient Descent with Adaline - comparing different training schemes" href="01_30_2025_lec3_NNDL_gradient_descent.html" />
+    <link rel="next" title="11. Model Evaluation, Hyperparamter Tuning: Examples and Discussion" href="02_11_2025_modeleval.html" />
+    <link rel="prev" title="9. Code examples for Data Preprocessing" href="02_04_2025_lec4_datapreprocessing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -281,11 +281,11 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2b_NNDL_adaline.html">6. Training Adaline (Jupyter notebook)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/30/2025] Gradient Descent, stochastic GD, Logistic Regression and Other classifiers</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/13GMGu7k5PQtn4QsOYRgAMiUcuZyA2xREq16HjWzW2W4/edit?usp=sharing">Stochastic Gradient Descent (lecture slides)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3_NNDL_gradient_descent.html">7. Gradient Descent, Stochastic Gradient Descent, Mini-batch GD (Jupyter notebook)</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1geYpTbIyNOa3GlhDkbCy9IOQ0iiTl_FNB4Dr6cLmBqs/edit?usp=sharing">An Intro to Logistic Regression, Regularization, linear (and non-linear) boundaries (lecture slides)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">8. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3b_NNDL_logistic_regression.html">8. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/4/2025] Building Training Datasets</span></p>
 <ul class="nav bd-sidenav">
@@ -293,8 +293,8 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l1"><a class="reference internal" href="02_04_2025_lec4_datapreprocessing.html">9. Data Preprocessing (Jupyter notebook)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/6/2025] Regularization (Continued, see 1/30/2025)</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="02_06_2025_lec3b_NNDL_logistic_regression.html">10. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">10. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/11/2024] Model Evaluation, Hyperparameter Tuning: Examples and Discussion</span></p>
 <ul class="nav bd-sidenav">
@@ -357,7 +357,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="https://colab.research.google.com/github/cfteach/NNDL_2025/blob/webpage-src/NNDL_2025/NNDL_2025/01_30_2025_lec3b_NNDL_logistic_regression.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/cfteach/NNDL_2025/blob/webpage-src/NNDL_2025/NNDL_2025/02_06_2025_lec3b_NNDL_logistic_regression.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch on Colab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -423,7 +423,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="https://github.com/cfteach/NNDL_2025/edit/webpage-src/NNDL_2025/NNDL_2025/01_30_2025_lec3b_NNDL_logistic_regression.ipynb" target="_blank"
+      <li><a href="https://github.com/cfteach/NNDL_2025/edit/webpage-src/NNDL_2025/NNDL_2025/02_06_2025_lec3b_NNDL_logistic_regression.ipynb" target="_blank"
    class="btn btn-sm btn-source-edit-button dropdown-item"
    title="Suggest edit"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -440,7 +440,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="https://github.com/cfteach/NNDL_2025/issues/new?title=Issue%20on%20page%20%2F01_30_2025_lec3b_NNDL_logistic_regression.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/cfteach/NNDL_2025/issues/new?title=Issue%20on%20page%20%2F02_06_2025_lec3b_NNDL_logistic_regression.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -470,7 +470,7 @@ commentsRunWhenDOMLoaded(addUtterances);
       
       
       
-      <li><a href="_sources/01_30_2025_lec3b_NNDL_logistic_regression.ipynb" target="_blank"
+      <li><a href="_sources/02_06_2025_lec3b_NNDL_logistic_regression.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -564,13 +564,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">8.1. Using the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">8.2. Plotting the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">8.3. Standardize Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">8.4. Logistic Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#augmenting-complexity-of-decision-boundary">8.5. Augmenting complexity of decision boundary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-regularization">8.6. Adding Regularization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-non-linear-problems">8.7. Introduction to Non-Linear Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">10.1. Using the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">10.2. Plotting the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">10.3. Standardize Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.4. Logistic Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#augmenting-complexity-of-decision-boundary">10.5. Augmenting complexity of decision boundary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-regularization">10.6. Adding Regularization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-non-linear-problems">10.7. Introduction to Non-Linear Problems</a></li>
 </ul>
             </nav>
         </div>
@@ -587,7 +587,7 @@ document.write(`
 <li><p>Sebastian Raschka, Yuxi Hayden Liu, and Vahid Mirjalili. Machine Learning with PyTorch and Scikit-Learn: Develop machine learning and deep learning models with Python. Packt Publishing Ltd, 2022.</p></li>
 </ul>
 <section id="logistic-regression">
-<h1><span class="section-number">8. </span>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">10. </span>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Link to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
@@ -621,7 +621,7 @@ document.write(`
 <div class="output text_html"><img src="https://raw.githubusercontent.com/cfteach/NNDL_DATA621/webpage-src/DATA621/DATA621/images/logreg_gradientdescent.png" width="700"/></div></div>
 </div>
 <section id="using-the-iris-data">
-<h2><span class="section-number">8.1. </span>Using the Iris data<a class="headerlink" href="#using-the-iris-data" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.1. </span>Using the Iris data<a class="headerlink" href="#using-the-iris-data" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
@@ -933,7 +933,7 @@ document.write(`
 </div>
 </section>
 <section id="plotting-the-iris-data">
-<h2><span class="section-number">8.2. </span>Plotting the Iris data<a class="headerlink" href="#plotting-the-iris-data" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.2. </span>Plotting the Iris data<a class="headerlink" href="#plotting-the-iris-data" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
@@ -1001,7 +1001,7 @@ document.write(`
 </div>
 </section>
 <section id="standardize-data">
-<h2><span class="section-number">8.3. </span>Standardize Data<a class="headerlink" href="#standardize-data" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.3. </span>Standardize Data<a class="headerlink" href="#standardize-data" title="Link to this heading">#</a></h2>
 <p>This can be very helpful: as we already saw, gradient descent is one of many algorithms that benefit from feature scaling.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1014,7 +1014,7 @@ document.write(`
 </div>
 </section>
 <section id="id1">
-<h2><span class="section-number">8.4. </span>Logistic Regression<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.4. </span>Logistic Regression<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">LogisticRegressionGD</span><span class="p">:</span>
@@ -1201,7 +1201,7 @@ document.write(`
 </div>
 </section>
 <section id="augmenting-complexity-of-decision-boundary">
-<h2><span class="section-number">8.5. </span>Augmenting complexity of decision boundary<a class="headerlink" href="#augmenting-complexity-of-decision-boundary" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.5. </span>Augmenting complexity of decision boundary<a class="headerlink" href="#augmenting-complexity-of-decision-boundary" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -1334,7 +1334,7 @@ document.write(`
 </div>
 </section>
 <section id="adding-regularization">
-<h2><span class="section-number">8.6. </span>Adding Regularization<a class="headerlink" href="#adding-regularization" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.6. </span>Adding Regularization<a class="headerlink" href="#adding-regularization" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Image</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://raw.githubusercontent.com/cfteach/NNDL_DATA621/webpage-src/DATA621/DATA621/images/variance_bias_tradeoff.png&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">))</span>
@@ -1486,7 +1486,7 @@ document.write(`
 </ul>
 </section>
 <section id="introduction-to-non-linear-problems">
-<h2><span class="section-number">8.7. </span>Introduction to Non-Linear Problems<a class="headerlink" href="#introduction-to-non-linear-problems" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">10.7. </span>Introduction to Non-Linear Problems<a class="headerlink" href="#introduction-to-non-linear-problems" title="Link to this heading">#</a></h2>
 <p>Let’s create another dataset, which is non-linear and corresponding to the logical XOR</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1604,20 +1604,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="01_30_2025_lec3_NNDL_gradient_descent.html"
+       href="02_04_2025_lec4_datapreprocessing.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title"><span class="section-number">7. </span>Introducing Stochastic Gradient Descent with Adaline -  comparing different training schemes</p>
+        <p class="prev-next-title"><span class="section-number">9. </span>Code examples for Data Preprocessing</p>
       </div>
     </a>
     <a class="right-next"
-       href="02_04_2025_lec4_datapreprocessing.html"
+       href="02_11_2025_modeleval.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">9. </span>Code examples for Data Preprocessing</p>
+        <p class="prev-next-title"><span class="section-number">11. </span>Model Evaluation, Hyperparamter Tuning: Examples and Discussion</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1637,13 +1637,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">8.1. Using the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">8.2. Plotting the Iris data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">8.3. Standardize Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">8.4. Logistic Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#augmenting-complexity-of-decision-boundary">8.5. Augmenting complexity of decision boundary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-regularization">8.6. Adding Regularization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-non-linear-problems">8.7. Introduction to Non-Linear Problems</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-iris-data">10.1. Using the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-the-iris-data">10.2. Plotting the Iris data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standardize-data">10.3. Standardize Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">10.4. Logistic Regression</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#augmenting-complexity-of-decision-boundary">10.5. Augmenting complexity of decision boundary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-regularization">10.6. Adding Regularization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-non-linear-problems">10.7. Introduction to Non-Linear Problems</a></li>
 </ul>
   </nav></div>
 
