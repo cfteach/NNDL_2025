@@ -7,7 +7,7 @@ The course schedule is updated regularly. Please check it frequently for the lat
 - J. Giroux (TA) office hours: Friday, 11:30-1:30, office ISC-1109
 
 
-Last update: (1/23/2025)
+Last update: (2/12/2025)
 
 ## Week 1 (Mon, Jan 20 - Sun, Jan 26)
 
@@ -65,7 +65,7 @@ Last update: (1/23/2025)
 | 2:00pm-3:20pm  | | **Lecture:** Model Evaluation and Hyperparameter Tuning  <br> **What to learn:** Streamlining workflows, cross-validation, learning and validation curves, fine-tuning | | **Lecture:** Developing a Multi-Layer Neural Network from Scratch <br> **What to learn:** forward propagation, training via backpropagation, convergence  | |
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 1 (assigned Feb 14; due Feb 24)</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 1 (assigned Feb 16; due Feb 26)</strong></span></td>
 </tr>
 </table>
 <table>
@@ -103,7 +103,7 @@ Last update: (1/23/2025)
 | 2:00pm-3:20pm  | | **Lecture:**  Convolutional Neural Networks <br> **What to learn:** Understanding CNN and feature hierarchies, implementing a CNN |  |  **Lecture:**  Convolutional Neural Networks <br> **What to learn:**  Hands-on with classification problems| |
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 1 due Feb 24</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 1 due Feb 26</strong></span></td>
 </tr>
 </table>
 <table>
