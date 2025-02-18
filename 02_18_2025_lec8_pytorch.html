@@ -99,7 +99,7 @@ commentsRunWhenDOMLoaded(addUtterances);
     <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/02_18_2025_lec8_pytorch.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References" href="referencesmc.html" />
+    <link rel="next" title="14. Using PyTorch to build Neural Networks" href="02_18_2025_lec8_NN.html" />
     <link rel="prev" title="12. Building a Multi-layer Artificial Neural Network from Scratch" href="02.13.2025_lec6_MLP.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -312,6 +312,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/18/2024] Building Multi-Layer Neural Networks with PyTorch</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">13. Using PyTorch preflight (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_18_2025_lec8_NN.html">14. Using torch.nn (Jupyter notebook)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional resources</span></p>
 <ul class="nav bd-sidenav">
@@ -657,26 +658,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tue Feb 18 02:57:59 2025       
-+-----------------------------------------------------------------------------------------+
-| NVIDIA-SMI 550.54.15              Driver Version: 550.54.15      CUDA Version: 12.4     |
-|-----------------------------------------+------------------------+----------------------+
-| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
-| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
-|                                         |                        |               MIG M. |
-|=========================================+========================+======================|
-|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |
-| N/A   38C    P8              9W /   70W |       0MiB /  15360MiB |      0%      Default |
-|                                         |                        |                  N/A |
-+-----------------------------------------+------------------------+----------------------+
-                                                                                         
-+-----------------------------------------------------------------------------------------+
-| Processes:                                                                              |
-|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
-|        ID   ID                                                               Usage      |
-|=========================================================================================|
-|  No running processes found                                                             |
-+-----------------------------------------------------------------------------------------+
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/bin/bash: line 1: nvidia-smi: command not found
 </pre></div>
 </div>
 </div>
@@ -685,7 +667,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># choose between &quot;CPU&quot; or &quot;GPU&quot;</span>
 
-<span class="n">install_type</span> <span class="o">=</span> <span class="s2">&quot;GPU&quot;</span>
+<span class="n">install_type</span> <span class="o">=</span> <span class="s2">&quot;CPU&quot;</span>
 <span class="n">cuda_version</span> <span class="o">=</span> <span class="s2">&quot;cu124&quot;</span> <span class="c1"># see above</span>
 </pre></div>
 </div>
@@ -693,7 +675,9 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#--- for CPU installation</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#--- you can install the most recent release of PyTorch</span>
+
+<span class="c1">#--- for CPU installation</span>
 
 <span class="k">if</span> <span class="n">install_type</span><span class="o">==</span><span class="s2">&quot;CPU&quot;</span><span class="p">:</span>
 
@@ -710,34 +694,49 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://download.pytorch.org/whl/cu124
-Requirement already satisfied: torch==2.6.0+cu124 in /usr/local/lib/python3.11/dist-packages (2.6.0+cu124)
-Requirement already satisfied: torchvision in /usr/local/lib/python3.11/dist-packages (0.21.0+cpu)
-Requirement already satisfied: torchaudio in /usr/local/lib/python3.11/dist-packages (2.6.0+cpu)
-Requirement already satisfied: filelock in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (3.17.0)
-Requirement already satisfied: typing-extensions&gt;=4.10.0 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (4.12.2)
-Requirement already satisfied: networkx in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (3.4.2)
-Requirement already satisfied: jinja2 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (3.1.5)
-Requirement already satisfied: fsspec in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (2024.10.0)
-Requirement already satisfied: nvidia-cuda-nvrtc-cu12==12.4.127 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (12.4.127)
-Requirement already satisfied: nvidia-cuda-runtime-cu12==12.4.127 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (12.4.127)
-Requirement already satisfied: nvidia-cuda-cupti-cu12==12.4.127 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (12.4.127)
-Requirement already satisfied: nvidia-cudnn-cu12==9.1.0.70 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (9.1.0.70)
-Requirement already satisfied: nvidia-cublas-cu12==12.4.5.8 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (12.4.5.8)
-Requirement already satisfied: nvidia-cufft-cu12==11.2.1.3 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (11.2.1.3)
-Requirement already satisfied: nvidia-curand-cu12==10.3.5.147 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (10.3.5.147)
-Requirement already satisfied: nvidia-cusolver-cu12==11.6.1.9 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (11.6.1.9)
-Requirement already satisfied: nvidia-cusparse-cu12==12.3.1.170 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (12.3.1.170)
-Requirement already satisfied: nvidia-cusparselt-cu12==0.6.2 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (0.6.2)
-Requirement already satisfied: nvidia-nccl-cu12==2.21.5 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (2.21.5)
-Requirement already satisfied: nvidia-nvtx-cu12==12.4.127 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (12.4.127)
-Requirement already satisfied: nvidia-nvjitlink-cu12==12.4.127 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (12.4.127)
-Requirement already satisfied: triton==3.2.0 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (3.2.0)
-Requirement already satisfied: sympy==1.13.1 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0+cu124) (1.13.1)
-Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /usr/local/lib/python3.11/dist-packages (from sympy==1.13.1-&gt;torch==2.6.0+cu124) (1.3.0)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Looking in indexes: https://download.pytorch.org/whl/cpu
+Collecting torch==2.6.0
+  Downloading https://download.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp311-cp311-linux_x86_64.whl.metadata (26 kB)
+Requirement already satisfied: torchvision in /usr/local/lib/python3.11/dist-packages (0.20.1+cu124)
+Requirement already satisfied: torchaudio in /usr/local/lib/python3.11/dist-packages (2.5.1+cu124)
+Requirement already satisfied: filelock in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0) (3.17.0)
+Requirement already satisfied: typing-extensions&gt;=4.10.0 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0) (4.12.2)
+Requirement already satisfied: networkx in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0) (3.4.2)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0) (3.1.5)
+Requirement already satisfied: fsspec in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0) (2024.10.0)
+Requirement already satisfied: sympy==1.13.1 in /usr/local/lib/python3.11/dist-packages (from torch==2.6.0) (1.13.1)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /usr/local/lib/python3.11/dist-packages (from sympy==1.13.1-&gt;torch==2.6.0) (1.3.0)
 Requirement already satisfied: numpy in /usr/local/lib/python3.11/dist-packages (from torchvision) (1.26.4)
+INFO: pip is looking at multiple versions of torchvision to determine which version is compatible with other requirements. This could take a while.
+Collecting torchvision
+  Downloading https://download.pytorch.org/whl/cpu/torchvision-0.21.0%2Bcpu-cp311-cp311-linux_x86_64.whl.metadata (6.1 kB)
 Requirement already satisfied: pillow!=8.3.*,&gt;=5.3.0 in /usr/local/lib/python3.11/dist-packages (from torchvision) (11.1.0)
-Requirement already satisfied: MarkupSafe&gt;=2.0 in /usr/local/lib/python3.11/dist-packages (from jinja2-&gt;torch==2.6.0+cu124) (3.0.2)
+INFO: pip is looking at multiple versions of torchaudio to determine which version is compatible with other requirements. This could take a while.
+Collecting torchaudio
+  Downloading https://download.pytorch.org/whl/cpu/torchaudio-2.6.0%2Bcpu-cp311-cp311-linux_x86_64.whl.metadata (6.6 kB)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /usr/local/lib/python3.11/dist-packages (from jinja2-&gt;torch==2.6.0) (3.0.2)
+Downloading https://download.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp311-cp311-linux_x86_64.whl (178.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">178.7/178.7 MB</span> <span class=" -Color -Color-Red">7.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hDownloading https://download.pytorch.org/whl/cpu/torchvision-0.21.0%2Bcpu-cp311-cp311-linux_x86_64.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.8/1.8 MB</span> <span class=" -Color -Color-Red">49.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hDownloading https://download.pytorch.org/whl/cpu/torchaudio-2.6.0%2Bcpu-cp311-cp311-linux_x86_64.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.7/1.7 MB</span> <span class=" -Color -Color-Red">48.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hInstalling collected packages: torch, torchvision, torchaudio
+  Attempting uninstall: torch
+    Found existing installation: torch 2.5.1+cu124
+    Uninstalling torch-2.5.1+cu124:
+      Successfully uninstalled torch-2.5.1+cu124
+  Attempting uninstall: torchvision
+    Found existing installation: torchvision 0.20.1+cu124
+    Uninstalling torchvision-0.20.1+cu124:
+      Successfully uninstalled torchvision-0.20.1+cu124
+  Attempting uninstall: torchaudio
+    Found existing installation: torchaudio 2.5.1+cu124
+    Uninstalling torchaudio-2.5.1+cu124:
+      Successfully uninstalled torchaudio-2.5.1+cu124
+<span class=" -Color -Color-Red">ERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.</span>
+<span class=" -Color -Color-Red">fastai 2.7.18 requires torch&lt;2.6,&gt;=1.10, but you have torch 2.6.0+cpu which is incompatible.</span>
+Successfully installed torch-2.6.0+cpu torchaudio-2.6.0+cpu torchvision-0.21.0+cpu
 </pre></div>
 </div>
 </div>
@@ -1065,31 +1064,19 @@ numba                              0.61.0
 numba-cuda                         0.0.17.1
 numexpr                            2.10.2
 numpy                              1.26.4
-nvidia-cublas-cu11                 11.11.3.6
-nvidia-cublas-cu12                 12.4.5.8
-nvidia-cuda-cupti-cu11             11.8.87
-nvidia-cuda-cupti-cu12             12.4.127
+nvidia-cublas-cu12                 12.5.3.2
+nvidia-cuda-cupti-cu12             12.5.82
 nvidia-cuda-nvcc-cu12              12.5.82
-nvidia-cuda-nvrtc-cu11             11.8.89
-nvidia-cuda-nvrtc-cu12             12.4.127
-nvidia-cuda-runtime-cu11           11.8.89
-nvidia-cuda-runtime-cu12           12.4.127
-nvidia-cudnn-cu11                  9.1.0.70
-nvidia-cudnn-cu12                  9.1.0.70
-nvidia-cufft-cu11                  10.9.0.58
-nvidia-cufft-cu12                  11.2.1.3
-nvidia-curand-cu11                 10.3.0.86
-nvidia-curand-cu12                 10.3.5.147
-nvidia-cusolver-cu11               11.4.1.48
-nvidia-cusolver-cu12               11.6.1.9
-nvidia-cusparse-cu11               11.7.5.86
-nvidia-cusparse-cu12               12.3.1.170
-nvidia-cusparselt-cu12             0.6.2
-nvidia-nccl-cu11                   2.21.5
+nvidia-cuda-nvrtc-cu12             12.5.82
+nvidia-cuda-runtime-cu12           12.5.82
+nvidia-cudnn-cu12                  9.3.0.75
+nvidia-cufft-cu12                  11.2.3.61
+nvidia-curand-cu12                 10.3.6.82
+nvidia-cusolver-cu12               11.6.3.83
+nvidia-cusparse-cu12               12.5.1.3
 nvidia-nccl-cu12                   2.21.5
 nvidia-nvcomp-cu12                 4.1.0.6
-nvidia-nvjitlink-cu12              12.4.127
-nvidia-nvtx-cu11                   11.8.86
+nvidia-nvjitlink-cu12              12.5.82
 nvidia-nvtx-cu12                   12.4.127
 nvtx                               0.2.10
 nx-cugraph-cu12                    24.12.0
@@ -1296,7 +1283,7 @@ tinycss2                           1.4.0
 tokenizers                         0.21.0
 toml                               0.10.2
 toolz                              0.12.1
-torch                              2.6.0+cu124
+torch                              2.6.0+cpu
 torchaudio                         2.6.0+cpu
 torchsummary                       1.5.1
 torchvision                        0.21.0+cpu
@@ -1306,7 +1293,7 @@ traitlets                          5.7.1
 traittypes                         0.2.1
 transformers                       4.48.3
 treescope                          0.1.8
-triton                             3.2.0
+triton                             3.1.0
 tuf                                5.1.0
 tweepy                             4.15.0
 typeguard                          4.4.1
@@ -1389,7 +1376,7 @@ Successfully installed cuda-python-12.4.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PyTorch version: 2.6.0+cu124
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PyTorch version: 2.6.0+cpu
 </pre></div>
 </div>
 </div>
@@ -1422,10 +1409,7 @@ Successfully installed cuda-python-12.4.0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GPU is available!
-Using GPU: Tesla T4
-12.4
-1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GPU not available, using CPU.
 </pre></div>
 </div>
 </div>
@@ -2042,7 +2026,38 @@ torch.Size([2, 3])
 </div>
 </div>
 </div>
+<hr class="docutils" />
+<p><strong>EXERCISE</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Create a Tensor:</strong><br />
+Create a tensor <code class="docutils literal notranslate"><span class="pre">A</span></code> of shape <code class="docutils literal notranslate"><span class="pre">[3,</span> <span class="pre">4]</span></code> filled with random values.</p></li>
+<li><p><strong>Transpose:</strong><br />
+Compute the transpose of <code class="docutils literal notranslate"><span class="pre">A</span></code> and store it in <code class="docutils literal notranslate"><span class="pre">B</span></code>.</p></li>
+<li><p><strong>Matrix Multiplication:</strong><br />
+Multiply <code class="docutils literal notranslate"><span class="pre">A</span></code> by its transpose <code class="docutils literal notranslate"><span class="pre">B</span></code> using matrix multiplication. This will result in a new tensor <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p></li>
+<li><p><strong>Compute Means:</strong><br />
+Compute the mean of <code class="docutils literal notranslate"><span class="pre">C</span></code> along:</p>
+<ul class="simple">
+<li><p>Dimension 0 (i.e., compute the mean of each column)</p></li>
+<li><p>Dimension 1 (i.e., compute the mean of each row)</p></li>
+</ul>
+</li>
+<li><p><strong>Split:</strong><br />
+Split the tensor <code class="docutils literal notranslate"><span class="pre">C</span></code> into 2 equal chunks along dimension 0.<br />
+<em>Hint:</em> If the number of rows is not evenly divisible, use <code class="docutils literal notranslate"><span class="pre">torch.chunk</span></code> which will distribute the rows as evenly as possible.</p></li>
+<li><p><strong>Print:</strong><br />
+Print the following:</p>
+<ul class="simple">
+<li><p>Tensor <code class="docutils literal notranslate"><span class="pre">A</span></code> and its shape.</p></li>
+<li><p>Tensor <code class="docutils literal notranslate"><span class="pre">B</span></code> and its shape.</p></li>
+<li><p>Tensor <code class="docutils literal notranslate"><span class="pre">C</span></code> and its shape.</p></li>
+<li><p>The means computed in step 4.</p></li>
+<li><p>The two chunks obtained in step 5.</p></li>
+</ul>
+</li>
+</ol>
 </section>
+<hr class="docutils" />
 <section id="building-input-pipelines-in-pytorch">
 <h2><span class="section-number">13.7. </span><strong>Building input pipelines in PyTorch</strong><a class="headerlink" href="#building-input-pipelines-in-pytorch" title="Link to this heading">#</a></h2>
 <p><strong>Creating a PyTorch DataLoader from existing tensors</strong></p>
@@ -2102,6 +2117,7 @@ batch 2: tensor([3., 4., 5.])
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Dataset</span>
 
 <span class="k">class</span> <span class="nc">JointDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
@@ -2109,6 +2125,8 @@ batch 2: tensor([3., 4., 5.])
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
     <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="c1"># &quot;magic&quot; methods: e.g., automatically involked when using indexing operator</span>
 </pre></div>
 </div>
 </div>
@@ -2563,11 +2581,11 @@ tensor([[[0.5765, 0.5843, 0.5804,  ..., 0.5725, 0.6039, 0.6157],
       </div>
     </a>
     <a class="right-next"
-       href="referencesmc.html"
+       href="02_18_2025_lec8_NN.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">References</p>
+        <p class="prev-next-title"><span class="section-number">14. </span>Using PyTorch to build Neural Networks</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
