@@ -86,12 +86,16 @@ Last update: (2/12/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | |  **Lecture:** Parallelizing a NN with PyTorch <br> **What to learn:** Manipulating tensors, DataLoader, model training, optimization  |  | **Lecture:** PyTorch Computation Graphs  <br>  **What to learn:** Understanding computation graphs; creating a graph in PyTorch; computing gradients; understanding autodifferentiation. <br> **What to submit (...):** Assignment 1 - Building a NN from Scratch | |
+| 2:00pm-3:20pm  | |  **Lecture:** Parallelizing a NN with PyTorch <br> **What to learn:** Manipulating tensors, DataLoader, model training, optimization  |  | No class today | |
 <table>
 <tr>
 <td colspan="7" align="center"><span style="color:purple"><strong>Readings for Feb 18 and 20 Lectures: Based on Raschka, Chap. 12; Chap. 13 pages 410-412, 415-417, 417-430, 436-439</strong></span></td>
 </tr>
 </table>
+
+
+
+
 
 
 ## Week 6 (Mon, Feb 24 - Sun, Mar 2)
@@ -100,22 +104,24 @@ Last update: (2/12/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | | **Lecture:**  Convolutional Neural Networks <br> **What to learn:** Understanding CNN and feature hierarchies, implementing a CNN |  |  **Lecture:**  Convolutional Neural Networks <br> **What to learn:**  Hands-on with classification problems| |
+| 2:00pm-3:20pm  | | **Lecture:** Building a NN with PyTorch and PyTorch Computation Graphs  <br>  **What to learn:** Transiotning from building a NN from scratch to leveraging built-in functionalities in PyTorch |  |  **Lecture:** PyTorch Computation Graphs  <br>  **What to learn:** Understanding computation graphs; creating a graph in PyTorch; computing gradients; understanding autodifferentiation. <br> **What to submit (...):** Assignment 1 - Building a NN from Scratch (see past weeks) | |
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 1 due Feb 26</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 1 due  Feb 28 (new date) </strong></span></td>
 </tr>
 </table>
 <table>
-<tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 2 (assigned Feb 27; due Mar 19)</strong></span></td>
-</tr>
-</table>
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:purple"><strong>Readings for Feb 25 and Feb 27 Lectures: Based on Raschka, Chap. 14</strong></span></td>
+<td colspan="7" align="center"><span style="color:purple"><strong>Readings for Feb 26 and 28 Lectures: Based on Raschka, Chap. 12; Chap. 13 pages 410-412, 415-417, 417-430, 436-439</strong></span></td>
 </tr>
 </table>
+
+
+
+
+
+
 
 ## Week 7 (Mon, Mar 3 - Sun, Mar 9)
 
@@ -123,7 +129,19 @@ Last update: (2/12/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | | **Lecture:** Convolutional Neural Network  <br> **What to learn:** Hands-on with classification problem |  |  Convolutional Neural Network  <br> **What to learn:** Hands-on with regression problem  |  |
+| 2:00pm-3:20pm  | | **Lecture:**  Convolutional Neural Networks <br> **What to learn:** Understanding CNN and feature hierarchies, implementing a CNN |  |  **Lecture:**  Convolutional Neural Networks <br> **What to learn:**  Hands-on with classification problems| |
+<table>
+<tr>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 2 (assigned Mar 7; due Mar 20)</strong></span></td>
+</tr>
+</table>
+<table>
+<tr>
+<td colspan="7" align="center"><span style="color:purple"><strong>Readings for Mar 4 and Mar 6 Lectures: Based on Raschka, Chap. 14</strong></span></td>
+</tr>
+</table>
+
+
 
 
 ## Week (Mon, Mar 10 - Sun, Mar 16)
@@ -139,10 +157,10 @@ Last update: (2/12/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | | **Lecture:**  (Continue) CNN; intro to GradCAM  <br> **What to learn:** practical understanding of GradCAM, case studies and applications |  |  **Lecture:** GradCAM for explainability of CNN <br> **What to learn:** practical understanding of GradCAM, case studies and applications | |
+| 2:00pm-3:20pm  | | **Lecture:**  (Continue) CNN <br> **What to learn:** CNN for classification and/or regression problems |  |  **Lecture:** An Introduction to GradCAM for explainability of CNN <br> **What to learn:** practical understanding of GradCAM, case studies and applications | |
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 2 due Mar 19</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 2 due Mar 20 (new date) </strong></span></td>
 </tr>
 </table>
 
@@ -159,6 +177,7 @@ Last update: (2/12/2025)
 <td colspan="7" align="center"><span style="color:purple"><strong>Readings for Mar 25 and Mar 27 Lectures: Raschka, Chap. 15</strong></span></td>
 </tr>
 </table>
+
 
 ## Week 10 (Mon, Mar 31 - Sun, Apr 6)
 
