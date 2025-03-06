@@ -324,6 +324,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="03_04_2025_lec11_CNN.html">18. Using PyTorch with CNN</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">19. Using CNN and Celeb Dataset</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://adamharley.com/nn_vis/">(A really nice and well-known resource:) Interactive Node-Link Visualization of Convolutional Neural Networks by Adam Harley</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional resources</span></p>
 <ul class="nav bd-sidenav">
@@ -589,7 +590,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-dcnn">19.1. Training a DCNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-deep-convolutional-neural-network">19.1. Training a Deep Convolutional Neural Network</a></li>
 </ul>
             </nav>
         </div>
@@ -638,21 +639,47 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">mkdir</span> <span class="n">data_faces</span> <span class="o">&amp;&amp;</span> <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">s3</span><span class="o">-</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">1.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">udacity</span><span class="o">-</span><span class="n">dlnfd</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">celeba</span><span class="o">.</span><span class="n">zip</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">ls</span> <span class="o">-</span><span class="n">ld</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--2024-10-08 02:14:46--  https://s3-us-west-1.amazonaws.com/udacity-dlnfd/datasets/celeba.zip
-Resolving s3-us-west-1.amazonaws.com (s3-us-west-1.amazonaws.com)... 52.219.220.152, 52.219.121.56, 52.219.193.24, ...
-Connecting to s3-us-west-1.amazonaws.com (s3-us-west-1.amazonaws.com)|52.219.220.152|:443... connected.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>drwxr-xr-x 1 root root 4096 Mar  4 14:26 .
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">mkdir</span> <span class="n">data_faces</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mkdir: cannot create directory ‘data_faces’: File exists
+drwxr-xr-x 1 root root 4096 Mar  6 14:51 .
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># downloading images of celebs</span>
+<span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">s3</span><span class="o">-</span><span class="n">us</span><span class="o">-</span><span class="n">west</span><span class="o">-</span><span class="mf">1.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">udacity</span><span class="o">-</span><span class="n">dlnfd</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">celeba</span><span class="o">.</span><span class="n">zip</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--2025-03-06 15:25:52--  https://s3-us-west-1.amazonaws.com/udacity-dlnfd/datasets/celeba.zip
+Resolving s3-us-west-1.amazonaws.com (s3-us-west-1.amazonaws.com)... 52.219.193.128, 52.219.112.232, 52.219.117.40, ...
+Connecting to s3-us-west-1.amazonaws.com (s3-us-west-1.amazonaws.com)|52.219.193.128|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 1443490838 (1.3G) [application/zip]
 Saving to: ‘celeba.zip’
 
-celeba.zip          100%[===================&gt;]   1.34G  85.9MB/s    in 21s     
+celeba.zip          100%[===================&gt;]   1.34G  9.56MB/s    in 78s     
 
-2024-10-08 02:15:08 (65.1 MB/s) - ‘celeba.zip’ saved [1443490838/1443490838]
+2025-03-06 15:27:10 (17.7 MB/s) - ‘celeba.zip’ saved [1443490838/1443490838]
 </pre></div>
 </div>
 </div>
@@ -671,45 +698,21 @@ celeba.zip          100%[===================&gt;]   1.34G  85.9MB/s    in 21s
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">root</span> <span class="o">=</span> <span class="s1">&#39;data_faces/img_align_celeba&#39;</span>
 <span class="n">img_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">img_list</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;number of images: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">img_list</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>202599
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>number of images: 202599
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">google.colab</span> <span class="kn">import</span> <span class="n">drive</span>
-<span class="n">drive</span><span class="o">.</span><span class="n">mount</span><span class="p">(</span><span class="s1">&#39;/content/drive&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mounted at /content/drive
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">ls</span> <span class="s2">&quot;data_faces/&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>img_align_celeba
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download all files in the Google Drive folder</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download all files (features/labels and other information) from a Google Drive folder (should be publicly visible)</span>
 <span class="err">!</span><span class="n">gdown</span> <span class="o">--</span><span class="n">folder</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">drive</span><span class="o">.</span><span class="n">google</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">drive</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">1</span><span class="n">zIhmZAbpt9R3aM09wu3J1CixK0kluwMb</span> <span class="o">-</span><span class="n">O</span> <span class="n">data_faces</span><span class="o">/</span>
+
 </pre></div>
 </div>
 </div>
@@ -727,28 +730,41 @@ Building directory structure completed
 Downloading...
 From: https://drive.google.com/uc?id=1W6PUogOswAGjWc3TS6acWewkGw7v72VO
 To: /content/data_faces/copied_celeba/identity_CelebA.txt
-100% 3.42M/3.42M [00:00&lt;00:00, 24.3MB/s]
+100% 3.42M/3.42M [00:00&lt;00:00, 17.5MB/s]
 Downloading...
 From: https://drive.google.com/uc?id=1bXoazwXbKK2dWxu_skhwv156Uq-gNZGe
 To: /content/data_faces/copied_celeba/list_attr_celeba.txt
-100% 26.7M/26.7M [00:00&lt;00:00, 42.8MB/s]
+100% 26.7M/26.7M [00:00&lt;00:00, 162MB/s]
 Downloading...
 From: https://drive.google.com/uc?id=1RE8Ojs0gs8BxPxd7ZtbmE7-_lZT1wNHK
 To: /content/data_faces/copied_celeba/list_bbox_celeba.txt
-100% 6.08M/6.08M [00:00&lt;00:00, 26.6MB/s]
+100% 6.08M/6.08M [00:00&lt;00:00, 65.7MB/s]
 Downloading...
 From: https://drive.google.com/uc?id=1xojfv4rXGdR7TB7-peFPrUFY-MLZQa3m
 To: /content/data_faces/copied_celeba/list_eval_partition.txt
-100% 2.84M/2.84M [00:00&lt;00:00, 20.3MB/s]
+100% 2.84M/2.84M [00:00&lt;00:00, 74.1MB/s]
 Downloading...
 From: https://drive.google.com/uc?id=18OZpHkC4Bpi2YMnewN9yriwLogAiVrsP
 To: /content/data_faces/copied_celeba/list_landmarks_align_celeba.txt
-100% 12.2M/12.2M [00:00&lt;00:00, 65.5MB/s]
+100% 12.2M/12.2M [00:00&lt;00:00, 24.6MB/s]
 Downloading...
 From: https://drive.google.com/uc?id=1Uh_UHnkJmmkPuYPmiKYcp2Ookum6JHEI
 To: /content/data_faces/copied_celeba/list_landmarks_celeba.txt
-100% 12.4M/12.4M [00:00&lt;00:00, 60.9MB/s]
+100% 12.4M/12.4M [00:00&lt;00:00, 83.8MB/s]
 Download completed
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">ls</span> <span class="o">-</span><span class="n">lrth</span> <span class="o">./</span><span class="n">data_faces</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 4.0K
+drwxr-xr-x 2 root root 4.0K Mar  6 14:54 copied_celeba
 </pre></div>
 </div>
 </div>
@@ -764,7 +780,7 @@ Download completed
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove the empty copied_celeba folder</span>
-<span class="err">!</span><span class="n">rmdir</span> <span class="n">data_faces</span><span class="o">/</span><span class="n">copied_celeba</span>
+<span class="err">!</span><span class="n">rm</span> <span class="o">-</span><span class="n">r</span> <span class="n">data_faces</span><span class="o">/</span><span class="n">copied_celeba</span>
 
 </pre></div>
 </div>
@@ -777,9 +793,8 @@ Download completed
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>identity_CelebA.txt   list_bbox_celeba.txt	       list_landmarks_celeba.txt
-img_align_celeba      list_eval_partition.txt
-list_attr_celeba.txt  list_landmarks_align_celeba.txt
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>identity_CelebA.txt   list_bbox_celeba.txt     list_landmarks_align_celeba.txt
+list_attr_celeba.txt  list_eval_partition.txt  list_landmarks_celeba.txt
 </pre></div>
 </div>
 </div>
@@ -795,8 +810,8 @@ list_attr_celeba.txt  list_landmarks_align_celeba.txt
 
 <span class="k">class</span> <span class="nc">CelebADataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_ids</span><span class="p">,</span> <span class="n">attr_labels</span><span class="p">,</span> <span class="n">img_folder</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">image_ids</span> <span class="o">=</span> <span class="n">image_ids</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># Convert to list to avoid .iloc issues</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">attr_labels</span> <span class="o">=</span> <span class="n">attr_labels</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>  <span class="c1"># Convert to NumPy array for easier indexing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_ids</span> <span class="o">=</span> <span class="n">image_ids</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>  <span class="c1"># Convert Pandas series to list to avoid .iloc issues</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">attr_labels</span> <span class="o">=</span> <span class="n">attr_labels</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>  <span class="c1"># Convert Pandas dataframe to NumPy array for easier indexing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">img_folder</span> <span class="o">=</span> <span class="n">img_folder</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transform</span>
 
@@ -823,9 +838,90 @@ list_attr_celeba.txt  list_landmarks_align_celeba.txt
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">ls</span> <span class="o">-</span><span class="n">l</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">data_faces</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 62092
+-rw-r--r-- 1 root root  3424458 Oct  3 14:27 identity_CelebA.txt
+-rw-r--r-- 1 root root 26721026 Oct  3 14:27 list_attr_celeba.txt
+-rw-r--r-- 1 root root  6082035 Oct  3 14:27 list_bbox_celeba.txt
+-rw-r--r-- 1 root root  2836386 Oct  3 14:27 list_eval_partition.txt
+-rw-r--r-- 1 root root 12156055 Oct  3 14:27 list_landmarks_align_celeba.txt
+-rw-r--r-- 1 root root 12352635 Oct  3 14:27 list_landmarks_celeba.txt
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">data_faces</span><span class="o">/</span><span class="n">list_attr_celeba</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>202599
+5_o_Clock_Shadow Arched_Eyebrows Attractive Bags_Under_Eyes Bald Bangs Big_Lips Big_Nose Black_Hair Blond_Hair Blurry Brown_Hair Bushy_Eyebrows Chubby Double_Chin Eyeglasses Goatee Gray_Hair Heavy_Makeup High_Cheekbones Male Mouth_Slightly_Open Mustache Narrow_Eyes No_Beard Oval_Face Pale_Skin Pointy_Nose Receding_Hairline Rosy_Cheeks Sideburns Smiling Straight_Hair Wavy_Hair Wearing_Earrings Wearing_Hat Wearing_Lipstick Wearing_Necklace Wearing_Necktie Young 
+000001.jpg -1  1  1 -1 -1 -1 -1 -1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1  1  1 -1  1 -1 -1  1 -1 -1  1 -1 -1 -1  1  1 -1  1 -1  1 -1 -1  1
+000002.jpg -1 -1 -1  1 -1 -1 -1  1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1  1 -1  1 -1 -1  1 -1 -1 -1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1  1
+000003.jpg -1 -1 -1 -1 -1 -1  1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1 -1 -1  1  1 -1 -1  1 -1 -1 -1 -1 -1  1 -1 -1 -1 -1 -1  1
+000004.jpg -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1 -1 -1  1 -1 -1 -1 -1  1 -1  1 -1  1  1 -1  1
+000005.jpg -1  1  1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1 -1 -1 -1 -1  1  1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1  1 -1 -1  1
+000006.jpg -1  1  1 -1 -1 -1  1 -1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1  1 -1 -1  1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1  1  1 -1  1 -1 -1  1
+000007.jpg 1 -1  1  1 -1 -1  1  1  1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1  1 -1 -1 -1  1 -1 -1  1 -1 -1 -1 -1  1 -1 -1 -1 -1 -1 -1  1
+000008.jpg 1  1 -1  1 -1 -1  1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1 -1 -1 -1  1 -1 -1  1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1  1
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">data_faces</span><span class="o">/</span><span class="n">list_eval_partition</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>000001.jpg 0
+000002.jpg 0
+000003.jpg 0
+000004.jpg 0
+000005.jpg 0
+000006.jpg 0
+000007.jpg 0
+000008.jpg 0
+000009.jpg 0
+000010.jpg 0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="o">/</span><span class="n">content</span><span class="o">/</span><span class="n">data_faces</span><span class="o">/</span><span class="n">identity_CelebA</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>000001.jpg 2880
+000002.jpg 2937
+000003.jpg 8692
+000004.jpg 5805
+000005.jpg 9295
+000006.jpg 4153
+000007.jpg 9040
+000008.jpg 6369
+000009.jpg 3332
+000010.jpg 612
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Path to your dataset folder</span>
 <span class="n">image_path</span> <span class="o">=</span> <span class="s2">&quot;/content/data_faces&quot;</span>
-<span class="n">img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="s1">&#39;img_align_celeba&#39;</span><span class="p">)</span>
+<span class="n">img_folder</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="s1">&#39;img_align_celeba&#39;</span><span class="p">)</span> <span class="c1">#img_align_celeba</span>
 
 <span class="c1"># Paths to the required files</span>
 <span class="n">attr_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="s1">&#39;list_attr_celeba.txt&#39;</span><span class="p">)</span>
@@ -868,11 +964,11 @@ list_attr_celeba.txt  list_landmarks_align_celeba.txt
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-13-0e13e4010fa0&gt;:10: FutureWarning: The &#39;delim_whitespace&#39; keyword in pd.read_csv is deprecated and will be removed in a future version. Use ``sep=&#39;\s+&#39;`` instead
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-62-5b2fa53d6678&gt;:10: FutureWarning: The &#39;delim_whitespace&#39; keyword in pd.read_csv is deprecated and will be removed in a future version. Use ``sep=&#39;\s+&#39;`` instead
   attributes = pd.read_csv(attr_file, delim_whitespace=True, skiprows=1)
-&lt;ipython-input-13-0e13e4010fa0&gt;:11: FutureWarning: The &#39;delim_whitespace&#39; keyword in pd.read_csv is deprecated and will be removed in a future version. Use ``sep=&#39;\s+&#39;`` instead
+&lt;ipython-input-62-5b2fa53d6678&gt;:11: FutureWarning: The &#39;delim_whitespace&#39; keyword in pd.read_csv is deprecated and will be removed in a future version. Use ``sep=&#39;\s+&#39;`` instead
   partition = pd.read_csv(partition_file, delim_whitespace=True, header=None, names=[&#39;image_id&#39;, &#39;partition&#39;])
-&lt;ipython-input-13-0e13e4010fa0&gt;:15: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
+&lt;ipython-input-62-5b2fa53d6678&gt;:15: FutureWarning: DataFrame.applymap has been deprecated. Use DataFrame.map instead.
   smiling_attr = smiling_attr.applymap(lambda x: 1 if x == 1 else 0)  # Convert -1 to 0 for binary classification
 </pre></div>
 </div>
@@ -896,9 +992,9 @@ Test set: 19962
 
 <span class="c1">## Column 2: flipping (horizontally)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">img</span><span class="p">,</span> <span class="n">attr</span> <span class="o">=</span> <span class="n">celeba_train_dataset</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">img</span><span class="p">,</span> <span class="n">attr</span> <span class="o">=</span> <span class="n">celeba_train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Flip (horizontal)&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">imgtmp</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">imgtmp</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="c1">#Permutes the dimensions of the image tensor. PyTorch images are typically stored as (C, H, W). Matplotlib expects images in (H, W, C) format.</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgtmp</span><span class="p">)</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 <span class="n">img_flipped</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">hflip</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
@@ -908,7 +1004,7 @@ Test set: 19962
 
 <span class="c1">## Column 3: adjust contrast</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">img</span><span class="p">,</span> <span class="n">attr</span> <span class="o">=</span> <span class="n">celeba_train_dataset</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">img</span><span class="p">,</span> <span class="n">attr</span> <span class="o">=</span> <span class="n">celeba_train_dataset</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 <span class="n">imgtmp</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Adjust constrast&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgtmp</span><span class="p">)</span>
@@ -920,7 +1016,7 @@ Test set: 19962
 
 <span class="c1">## Column 4: adjust brightness</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">img</span><span class="p">,</span> <span class="n">attr</span> <span class="o">=</span> <span class="n">celeba_train_dataset</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">img</span><span class="p">,</span> <span class="n">attr</span> <span class="o">=</span> <span class="n">celeba_train_dataset</span><span class="p">[</span><span class="mi">5555</span><span class="p">]</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Adjust brightness&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">imgtmp</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgtmp</span><span class="p">)</span>
@@ -935,10 +1031,10 @@ Test set: 19962
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x77fcad1b3340&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x795e9bb03d10&gt;
 </pre></div>
 </div>
-<img alt="_images/4db93963a1ed98f4339ea53ba2f3206ac077e7e9fce574a380e40b15c8af6bc5.png" src="_images/4db93963a1ed98f4339ea53ba2f3206ac077e7e9fce574a380e40b15c8af6bc5.png" />
+<img alt="_images/1b3fb3977ada75e328b3cca710a063f24670bb80911a9ea71af80fa6efb35e1a.png" src="_images/1b3fb3977ada75e328b3cca710a063f24670bb80911a9ea71af80fa6efb35e1a.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -948,7 +1044,7 @@ Test set: 19962
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__main__.CelebADataset at 0x77fcb265d2a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;__main__.CelebADataset at 0x795ea0c78190&gt;
 </pre></div>
 </div>
 </div>
@@ -956,7 +1052,7 @@ Test set: 19962
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">Subset</span>
-<span class="n">celeba_train_dataset</span> <span class="o">=</span> <span class="n">Subset</span><span class="p">(</span><span class="n">celeba_train_dataset</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">16000</span><span class="p">))</span>
+<span class="n">celeba_train_dataset</span> <span class="o">=</span> <span class="n">Subset</span><span class="p">(</span><span class="n">celeba_train_dataset</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">16000</span><span class="p">))</span> <span class="c1"># Subset allows you to create a smaller subset of a dataset by specifying indices.</span>
 <span class="n">celeba_valid_dataset</span> <span class="o">=</span> <span class="n">Subset</span><span class="p">(</span><span class="n">celeba_valid_dataset</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -981,7 +1077,7 @@ Test set: 19962
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;torch.utils.data.dataset.Subset at 0x77fcaaf9b970&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;torch.utils.data.dataset.Subset at 0x795e9bc1bb50&gt;
 </pre></div>
 </div>
 </div>
@@ -1018,7 +1114,9 @@ Batch of labels: torch.Size([2])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Showing some random images</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># Create a figure for plotting</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -1060,11 +1158,11 @@ Batch of labels: torch.Size([2])
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/18da16cbb1d487fd4c580d1c1c64f1957ac4cab55e79f51abe5d26f3e9874c74.png" src="_images/18da16cbb1d487fd4c580d1c1c64f1957ac4cab55e79f51abe5d26f3e9874c74.png" />
+<img alt="_images/5c68013fa45e6dbd42e56e9adaf54a9f2cec8626255077ce85ebdb1a5649c74a.png" src="_images/5c68013fa45e6dbd42e56e9adaf54a9f2cec8626255077ce85ebdb1a5649c74a.png" />
 </div>
 </div>
-<section id="training-a-dcnn">
-<h2><span class="section-number">19.1. </span>Training a DCNN<a class="headerlink" href="#training-a-dcnn" title="Link to this heading">#</a></h2>
+<section id="training-a-deep-convolutional-neural-network">
+<h2><span class="section-number">19.1. </span>Training a Deep Convolutional Neural Network<a class="headerlink" href="#training-a-deep-convolutional-neural-network" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
@@ -1197,6 +1295,25 @@ Label batch shape: torch.Size([64])
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># testing dimensions</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">))</span> <span class="c1"># tensor representing a batch of 4 fake images each (CxHxW) =(3x64x64)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([4, 1])
+tensor([0.4876, 0.4875, 0.4870, 0.4879], grad_fn=&lt;SelectBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#----------------------------------------------------------------------------------------------------------</span>
 </pre></div>
 </div>
@@ -1305,26 +1422,26 @@ Label batch shape: torch.Size([64])
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1 accuracy: 0.5176 val_accuracy: 0.5140
-Epoch 2 accuracy: 0.5292 val_accuracy: 0.5540
-Epoch 3 accuracy: 0.5707 val_accuracy: 0.5880
-Epoch 4 accuracy: 0.6011 val_accuracy: 0.6110
-Epoch 5 accuracy: 0.6237 val_accuracy: 0.6270
-Epoch 6 accuracy: 0.6455 val_accuracy: 0.6530
-Epoch 7 accuracy: 0.6729 val_accuracy: 0.7230
-Epoch 8 accuracy: 0.7531 val_accuracy: 0.8000
-Epoch 9 accuracy: 0.7946 val_accuracy: 0.8260
-Epoch 10 accuracy: 0.8111 val_accuracy: 0.8410
-Epoch 11 accuracy: 0.8207 val_accuracy: 0.8490
-Epoch 12 accuracy: 0.8326 val_accuracy: 0.8520
-Epoch 13 accuracy: 0.8373 val_accuracy: 0.8620
-Epoch 14 accuracy: 0.8435 val_accuracy: 0.8620
-Epoch 15 accuracy: 0.8536 val_accuracy: 0.8690
-Epoch 16 accuracy: 0.8556 val_accuracy: 0.8760
-Epoch 17 accuracy: 0.8627 val_accuracy: 0.8510
-Epoch 18 accuracy: 0.8655 val_accuracy: 0.8840
-Epoch 19 accuracy: 0.8692 val_accuracy: 0.8780
-Epoch 20 accuracy: 0.8733 val_accuracy: 0.8940
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1 accuracy: 0.5176 val_accuracy: 0.5410
+Epoch 2 accuracy: 0.5332 val_accuracy: 0.5290
+Epoch 3 accuracy: 0.5533 val_accuracy: 0.6080
+Epoch 4 accuracy: 0.5838 val_accuracy: 0.5960
+Epoch 5 accuracy: 0.6151 val_accuracy: 0.6330
+Epoch 6 accuracy: 0.6377 val_accuracy: 0.6370
+Epoch 7 accuracy: 0.6568 val_accuracy: 0.6810
+Epoch 8 accuracy: 0.7138 val_accuracy: 0.7400
+Epoch 9 accuracy: 0.7474 val_accuracy: 0.7620
+Epoch 10 accuracy: 0.7729 val_accuracy: 0.7880
+Epoch 11 accuracy: 0.7909 val_accuracy: 0.8000
+Epoch 12 accuracy: 0.8158 val_accuracy: 0.8310
+Epoch 13 accuracy: 0.8241 val_accuracy: 0.8370
+Epoch 14 accuracy: 0.8349 val_accuracy: 0.8540
+Epoch 15 accuracy: 0.8426 val_accuracy: 0.8210
+Epoch 16 accuracy: 0.8496 val_accuracy: 0.8330
+Epoch 17 accuracy: 0.8514 val_accuracy: 0.8630
+Epoch 18 accuracy: 0.8530 val_accuracy: 0.8670
+Epoch 19 accuracy: 0.8604 val_accuracy: 0.8590
+Epoch 20 accuracy: 0.8614 val_accuracy: 0.8600
 </pre></div>
 </div>
 </div>
@@ -1390,7 +1507,7 @@ drwxr-xr-x 3 root root 4.0K Oct  8 02:17 data_faces
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/78ba87c0888615bed0852530c7c63d83a757c1331c596d230412c490e9020dea.png" src="_images/78ba87c0888615bed0852530c7c63d83a757c1331c596d230412c490e9020dea.png" />
+<img alt="_images/9054c0b04482480bc943338149e1592e66c134b1a759f217c1905d6b59285496.png" src="_images/9054c0b04482480bc943338149e1592e66c134b1a759f217c1905d6b59285496.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1413,7 +1530,7 @@ drwxr-xr-x 3 root root 4.0K Oct  8 02:17 data_faces
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.8812
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test accuracy: 0.8650
 </pre></div>
 </div>
 </div>
@@ -1444,7 +1561,7 @@ drwxr-xr-x 3 root root 4.0K Oct  8 02:17 data_faces
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/a652476d51bc0849e033384a179afcf51aeeeaecbede5851f511c94ba5a60ea1.png" src="_images/a652476d51bc0849e033384a179afcf51aeeeaecbede5851f511c94ba5a60ea1.png" />
+<img alt="_images/6b6f0a5cd0b5ebb1d663b6bdffb845ad338d0a9fa2cc7b227f3edca24626b146.png" src="_images/6b6f0a5cd0b5ebb1d663b6bdffb845ad338d0a9fa2cc7b227f3edca24626b146.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1533,7 +1650,7 @@ drwxr-xr-x 3 root root 4.0K Oct  8 02:17 data_faces
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-dcnn">19.1. Training a DCNN</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#training-a-deep-convolutional-neural-network">19.1. Training a Deep Convolutional Neural Network</a></li>
 </ul>
   </nav></div>
 
