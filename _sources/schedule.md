@@ -7,7 +7,7 @@ The course schedule is updated regularly. Please check it frequently for the lat
 - J. Giroux (TA) office hours: Friday, 11:30-1:30, office ISC-1109
 
 
-Last update: (2/12/2025)
+Last update: (3/8/2025)
 
 ## Week 1 (Mon, Jan 20 - Sun, Jan 26)
 
@@ -132,7 +132,7 @@ Last update: (2/12/2025)
 | 2:00pm-3:20pm  | | **Lecture:**  Convolutional Neural Networks <br> **What to learn:** Understanding CNN and feature hierarchies, implementing a CNN |  |  **Lecture:**  Convolutional Neural Networks <br> **What to learn:**  Hands-on with classification problems| |
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 2 (assigned Mar 7; due Mar 20)</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 2 (assigned Mar 8; due Mar 21)</strong></span></td>
 </tr>
 </table>
 <table>
@@ -160,7 +160,7 @@ Last update: (2/12/2025)
 | 2:00pm-3:20pm  | | **Lecture:**  (Continue) CNN <br> **What to learn:** CNN for classification and/or regression problems |  |  **Lecture:** An Introduction to GradCAM for explainability of CNN <br> **What to learn:** practical understanding of GradCAM, case studies and applications | |
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 2 due Mar 20 (new date) </strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 2 due Mar 21 (new date) </strong></span></td>
 </tr>
 </table>
 
