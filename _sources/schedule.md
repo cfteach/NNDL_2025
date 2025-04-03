@@ -7,7 +7,7 @@ The course schedule is updated regularly. Please check it frequently for the lat
 - J. Giroux (TA) office hours: Friday, 11:30-1:30, office ISC-1109
 
 
-Last update: (3/8/2025)
+Last update: (4/2/2025)
 
 ## Week 1 (Mon, Jan 20 - Sun, Jan 26)
 
@@ -185,16 +185,13 @@ Last update: (3/8/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | | **Lecture:** Introduction to Generative Adversarial Networks <br> **What to learn:** Implementing GAN from scratch |  |  **Lecture:** Generative Adversarial Networks <br>  **What to learn:** Training, implementing generator and discriminator networks | |
+| 2:00pm-3:20pm  | | **Lecture:** RNN  <br> **What to learn:** hidden to hidden recurrence, full example with LSTM; integration of other approaches (GRU, etc) |  |  **Lecture:** Generative Adversarial Networks <br>  **What to learn:** Implementing GAN from scratch; Training, implementing generator and discriminator networks | |
 <table>
 <tr>
 <td colspan="7" align="center"><span style="color:purple"><strong>Readings: Raschka, Chap. 17</strong></span></td>
 </tr>
 </table>
 <table>
-<tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 3 (assigned Apr 4; due Apr 13)</strong></span></td>
-</tr>
 </table>
 
 ## Week 11 (Mon, Apr 7 - Sun, Apr 13)
@@ -207,10 +204,8 @@ Last update: (3/8/2025)
 </table>
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Reminder Assignment 3 due Apr 13</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 3 (assigned Apr 8; due Apr 15)</strong></span></td>
 </tr>
-</table>
-<table>
 <tr>
 <td colspan="7" align="center"><span style="color:purple"><strong>Readings: Raschka, Chap. 17</strong></span></td>
 </tr>
@@ -222,10 +217,14 @@ Last update: (3/8/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | | **Lecture:**  Graph Neural Networks <br> **What to learn:** Undirected graphs, directed graphs, understanding graph convolutions | |   **Lecture:** Graph Neural Networks <br> **What to learn:** Implementation of a GNN from scratch using Pytorch | |
+| 2:00pm-3:20pm  | | **Lecture:**  Complete lectures on GAN; Intro Graph Neural Networks <br> **What to learn:** Undirected graphs, directed graphs, understanding graph convolutions | |   **Lecture:** Graph Neural Networks <br> **What to learn:** Implementation of a GNN from scratch using Pytorch | |
 <table>
+
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 4 (assigned Apr 18; due Apr 27)</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong> Reminder Assignment 3 due Apr 15 (new date)
+</tr>
+<tr>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 4 (assigned Apr 19; due Apr 27)</strong></span></td>
 </tr>
 </table>
 <table>
