@@ -1,0 +1,1567 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DATA 621 - NNDL - Homework 1 (by Steven Morse) &#8212; Neural Networks and Deep Learning - Spring 2025</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/tabs.js?v=3ee01567"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "cfteach/NNDL_2025");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Steven_Morse_Assign1';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/Steven_Morse_Assign1.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Introduction to Modeling" href="Linear_Regression_1_class.html" />
+    <link rel="prev" title="Schedule" href="schedule.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">This page is being updated</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logowm1.png" class="logo__image only-light" alt="Neural Networks and Deep Learning - Spring 2025 - Home"/>
+    <script>document.write(`<img src="_static/logowm1.png" class="logo__image only-dark" alt="Neural Networks and Deep Learning - Spring 2025 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Neural Networks and Deep Learning 2025 (NNDL-2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Syllabus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1SDP2tsxEkxrWSATzJieMX6zk63FfYTwH/view?usp=sharing">Syllabus (last update 1/23/2025)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1FTYc_JyeStYWXuskukHhw1B3AAFJyb7N/view?usp=sharing">Assignment 1, Deep Neural Networks from Scratch</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Solution to Assignment 1, by Steven Morse</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1ime_ivKnYQURPyaQl710-n5g9-IyqwRf/view?usp=sharing">Assignment 2, Convolutional Neural Networks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Intro</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1mgFybK0KbOyRPinAU8r4lRd-9JzJpyEtPPzX6Sr4MuI/edit?usp=sharing">Welcome and Intro by Prof. C.Fanelli</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Intro to Modeling</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1BV2-N-c1bq4yx1IsPMW4fhC9i1SCdRAU/edit?usp=sharing&amp;ouid=113195593718692427789&amp;rtpof=true&amp;sd=true">Linear Regression (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linear_Regression_1_class.html">1. Linear Regression (Jupyter Notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Introduction to git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/GIT-course/intro_to_git.html">2. Brief course on <code class="docutils literal notranslate"><span class="pre">git</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/VCS.html">2.1. Version Control System (VCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/git_basics.html">2.2. What is Git?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/git_configure.html">2.3. Configuring your <code class="docutils literal notranslate"><span class="pre">git</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/GIT-course/git_exercises.html">3. Exercises on <code class="docutils literal notranslate"><span class="pre">git</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-1.html">3.1. Exercise 1: Basic Git Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-2.html">3.2. Exercise 2: Commits, push and branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-3.html">3.3. Advanced exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-4.html">3.4. GitHub Actions and Workflow Tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Using VS-Code</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Day-1/VS-code.html">Installing Visual Studio Code</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Introduction to High Performance Computing (HPC)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/HPC-course/intro_to_HPC_HTC.html">4. Introduction to High Performance Computing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/intro_to_HPC.html">4.1. High Performance Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/ssh_login.html">4.2. SSH into a Front-End Node Using Proxy Jump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/file_systems_WM.html">4.3. William &amp; Mary Research Computing: File Systems Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/SLURM_commands2.html">4.4. Introduction to SLURM</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference external" href="https://d8a-science.github.io/hpc-gitbook/">Other Resources: Distributed ML @ W&amp;M</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/D8A-SCIENCE/hpc-gitbook">Other Resources: Student Manual for using the HPC @ W&amp;M for Data Science</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Linux Commands</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://www.wm.edu/offices/it/services/researchcomputing/using/tutorials/">Linux Commands</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/28/2025] Linear Classifiers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1ihKM2j-tiXrbty8Btvn0QlHNX4WUd3XSR6_40HPBK6Q/edit?usp=sharing">Perceptrons (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1mU67w6GAhIWNFoO98AF7u8in2C-Op4Ag/view?usp=sharing">Perceptron - Proof of Convergence (PDF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2_NNDL_perceptron.html">5. Training a Perceptron (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1uWc1e_sLKnafzEq0NLC9xup_orxQaaFmDHV1i0S5ZvQ/edit?usp=sharing">Adaline (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2b_NNDL_adaline.html">6. Training Adaline (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/30/2025] Gradient Descent, stochastic GD, Logistic Regression and Other classifiers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/13GMGu7k5PQtn4QsOYRgAMiUcuZyA2xREq16HjWzW2W4/edit?usp=sharing">Stochastic Gradient Descent (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3_NNDL_gradient_descent.html">7. Gradient Descent, Stochastic Gradient Descent, Mini-batch GD (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1geYpTbIyNOa3GlhDkbCy9IOQ0iiTl_FNB4Dr6cLmBqs/edit?usp=sharing">An Intro to Logistic Regression, Regularization, linear (and non-linear) boundaries (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3b_NNDL_logistic_regression.html">8. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/4/2025] Building Training Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1UQVjqw57pJf_tmHxfIQty0DBgoD9UserRgs09p7T3ZU/edit?usp=sharing">Building Training Datasets (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_04_2025_lec4_datapreprocessing.html">9. Data Preprocessing (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/6/2025] Regularization (Continued, see 1/30/2025)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_06_2025_lec3b_NNDL_logistic_regression.html">10. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/11/2025] Model Evaluation, Hyperparameter Tuning: Examples and Discussion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_11_2025_modeleval.html">11. Model Evaluation, Hyperparameter Tuning (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/13/2025] Building Multi-Layer Neural Networks from scratch + discussion on assignment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1TFkGvstL8G2GRD7V3GLCjSIB5sERn03UqkWYvsDkDBo/edit?usp=sharing"> Adding hidden layers + Math of Backprop (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.13.2025_lec6_MLP.html">12. Multi-Layer Perceptron (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/18/2024] Building Multi-Layer Neural Networks with PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_18_2025_lec8_pytorch.html">13. Using PyTorch preflight (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_18_2025_lec8_NN.html">14. Using torch.nn (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/25 - 2/27 2025] PyTorch and Autograd</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_25_2025_lec9_pytorch.html">15. Using PyTorch to build Neural Networks (continue)</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="02_27_2025_lec10_pytorch.html">17. Autograd with PyTorch (continue)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/4 - 3/6 2025] CNN with PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_04_2025_lec11_CNN.html">18. Using PyTorch with CNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_06_2025_lec12_CNN_v2.html">19. Using CNN and Celeb Dataset</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://adamharley.com/nn_vis/">(A really nice and well-known resource:) Interactive Node-Link Visualization of Convolutional Neural Networks by Adam Harley</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/18/2025] Explainable AI using Grad-CAM for visual explanations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lec13_Introduction_to_X_AI_via_grad_cam.html">20. Explainable AI (XAI) and Grad-CAM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/20/2025] CNN: from Classification to Regression Tasks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_20_2025_cnn_regr.html">21. age prediciton based on face images</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/25 - 3/26 - 4/1 - 2025] Recurrent Neural Network</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1X8Tq_L4ChK8zh5DDts34N6w-2IAmNw12n7fLwJnzRdM/edit?usp=sharing">Introduction to Sequential Data and Time Series Data; Intro to RNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lec16_RNN_2_new.html">22. LSTM Recurrent Neural Networks (updated)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[4/3/2025] Generative Adversarial Networks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1p9H8dirIe2YJU1dn7fiHTc5H--HKO5mjuuvqvbde5O8/edit?usp=sharing">Introduction to GAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_03_2025_GAN_part1.html">23. Vanilla GAN Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_08_2025_lec17_GAN_part2.html">24. DCGAN</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="referencesmc.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/cfteach/NNDL_2025/blob/webpage-src/NNDL_2025/NNDL_2025/Steven_Morse_Assign1.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025/edit/webpage-src/NNDL_2025/NNDL_2025/Steven_Morse_Assign1.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025/issues/new?title=Issue%20on%20page%20%2FSteven_Morse_Assign1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Steven_Morse_Assign1.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>DATA 621 - NNDL - Homework 1 (by Steven Morse)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus">Bonus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#softmax">Softmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-layer">Output layer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hidden-layers">Hidden layers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-together">Putting it together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-hidden-layer-case">Single-hidden layer case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-regularization">Adding regularization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-implementation">Code implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1">Question 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2">Question 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3">Question 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4">Question 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-validation-testing-split">Train / Validation / Testing split</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6">Question 6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7">Question 7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="data-621-nndl-homework-1-by-steven-morse">
+<h1>DATA 621 - NNDL - Homework 1 (by Steven Morse)<a class="headerlink" href="#data-621-nndl-homework-1-by-steven-morse" title="Link to this heading">#</a></h1>
+<p><strong>Steven Morse</strong></p>
+<section id="bonus">
+<h2>Bonus<a class="headerlink" href="#bonus" title="Link to this heading">#</a></h2>
+<p><strong>This section provides the detailed derivation of computing backprop with cross-entropy loss (Bonus), and then we answer Questions 1-7.</strong></p>
+<p>We will implement, from scratch, a general neural network framework for multi-class classification, using ReLU hidden units and softmax output, so activations are:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{hidden layer: } a_j^l = f(z_j) = \max (0, z_j) \qquad
+\text{output layer: } a_j^L = F(z^L)_j = \frac{\exp(z_j^L)}{\sum_i \exp(z_i^L)}
+\]</div>
+<p>Here we use the usual <span class="math notranslate nohighlight">\(z^l = (W^l)^T a^{l-1} + b^l\)</span> where <span class="math notranslate nohighlight">\(W^l = [w_{ij}^l]\)</span> represents the weights at layer <span class="math notranslate nohighlight">\(l\)</span> such that <span class="math notranslate nohighlight">\(w_{ij}^l\)</span> is the weight from output <span class="math notranslate nohighlight">\(a_i^{l-1}\)</span> to unit <span class="math notranslate nohighlight">\(z_j^l\)</span> and <span class="math notranslate nohighlight">\(b^l\)</span> the bias vector at layer <span class="math notranslate nohighlight">\(l\)</span>.</p>
+<p>Using a one-hot encoding for each target <span class="math notranslate nohighlight">\(y^{(i)}\)</span>, we define the cross-entropy loss at a single datapoint with predicted value <span class="math notranslate nohighlight">\(\hat{y} = a^L = F(z^L)\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+\ell = -\sum_k y_k \log \hat{y}_k
+\]</div>
+<p>and the objective being to minimize total cross-entropy loss over all training data, i.e.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{W}, \hat{b} = \text{arg}\min_{W,b} -\sum_{i=1}^N \sum_{k=1}^K y_k^{(i)} \log \hat{y}_k^{(i)}
+\]</div>
+<p>To train the network, we use the approach of <em>feed-forward</em> and <em>backpropagation</em> with (mini-batch) stochastic gradient descent updates on the parameters.  Specifically, given a training point <span class="math notranslate nohighlight">\(x\)</span> and its target <span class="math notranslate nohighlight">\(y\)</span>, we first feed-forward through each layer <span class="math notranslate nohighlight">\(l\)</span> by setting <span class="math notranslate nohighlight">\(a^1 = x\)</span> and then sequentially solving</p>
+<div class="math notranslate nohighlight">
+\[
+z^l = (W^l)^T a^{l-1} + b^l \qquad \text{and} \qquad
+a^l = f(z^l), \ l = 2,3,...,L
+\]</div>
+<p>with the exception of the last layer, <span class="math notranslate nohighlight">\(a^L = F(z^L)\)</span>.  (This is easily extended to the mini-batch setting.)</p>
+<p>We now have values for all <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(z\)</span>, <span class="math notranslate nohighlight">\(W\)</span>, <span class="math notranslate nohighlight">\(b\)</span>, and associated predictions <span class="math notranslate nohighlight">\(\hat{y}\)</span>.  To train, we want to take mini-batch SGD steps for each layer weight and bias:
+$$</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+W^l_{(\text{new})} &amp;= W^l_{(\text{old})} - \eta \sum_b \nabla_{W^l} \ell \\
+b^l_{(\text{new})} &amp;= b^l_{(\text{old})} - \eta \sum_b \nabla_{b^l} \ell
+\end{align*}\]</div>
+<p>$<span class="math notranslate nohighlight">\(
+where \)</span>b$ runs over the batch.</p>
+<p>Because of the recursive, layered nature of the neural network, the measured error at the output layer propagates backward through the nested functions of each layer, so we call this gradient step <em>backpropagation.</em></p>
+<p>To setup backpropagation, we need to compute the gradient of the loss with respect to the parameters.  This is more involved, and we’ll do in several parts.</p>
+</section>
+<section id="softmax">
+<h2>Softmax<a class="headerlink" href="#softmax" title="Link to this heading">#</a></h2>
+<p>We will need the gradient <span class="math notranslate nohighlight">\(\frac{\partial F(z^L)}{\partial a^L}\)</span> of the output layer activation, the softmax function defined above.  Notice that this is a function <span class="math notranslate nohighlight">\(F: \mathbb{R}^N \rightarrow \mathbb{R}^N\)</span> and so its gradient is a Jacobian matrix — in other words, we need each combination <span class="math notranslate nohighlight">\((i,j)\)</span> of <span class="math notranslate nohighlight">\(\partial F(a^L)_i / \partial a_j^L\)</span>.  Dropping the <span class="math notranslate nohighlight">\(L\)</span> superscript, and recalling the product rule for derivatives of <span class="math notranslate nohighlight">\((gh^{-1})' = (g'h-h'g)/h^2\)</span>, we have two cases.</p>
+<p>When <span class="math notranslate nohighlight">\(i=j\)</span>,
+$<span class="math notranslate nohighlight">\(
+\frac{\partial F_i}{\partial a_j} = \frac{e^{a_i}\sum e^{a_k} - e^{a_j}e^{a_i}}{(\sum e^{a_k})^2}
+= \frac{e^{a_i}}{\sum e^{a_k}}\cdot \frac{\sum e^{a_k} - e^{a_j}}{\sum e^{a_k}} = F_i(1-F_i)
+\)</span>$</p>
+<p>When <span class="math notranslate nohighlight">\(i\neq j\)</span>,
+$<span class="math notranslate nohighlight">\(
+\frac{\partial F_i}{\partial a_j} = \frac{-e^{a_j} e^{a_i}}{(\sum e^{a_k})^2} = -F_i F_j
+\)</span>$</p>
+<p>We may see this situation written using the Kronecker delta <span class="math notranslate nohighlight">\(\delta_{ij} = 1 \text{ if } i=j, \ 0 \text{ o.w.}\)</span> as <span class="math notranslate nohighlight">\(\frac{\partial F_i}{\partial a_j} = F_i(\delta_{ij} - F_j)\)</span>.</p>
+</section>
+<section id="output-layer">
+<h2>Output layer<a class="headerlink" href="#output-layer" title="Link to this heading">#</a></h2>
+<p>Now we’re in a position to derive the loss gradient for the output layer, <span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial z_i^L}\)</span>.  Notice this is over a single datapoint, and for a single element <span class="math notranslate nohighlight">\(i\)</span> of the vector <span class="math notranslate nohighlight">\(z^L\)</span>, but will involve differentiating over all elements <span class="math notranslate nohighlight">\(a_k^L\)</span> of the output activation <span class="math notranslate nohighlight">\(a^L\)</span>.  So we use the chain rule for a scalar valued function with vector inputs, again dropping the <span class="math notranslate nohighlight">\(L\)</span> superscript
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \ell}{\partial z_i}
+= \sum_k \frac{\partial \ell}{\partial a_k}\frac{\partial a_k}{\partial z_i}
+\)</span>$</p>
+<p>and recall <span class="math notranslate nohighlight">\(\partial \ell / \partial a_k = - y_k/a_k\)</span> by definition of derivative of log.  This leads to
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \ell}{\partial z_i}
+= \sum_k \left(-\frac{y_k}{a_k}\right)\left(a_k(\delta_{ik} - a_i\right)
+= \sum_k y_k(\delta_{ik} - a_i)
+\)</span>$</p>
+<p>Looking at terms of this sum over <span class="math notranslate nohighlight">\(k\)</span>, when <span class="math notranslate nohighlight">\(k=i\)</span>, we have <span class="math notranslate nohighlight">\(-y_i(1-a_i)\)</span>.  When <span class="math notranslate nohighlight">\(k\neq i\)</span>, we have <span class="math notranslate nohighlight">\(y_k a_i\)</span>.  Combining, collecting like terms, and recalling <span class="math notranslate nohighlight">\(\sum_k y_k = 1\)</span> by construction (one-hot encoding), we have
+$<span class="math notranslate nohighlight">\(
+= -y_i(1-a_i) + \sum_{k\neq i} y_k a_i = -y_i + a_i(\sum_k y_k) = a_i - y_i
+\)</span>$</p>
+<p>All together, replacing the <span class="math notranslate nohighlight">\(L\)</span> superscript, we have the “error” in the output layer as
+$<span class="math notranslate nohighlight">\(
+\delta^L \overset{\text{def}}{=} \frac{\partial \ell}{\partial z^L} = a^L - y
+\)</span><span class="math notranslate nohighlight">\(
+where we've introduced the notation \)</span>\delta^l<span class="math notranslate nohighlight">\( to indicate this error term in the \)</span>l$-th layer, following Bishop and other standard texts.  (See References.)</p>
+</section>
+<section id="hidden-layers">
+<h2>Hidden layers<a class="headerlink" href="#hidden-layers" title="Link to this heading">#</a></h2>
+<p>For any hidden layer <span class="math notranslate nohighlight">\(l\)</span>, we need to work out
+$<span class="math notranslate nohighlight">\(
+\delta^l \overset{\text{def}}{=} \frac{\partial \ell}{\partial z^l}
+\)</span>$</p>
+<p>First note <span class="math notranslate nohighlight">\(a^l = f(z^l)\)</span> elementwise, so for each element <span class="math notranslate nohighlight">\(i\)</span> by the chain rule we have
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \ell}{\partial z_i^l}
+= \frac{\partial \ell}{\partial a_i^l} \frac{\partial a_i^l}{\partial z_i^l}
+= \frac{\partial \ell}{\partial a_i^l} f'(z_i^l)
+\)</span>$</p>
+<p>One way to write this is with a Hadamard (element-wise) product,
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \ell}{\partial z^l} = \frac{\partial \ell}{\partial a^l} \circ f'(z^L)
+\)</span>$</p>
+<p>Another equivalent way is to use a diagonal matrix (<span class="math notranslate nohighlight">\(f'(z^L)\)</span> along the diagonal, 0’s elsewhere):
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \ell}{\partial z^l} = \frac{\partial \ell}{\partial a^l} \text{diag}\{f'(z^L)\}
+\)</span>$</p>
+<p>Regardless, now need the partial of the loss wrt the activation <span class="math notranslate nohighlight">\(a^l\)</span>.  Note that <span class="math notranslate nohighlight">\(a^l\)</span> affects <span class="math notranslate nohighlight">\(z^{l+1}\)</span>, because we have <span class="math notranslate nohighlight">\(z^{l+1} = (W^{l+1})^T a^l + b^{l+1}\)</span>.  This leads to the chain rule
+$$</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\frac{\partial \ell}{\partial a^l}
+&amp;= \frac{\partial \ell}{\partial z^{l+1}} \frac{\partial z^{l+1}}{\partial a^l} \\
+&amp;= \delta^{l+1} W^{l+1}
+\end{align*}\]</div>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}
+using again our $\delta^l$ notation.  \\Substituting back into the earlier expression, we have an expression for $\delta^l$ in terms of $\delta^{l+1}$,
+\end{aligned}\end{align} \]</div>
+<p>\delta^l = \text{diag}(f’(z^l))W^{l+1}\delta^{l+1}
+$$</p>
+<p>This reveals a recursive formula,
+$<span class="math notranslate nohighlight">\(
+\delta^l = \text{diag}(f'(z^l))W^{l+1} \text{diag}(f'(z^{l+1}))W^{l+2} \ ... \ W^L \delta^L
+\)</span>$</p>
+<p>with <span class="math notranslate nohighlight">\(\delta^L\)</span> defined previously.</p>
+<p><strong>NOTE.</strong> The ReLU (<span class="math notranslate nohighlight">\(\max(0, z)\)</span>) is not differentiable, but is <em>sub</em>differentiable as <span class="math notranslate nohighlight">\(f'(z)=1\)</span> if <span class="math notranslate nohighlight">\(z&gt;0\)</span> else <span class="math notranslate nohighlight">\(0\)</span>.</p>
+</section>
+<section id="putting-it-together">
+<h2>Putting it together<a class="headerlink" href="#putting-it-together" title="Link to this heading">#</a></h2>
+<p>What we’re ultimately after is not these <span class="math notranslate nohighlight">\(\delta^l\)</span> terms, but the gradient step for each parameter.  Fortunately, this is now easy:
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \ell}{\partial W^l}
+= \frac{\partial z^l}{\partial W^l} \frac{\partial \ell}{\partial z^{l}}
+= a^{l-1} \delta^l
+\)</span>$</p>
+<p>and for the biases,
+$<span class="math notranslate nohighlight">\(
+\frac{\partial \ell}{\partial b^l}
+= \frac{\partial z^l}{\partial b^l} \frac{\partial \ell}{\partial z^{l}}
+= \delta^l
+\)</span>$</p>
+</section>
+<section id="single-hidden-layer-case">
+<h2>Single-hidden layer case<a class="headerlink" href="#single-hidden-layer-case" title="Link to this heading">#</a></h2>
+<p>In the case of just a single hidden layer <span class="math notranslate nohighlight">\(h\)</span> and output layer <span class="math notranslate nohighlight">\(L\)</span>, the output layer is the same:
+$<span class="math notranslate nohighlight">\(
+\delta^L = \frac{\partial \ell}{\partial z^L} = a^L - y
+\)</span><span class="math notranslate nohighlight">\(
+but the single \)</span>\delta^l = \delta^h<span class="math notranslate nohighlight">\( simplifies to
+\)</span><span class="math notranslate nohighlight">\(
+\delta^h = \frac{\partial \ell}{\partial z^h} = \text{diag}(f'(z^h))W^L \delta^L
+\)</span>$</p>
+<p>So for the update we have gradients
+$$</p>
+<div class="amsmath math notranslate nohighlight">
+\[\begin{align*}
+\frac{\partial \ell}{\partial W^L} &amp;= a^h \delta^L = a^h (a^L - y) \\
+\frac{\partial \ell}{\partial W^h} &amp;= a^1 \delta^h = x \ \text{diag}(f'(z^h)) W^L (a^L - y)
+\end{align*}\]</div>
+<p>$$</p>
+</section>
+<section id="adding-regularization">
+<h2>Adding regularization<a class="headerlink" href="#adding-regularization" title="Link to this heading">#</a></h2>
+<p>We can add weight penalties to the objective function to regularize our optimization, specifically,
+$<span class="math notranslate nohighlight">\(
+\hat{W}, \hat{b} = \text{arg}\min_{W,b} -\sum_{i=1}^N \sum_{k=1}^K y_k^{(i)} \log \hat{y}_k^{(i)} + \alpha ||W||_1 + \beta ||W||_2^2
+\)</span>$</p>
+<p>where <span class="math notranslate nohighlight">\(||\cdot||_1\)</span> and <span class="math notranslate nohighlight">\(||\cdot||_2\)</span> represent the <span class="math notranslate nohighlight">\(L_1\)</span> and <span class="math notranslate nohighlight">\(L_2\)</span> norms, respectively.</p>
+<p>Since this is additive, it is straightforward to incorporate into the gradient updates.  Our original gradient was
+$<span class="math notranslate nohighlight">\(
+\nabla_{W^l} L = \sum_n \nabla_{W^l} \ell = \sum_n a^{l-1}\delta^l
+\)</span><span class="math notranslate nohighlight">\(
+so with regularization we just have
+\)</span><span class="math notranslate nohighlight">\(
+\nabla_{W^l} L = \sum_n \nabla_{W^l} \ell + \alpha \partial ||W^l||_1 + \beta \partial ||W^l||_2
+\)</span>$</p>
+<p>Then we find:</p>
+<ul class="simple">
+<li><p>The <span class="math notranslate nohighlight">\(L_1\)</span> norm is not actually differentiable, but we can find a <a class="reference external" href="https://web.stanford.edu/class/ee364b/lectures/subgradients_notes.pdf">subgradient</a> which is <span class="math notranslate nohighlight">\(\text{sign}(W^l)\)</span>.</p></li>
+<li><p>For <span class="math notranslate nohighlight">\(L_2\)</span>, we just have <span class="math notranslate nohighlight">\(2W^l\)</span>.</p></li>
+</ul>
+<p>So the update with L1 and L2 regularization is
+$<span class="math notranslate nohighlight">\(
+\nabla_{W^l} L = a^{l-1} \delta^l + \alpha \text{sign}(W^l) + 2\beta W^l.
+\)</span>$</p>
+</section>
+<section id="code-implementation">
+<h2>Code implementation<a class="headerlink" href="#code-implementation" title="Link to this heading">#</a></h2>
+<p>I’ve made several modifications to the code from the class lab to match the notation above, and changes to allow the NN to have multiple hidden dimensions, different activations, etc.</p>
+<p>This code is in the script <code class="docutils literal notranslate"><span class="pre">MLP.py</span></code> which will be loaded as a module into this notebook for all experiments.</p>
+</section>
+<hr class="docutils" />
+<section id="question-1">
+<h2>Question 1<a class="headerlink" href="#question-1" title="Link to this heading">#</a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">MLP.py</span></code>.  The forward pass now looks like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="c1"># z for each layer, starting with first hidden layer</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>  <span class="c1"># [    z2, z3, ..., zL]</span>
+
+    <span class="c1"># activations for each layer, starting with input layer (a[0] = x)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span><span class="p">)]</span>      <span class="c1"># [a1, a2, a3, ..., aL]</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span>
+
+    <span class="c1"># forward pass through each layer starting with input layer</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span><span class="o">-</span><span class="mi">2</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">F</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="c1"># store all computed z and a</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="n">a</span>
+</pre></div>
+</div>
+<p>where the <code class="docutils literal notranslate"><span class="pre">F(z[i])</span></code> is a call to the softmax function by default (see the class constructor).</p>
+</section>
+<hr class="docutils" />
+<section id="question-2">
+<h2>Question 2<a class="headerlink" href="#question-2" title="Link to this heading">#</a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">MLP.py</span></code>.  Using our <span class="math notranslate nohighlight">\(\delta^l\)</span> notation and multiple possible hidden layers, this looks like:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># \delta&#39;s (dLoss / dz)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+
+    <span class="c1"># get one-hot encoding of y</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">int_to_onehot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_classes</span><span class="p">)</span>
+    
+    <span class="c1"># \delta^L</span>
+    <span class="n">d</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_layers</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)):</span>
+        <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">d</span> <span class="o">=</span> <span class="n">d</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="question-3">
+<h2>Question 3<a class="headerlink" href="#question-3" title="Link to this heading">#</a></h2>
+<p>See <code class="docutils literal notranslate"><span class="pre">MLP.py</span></code>.  We create a new function <code class="docutils literal notranslate"><span class="pre">mce_loss</span></code> and call it from the <code class="docutils literal notranslate"><span class="pre">compute_mce_and_acc</span></code> function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># cross entropy loss</span>
+<span class="k">def</span> <span class="nf">mce_loss</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">probas</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">onehot_targets</span> <span class="o">=</span> <span class="n">int_to_onehot</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="n">num_labels</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">onehot_targets</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">probas</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">compute_mce_and_acc</span><span class="p">(</span><span class="n">nnet</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">minibatch_size</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">mce</span><span class="p">,</span> <span class="n">correct_pred</span><span class="p">,</span> <span class="n">num_examples</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="n">minibatch_gen</span> <span class="o">=</span> <span class="n">minibatch_generator</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">minibatch_size</span><span class="p">)</span>
+
+    <span class="c1"># compute through mini-batches: more memory efficient</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">targets</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">minibatch_gen</span><span class="p">):</span>
+        <span class="n">nnet</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+        <span class="n">probas</span> <span class="o">=</span> <span class="n">nnet</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">predicted_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probas</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">mce_loss</span><span class="p">(</span><span class="n">targets</span><span class="p">,</span> <span class="n">probas</span><span class="p">,</span> <span class="n">num_labels</span><span class="o">=</span><span class="n">num_labels</span><span class="p">)</span>
+        <span class="n">correct_pred</span> <span class="o">+=</span> <span class="p">(</span><span class="n">predicted_labels</span> <span class="o">==</span> <span class="n">targets</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="n">num_examples</span> <span class="o">+=</span> <span class="n">targets</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mce</span> <span class="o">+=</span> <span class="n">loss</span>
+
+    <span class="n">mce</span> <span class="o">=</span> <span class="n">mce</span><span class="o">/</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">correct_pred</span><span class="o">/</span><span class="n">num_examples</span>
+    <span class="k">return</span> <span class="n">mce</span><span class="p">,</span> <span class="n">acc</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="question-4">
+<h2>Question 4<a class="headerlink" href="#question-4" title="Link to this heading">#</a></h2>
+<p>We will now train the model on the Fashion MNIST dataset, reporting learning curves for training and validation as a function of epochs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+
+<span class="kn">import</span> <span class="nn">MLP</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># autoreload scripts on changes</span>
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-the-data">
+<h2>Loading the data<a class="headerlink" href="#loading-the-data" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Load the Fashion MNIST dataset</span>
+<span class="n">fashion_mnist</span> <span class="o">=</span> <span class="n">fetch_openml</span><span class="p">(</span><span class="s2">&quot;Fashion-MNIST&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Access data and labels, converting to appropriate numpy types</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">fashion_mnist</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">fashion_mnist</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+<span class="c1"># Function to plot a grid of images</span>
+<span class="k">def</span> <span class="nf">plot_images</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">),</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Fashion MNIST&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Dictionary mapping label indices to class names</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;T-shirt/top&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Trouser&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;Pullover&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;Dress&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;Coat&quot;</span><span class="p">,</span>
+          <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;Sandal&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;Shirt&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;Sneaker&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="s2">&quot;Bag&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="s2">&quot;Ankle boot&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot sample images</span>
+<span class="n">plot_images</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0e8bddf8f113ebbde5187c6d3a2a3a89fee19ddd3f540852f9262ec693d7f2b3.png" src="_images/0e8bddf8f113ebbde5187c6d3a2a3a89fee19ddd3f540852f9262ec693d7f2b3.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 2. Check the distribution of the classes</span>
+<span class="n">hist</span><span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">hist</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[7000 7000 7000 7000 7000 7000 7000 7000 7000 7000]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 3. Scale the data to the range [-1, 1]</span>
+<span class="n">X</span> <span class="o">=</span> <span class="p">((</span><span class="n">X</span> <span class="o">/</span> <span class="mf">255.</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="train-validation-testing-split">
+<h2>Train / Validation / Testing split<a class="headerlink" href="#train-validation-testing-split" title="Link to this heading">#</a></h2>
+<p>We will use a 80 / 20 split, with 20% of training split off for validation (16% of total).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># split into train+validate / test</span>
+<span class="n">Xrv</span><span class="p">,</span> <span class="n">Xt</span><span class="p">,</span> <span class="n">yrv</span><span class="p">,</span> <span class="n">yt</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">314</span><span class="p">)</span>
+
+<span class="c1"># split further into train / validate</span>
+<span class="n">Xr</span><span class="p">,</span> <span class="n">Xv</span><span class="p">,</span> <span class="n">yr</span><span class="p">,</span> <span class="n">yv</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">Xrv</span><span class="p">,</span> <span class="n">yrv</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">314</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">yr</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">yv</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">yt</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(44800,) (11200,) (14000,)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="train-the-model">
+<h2>Train the model<a class="headerlink" href="#train-the-model" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="o">.</span><span class="n">NeuralNetMLP</span><span class="p">(</span>
+    <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_features</span><span class="o">=</span><span class="n">Xr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">num_hidden</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epoch_loss</span><span class="p">,</span> <span class="n">epoch_train_acc</span><span class="p">,</span> <span class="n">epoch_valid_acc</span> <span class="o">=</span> \
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+        <span class="n">Xr</span><span class="p">,</span> <span class="n">yr</span><span class="p">,</span> <span class="n">Xv</span><span class="p">,</span> <span class="n">yv</span><span class="p">,</span>
+        <span class="n">num_epochs</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.07</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/40 | Train Loss: 0.06 | Train Acc: 0.79 |Valid Loss: 0.06 | Valid Acc: 0.78
+Epoch 2/40 | Train Loss: 0.05 | Train Acc: 0.82 |Valid Loss: 0.05 | Valid Acc: 0.81
+Epoch 3/40 | Train Loss: 0.05 | Train Acc: 0.82 |Valid Loss: 0.05 | Valid Acc: 0.82
+Epoch 4/40 | Train Loss: 0.05 | Train Acc: 0.84 |Valid Loss: 0.05 | Valid Acc: 0.84
+Epoch 5/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.84
+Epoch 6/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 7/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 8/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 9/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 10/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 11/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 12/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 13/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 14/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 15/40 | Train Loss: 0.03 | Train Acc: 0.88 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 16/40 | Train Loss: 0.03 | Train Acc: 0.88 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 17/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 18/40 | Train Loss: 0.03 | Train Acc: 0.88 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 19/40 | Train Loss: 0.03 | Train Acc: 0.88 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 20/40 | Train Loss: 0.03 | Train Acc: 0.88 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 21/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 22/40 | Train Loss: 0.03 | Train Acc: 0.88 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 23/40 | Train Loss: 0.03 | Train Acc: 0.88 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 24/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 25/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 26/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 27/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 28/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 29/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 30/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 31/40 | Train Loss: 0.03 | Train Acc: 0.89 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 32/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 33/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 34/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 35/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 36/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 37/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+Epoch 38/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.88
+Epoch 39/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.88
+Epoch 40/40 | Train Loss: 0.03 | Train Acc: 0.90 |Valid Loss: 0.04 | Valid Acc: 0.87
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">epoch_train_acc</span><span class="p">)),</span> <span class="n">epoch_train_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">epoch_valid_acc</span><span class="p">)),</span> <span class="n">epoch_valid_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1731a640fb0be730a8c217cba276410b6fffe78f1c9466ce41bf81178f14e76f.png" src="_images/1731a640fb0be730a8c217cba276410b6fffe78f1c9466ce41bf81178f14e76f.png" />
+</div>
+</div>
+<p>This is not inspiring, but decent considering we are using a single hidden layer, a fixed learning rate, and a modest number of epochs.</p>
+<p>We will revisit this in Question 7.</p>
+</section>
+<hr class="docutils" />
+<section id="question-6">
+<h2>Question 6<a class="headerlink" href="#question-6" title="Link to this heading">#</a></h2>
+<p>Now we’ll make use of the regularization terms we have coded into the <code class="docutils literal notranslate"><span class="pre">train</span></code> function.  Let’s set a small value for both and see what we get.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="o">.</span><span class="n">NeuralNetMLP</span><span class="p">(</span>
+    <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_features</span><span class="o">=</span><span class="n">Xr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">num_hidden</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">l1</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+    <span class="n">l2</span><span class="o">=</span><span class="mf">0.0001</span>
+<span class="p">)</span>
+
+<span class="n">epoch_loss</span><span class="p">,</span> <span class="n">epoch_train_acc</span><span class="p">,</span> <span class="n">epoch_valid_acc</span> <span class="o">=</span> \
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+        <span class="n">Xr</span><span class="p">,</span> <span class="n">yr</span><span class="p">,</span> <span class="n">Xv</span><span class="p">,</span> <span class="n">yv</span><span class="p">,</span>
+        <span class="n">num_epochs</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.02</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 1/40 | Train Loss: 0.07 | Train Acc: 0.74 |Valid Loss: 0.08 | Valid Acc: 0.73
+Epoch 2/40 | Train Loss: 0.06 | Train Acc: 0.77 |Valid Loss: 0.07 | Valid Acc: 0.76
+Epoch 3/40 | Train Loss: 0.06 | Train Acc: 0.79 |Valid Loss: 0.06 | Valid Acc: 0.78
+Epoch 4/40 | Train Loss: 0.06 | Train Acc: 0.80 |Valid Loss: 0.06 | Valid Acc: 0.80
+Epoch 5/40 | Train Loss: 0.05 | Train Acc: 0.81 |Valid Loss: 0.05 | Valid Acc: 0.80
+Epoch 6/40 | Train Loss: 0.05 | Train Acc: 0.81 |Valid Loss: 0.05 | Valid Acc: 0.81
+Epoch 7/40 | Train Loss: 0.05 | Train Acc: 0.82 |Valid Loss: 0.05 | Valid Acc: 0.82
+Epoch 8/40 | Train Loss: 0.05 | Train Acc: 0.83 |Valid Loss: 0.05 | Valid Acc: 0.82
+Epoch 9/40 | Train Loss: 0.05 | Train Acc: 0.83 |Valid Loss: 0.05 | Valid Acc: 0.82
+Epoch 10/40 | Train Loss: 0.05 | Train Acc: 0.83 |Valid Loss: 0.05 | Valid Acc: 0.83
+Epoch 11/40 | Train Loss: 0.05 | Train Acc: 0.84 |Valid Loss: 0.05 | Valid Acc: 0.83
+Epoch 12/40 | Train Loss: 0.05 | Train Acc: 0.84 |Valid Loss: 0.05 | Valid Acc: 0.83
+Epoch 13/40 | Train Loss: 0.04 | Train Acc: 0.84 |Valid Loss: 0.05 | Valid Acc: 0.83
+Epoch 14/40 | Train Loss: 0.04 | Train Acc: 0.84 |Valid Loss: 0.05 | Valid Acc: 0.84
+Epoch 15/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.05 | Valid Acc: 0.84
+Epoch 16/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.84
+Epoch 17/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.84
+Epoch 18/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.84
+Epoch 19/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 20/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 21/40 | Train Loss: 0.04 | Train Acc: 0.85 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 22/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 23/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 24/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 25/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 26/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 27/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 28/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 29/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 30/40 | Train Loss: 0.04 | Train Acc: 0.86 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 31/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 32/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 33/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 34/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 35/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 36/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.85
+Epoch 37/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 38/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 39/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+Epoch 40/40 | Train Loss: 0.04 | Train Acc: 0.87 |Valid Loss: 0.04 | Valid Acc: 0.86
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">epoch_train_acc</span><span class="p">)),</span> <span class="n">epoch_train_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">epoch_valid_acc</span><span class="p">)),</span> <span class="n">epoch_valid_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1f319a0076ac4e006f06f35955315530df57b6a2be18a2d09cb3b1593573ec48.png" src="_images/1f319a0076ac4e006f06f35955315530df57b6a2be18a2d09cb3b1593573ec48.png" />
+</div>
+</div>
+<p>Similar overall performance but anecdotally, it looks like the loss curve has smoothed out, and our training and validation scores are closer, as expected (regularization should improve our out-of-sample performance by not overfitting, even if slightly hurting our in-sample performance).  Without doing any hyperparameter selection, we also notice we’re actually doing worse than without regularization, overall.</p>
+</section>
+<hr class="docutils" />
+<section id="question-7">
+<h2>Question 7<a class="headerlink" href="#question-7" title="Link to this heading">#</a></h2>
+<p>We’ll now select more optimal hyperparameters using a primitive k-fold cross-validation scheme.  Specifically, we’ll use the 80% cut of our dataset as training, and divide this into 5 “folds” of 20% each (16% of total).  With each fold, we will train on the training portion, and validate on the validation portion.  We’ll do this 5-step process for <em>each possible combination of hyperparameters</em>, and then select the set of hyperparameters with the best average out-of-sample performance.  Finally, we will do a true test of these hyperparams on the held-out 20% test set.</p>
+<p>We’d also like to test different numbers of hidden units, and, since our code implementation allows for it, different numbers of hidden layers.  This is an enormous number of combinations, so we’ll be very judicious at first and see what part of the grid gives anywhere near better/worse performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">itertools</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kfolds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">fold_size</span> <span class="o">=</span> <span class="n">Xrv</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">5</span>
+
+<span class="n">hyperparams</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;l1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">],</span>
+    <span class="s1">&#39;l2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">],</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="c1"># Generate all possible combinations of hyperparameters</span>
+<span class="n">hyperparam_combinations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span>
+    <span class="n">hyperparams</span><span class="p">[</span><span class="s1">&#39;l1&#39;</span><span class="p">],</span>
+    <span class="n">hyperparams</span><span class="p">[</span><span class="s1">&#39;l2&#39;</span><span class="p">],</span>
+    <span class="n">hyperparams</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">]</span>
+<span class="p">))</span>
+
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">hyperparam_combinations</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total combinations: </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Size of fold: </span><span class="si">{</span><span class="n">fold_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># iterate over all possible hyperparams for this fold</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">combo</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hyperparam_combinations</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Combo (</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s1">): </span><span class="si">{</span><span class="n">combo</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">lr</span> <span class="o">=</span> <span class="n">combo</span>
+
+    <span class="n">mce_avg</span><span class="p">,</span> <span class="n">acc_avg</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">kfolds</span><span class="p">):</span>
+        <span class="c1"># validation fold indices</span>
+        <span class="n">vx_start</span><span class="p">,</span> <span class="n">vx_end</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">fold_size</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">fold_size</span>
+
+        <span class="c1"># create validation and training sets</span>
+        <span class="n">Xv</span><span class="p">,</span> <span class="n">yv</span> <span class="o">=</span> <span class="n">Xrv</span><span class="p">[</span><span class="n">vx_start</span><span class="p">:</span><span class="n">vx_end</span><span class="p">],</span> <span class="n">yrv</span><span class="p">[</span><span class="n">vx_start</span><span class="p">:</span><span class="n">vx_end</span><span class="p">]</span>
+        <span class="n">Xr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">Xrv</span><span class="p">[:</span><span class="n">vx_start</span><span class="p">],</span> <span class="n">Xrv</span><span class="p">[</span><span class="n">vx_end</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">yr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">yrv</span><span class="p">[:</span><span class="n">vx_start</span><span class="p">],</span> <span class="n">yrv</span><span class="p">[</span><span class="n">vx_end</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># create model and train</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="o">.</span><span class="n">NeuralNetMLP</span><span class="p">(</span>
+            <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">num_features</span><span class="o">=</span><span class="n">Xr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+            <span class="n">num_hidden</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+            <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+            <span class="n">l1</span><span class="o">=</span><span class="n">l1</span><span class="p">,</span>
+            <span class="n">l2</span><span class="o">=</span><span class="n">l2</span>
+        <span class="p">)</span>
+
+        <span class="n">epoch_loss</span><span class="p">,</span> <span class="n">epoch_train_acc</span><span class="p">,</span> <span class="n">epoch_valid_acc</span> <span class="o">=</span> \
+            <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+                <span class="n">Xr</span><span class="p">,</span> <span class="n">yr</span><span class="p">,</span> <span class="n">Xv</span><span class="p">,</span> <span class="n">yv</span><span class="p">,</span>
+                <span class="n">num_epochs</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>
+                <span class="n">learning_rate</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">validate</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>
+
+        <span class="c1"># test on validation fold</span>
+        <span class="n">valid_mce</span><span class="p">,</span> <span class="n">valid_acc</span> <span class="o">=</span> <span class="n">MLP</span><span class="o">.</span><span class="n">compute_mce_and_acc</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Xv</span><span class="p">,</span> <span class="n">yv</span><span class="p">)</span>
+
+        <span class="n">mce_avg</span> <span class="o">+=</span> <span class="n">valid_mce</span>
+        <span class="n">acc_avg</span> <span class="o">+=</span> <span class="n">valid_acc</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&gt; Fold </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">: MCE: </span><span class="si">{</span><span class="n">valid_mce</span><span class="si">:</span><span class="s1">0.3f</span><span class="si">}</span><span class="s1">, Acc: </span><span class="si">{</span><span class="n">valid_acc</span><span class="si">:</span><span class="s1">0.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">mce_avg</span> <span class="o">/=</span> <span class="n">kfolds</span>
+    <span class="n">acc_avg</span> <span class="o">/=</span> <span class="n">kfolds</span>
+
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span>
+        <span class="n">combo</span><span class="p">,</span> <span class="p">[</span><span class="n">mce_avg</span><span class="p">,</span> <span class="n">acc_avg</span><span class="p">]</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total combinations: 8
+Size of fold: 11200
+Combo (1/8): (0, 0, 0.01)
+&gt; Fold 0: MCE: 0.045, Acc: 0.842
+&gt; Fold 1: MCE: 0.043, Acc: 0.849
+&gt; Fold 2: MCE: 0.046, Acc: 0.837
+&gt; Fold 3: MCE: 0.045, Acc: 0.836
+&gt; Fold 4: MCE: 0.044, Acc: 0.847
+Combo (2/8): (0, 0, 0.05)
+&gt; Fold 0: MCE: 0.038, Acc: 0.868
+&gt; Fold 1: MCE: 0.036, Acc: 0.873
+&gt; Fold 2: MCE: 0.039, Acc: 0.866
+&gt; Fold 3: MCE: 0.037, Acc: 0.866
+&gt; Fold 4: MCE: 0.037, Acc: 0.869
+Combo (3/8): (0, 0.001, 0.01)
+&gt; Fold 0: MCE: 0.045, Acc: 0.841
+&gt; Fold 1: MCE: 0.043, Acc: 0.849
+&gt; Fold 2: MCE: 0.046, Acc: 0.836
+&gt; Fold 3: MCE: 0.045, Acc: 0.834
+&gt; Fold 4: MCE: 0.044, Acc: 0.848
+Combo (4/8): (0, 0.001, 0.05)
+&gt; Fold 0: MCE: 0.037, Acc: 0.871
+&gt; Fold 1: MCE: 0.035, Acc: 0.876
+&gt; Fold 2: MCE: 0.039, Acc: 0.866
+&gt; Fold 3: MCE: 0.037, Acc: 0.866
+&gt; Fold 4: MCE: 0.036, Acc: 0.876
+Combo (5/8): (0.001, 0, 0.01)
+&gt; Fold 0: MCE: 0.047, Acc: 0.839
+&gt; Fold 1: MCE: 0.045, Acc: 0.843
+&gt; Fold 2: MCE: 0.049, Acc: 0.825
+&gt; Fold 3: MCE: 0.048, Acc: 0.832
+&gt; Fold 4: MCE: 0.047, Acc: 0.838
+Combo (6/8): (0.001, 0, 0.05)
+&gt; Fold 0: MCE: 0.046, Acc: 0.836
+&gt; Fold 1: MCE: 0.045, Acc: 0.844
+&gt; Fold 2: MCE: 0.050, Acc: 0.818
+&gt; Fold 3: MCE: 0.046, Acc: 0.833
+&gt; Fold 4: MCE: 0.047, Acc: 0.834
+Combo (7/8): (0.001, 0.001, 0.01)
+&gt; Fold 0: MCE: 0.047, Acc: 0.837
+&gt; Fold 1: MCE: 0.046, Acc: 0.842
+&gt; Fold 2: MCE: 0.049, Acc: 0.828
+&gt; Fold 3: MCE: 0.048, Acc: 0.833
+&gt; Fold 4: MCE: 0.047, Acc: 0.839
+Combo (8/8): (0.001, 0.001, 0.05)
+&gt; Fold 0: MCE: 0.048, Acc: 0.833
+&gt; Fold 1: MCE: 0.045, Acc: 0.842
+&gt; Fold 2: MCE: 0.063, Acc: 0.781
+&gt; Fold 3: MCE: 0.048, Acc: 0.830
+&gt; Fold 4: MCE: 0.045, Acc: 0.843
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[(0, 0, 0.01),
+  [np.float64(0.044781901281421746), np.float64(0.8422499999999999)]],
+ [(0, 0, 0.05),
+  [np.float64(0.037204091405624674), np.float64(0.8685357142857143)]],
+ [(0, 0.001, 0.01),
+  [np.float64(0.044881257163585674), np.float64(0.8418214285714285)]],
+ [(0, 0.001, 0.05),
+  [np.float64(0.036775871210494825), np.float64(0.8710000000000001)]],
+ [(0.001, 0, 0.01),
+  [np.float64(0.04704008225787333), np.float64(0.8355714285714285)]],
+ [(0.001, 0, 0.05),
+  [np.float64(0.04669670674390406), np.float64(0.8330714285714285)]],
+ [(0.001, 0.001, 0.01),
+  [np.float64(0.04755173700218526), np.float64(0.8357321428571428)]],
+ [(0.001, 0.001, 0.05),
+  [np.float64(0.0499939275781318), np.float64(0.8255892857142857)]]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see the parameters <span class="math notranslate nohighlight">\(\alpha = 0\)</span>, <span class="math notranslate nohighlight">\(\beta = 0.001\)</span>, and <span class="math notranslate nohighlight">\(\eta = 0.05\)</span> gave the best validation accuracy.  Let’s train the model with those parameters on the full training set and then test it on the held-out set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">MLP</span><span class="o">.</span><span class="n">NeuralNetMLP</span><span class="p">(</span>
+    <span class="n">num_classes</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">num_features</span><span class="o">=</span><span class="n">Xr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">num_hidden</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">l1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">l2</span><span class="o">=</span><span class="mf">0.001</span>
+<span class="p">)</span>
+
+<span class="n">epoch_loss</span><span class="p">,</span> <span class="n">epoch_train_acc</span><span class="p">,</span> <span class="n">epoch_valid_acc</span> <span class="o">=</span> \
+    <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+        <span class="n">Xrv</span><span class="p">,</span> <span class="n">yrv</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">num_epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">validate</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+<span class="c1"># test on validation fold</span>
+<span class="n">test_mce</span><span class="p">,</span> <span class="n">test_acc</span> <span class="o">=</span> <span class="n">MLP</span><span class="o">.</span><span class="n">compute_mce_and_acc</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Xt</span><span class="p">,</span> <span class="n">yt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_mce</span><span class="p">,</span> <span class="n">test_acc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(np.float64(0.03488580216538011), np.float64(0.8766428571428572))
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have an accuracy of 87.6% on the held-out test set, which seems pretty decent for such a large dataset and simple model.  It is also close to our training performance which is reassuring.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Pattern Recognition and Machine Learning.  Christopher Bishop.  2006 (Chapter 5 - Neural Networks)</p></li>
+<li><p>MIT 6.867 (Machine Learning) Course Notes.  Tommi Jaakkola.  Fall 2016</p></li>
+<li><p>“Beginner’s Guide to Neural Nets” September 2017 Blog post <a class="reference external" href="https://stmorse.github.io/journal/Beginner-NN-Part-I.html">https://stmorse.github.io/journal/Beginner-NN-Part-I.html</a> by the author.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cfteach/NNDL_2025",
+            ref: "webpage-src",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="schedule.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Schedule</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Linear_Regression_1_class.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>Introduction to Modeling</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus">Bonus</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#softmax">Softmax</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#output-layer">Output layer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hidden-layers">Hidden layers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#putting-it-together">Putting it together</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#single-hidden-layer-case">Single-hidden layer case</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-regularization">Adding regularization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-implementation">Code implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-1">Question 1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-2">Question 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-3">Question 3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-4">Question 4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">Loading the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-validation-testing-split">Train / Validation / Testing split</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-model">Train the model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-6">Question 6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#question-7">Question 7</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Cristiano Fanelli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  NNDL_2025
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
