@@ -1,0 +1,1395 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>25. Generative Adverserial Network &#8212; Neural Networks and Deep Learning - Spring 2025</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/tabs.js?v=3ee01567"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "cfteach/NNDL_2025");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lec17_GAN_part3';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/lec17_GAN_part3.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="References" href="referencesmc.html" />
+    <link rel="prev" title="24. Generative Adverserial Network" href="04_08_2025_lec17_GAN_part2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">This page is being updated</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logowm1.png" class="logo__image only-light" alt="Neural Networks and Deep Learning - Spring 2025 - Home"/>
+    <script>document.write(`<img src="_static/logowm1.png" class="logo__image only-dark" alt="Neural Networks and Deep Learning - Spring 2025 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Neural Networks and Deep Learning 2025 (NNDL-2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Syllabus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1SDP2tsxEkxrWSATzJieMX6zk63FfYTwH/view?usp=sharing">Syllabus (last update 1/23/2025)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1FTYc_JyeStYWXuskukHhw1B3AAFJyb7N/view?usp=sharing">Assignment 1, Deep Neural Networks from Scratch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Steven_Morse_Assign1.html">Solution to Assignment 1, by Steven Morse</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1ime_ivKnYQURPyaQl710-n5g9-IyqwRf/view?usp=sharing">Assignment 2, Convolutional Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kaibu_Feng_Assign2_sol.html">Solution to Assignment 2, by Kaibu Feng</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1OlJ-Z7NmJ90G2OjdIfvxVGydzOusIzIK/view?usp=share_link">Assignment 3, Generative Adversarial Networks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Intro</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1mgFybK0KbOyRPinAU8r4lRd-9JzJpyEtPPzX6Sr4MuI/edit?usp=sharing">Welcome and Intro by Prof. C.Fanelli</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Intro to Modeling</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1BV2-N-c1bq4yx1IsPMW4fhC9i1SCdRAU/edit?usp=sharing&amp;ouid=113195593718692427789&amp;rtpof=true&amp;sd=true">Linear Regression (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linear_Regression_1_class.html">1. Linear Regression (Jupyter Notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Introduction to git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/GIT-course/intro_to_git.html">2. Brief course on <code class="docutils literal notranslate"><span class="pre">git</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/VCS.html">2.1. Version Control System (VCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/git_basics.html">2.2. What is Git?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/git_configure.html">2.3. Configuring your <code class="docutils literal notranslate"><span class="pre">git</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/GIT-course/git_exercises.html">3. Exercises on <code class="docutils literal notranslate"><span class="pre">git</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-1.html">3.1. Exercise 1: Basic Git Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-2.html">3.2. Exercise 2: Commits, push and branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-3.html">3.3. Advanced exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-4.html">3.4. GitHub Actions and Workflow Tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Using VS-Code</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Day-1/VS-code.html">Installing Visual Studio Code</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Introduction to High Performance Computing (HPC)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/HPC-course/intro_to_HPC_HTC.html">4. Introduction to High Performance Computing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/intro_to_HPC.html">4.1. High Performance Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/ssh_login.html">4.2. SSH into a Front-End Node Using Proxy Jump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/file_systems_WM.html">4.3. William &amp; Mary Research Computing: File Systems Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/SLURM_commands2.html">4.4. Introduction to SLURM</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference external" href="https://d8a-science.github.io/hpc-gitbook/">Other Resources: Distributed ML @ W&amp;M</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/D8A-SCIENCE/hpc-gitbook">Other Resources: Student Manual for using the HPC @ W&amp;M for Data Science</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Linux Commands</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://www.wm.edu/offices/it/services/researchcomputing/using/tutorials/">Linux Commands</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/28/2025] Linear Classifiers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1ihKM2j-tiXrbty8Btvn0QlHNX4WUd3XSR6_40HPBK6Q/edit?usp=sharing">Perceptrons (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1mU67w6GAhIWNFoO98AF7u8in2C-Op4Ag/view?usp=sharing">Perceptron - Proof of Convergence (PDF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2_NNDL_perceptron.html">5. Training a Perceptron (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1uWc1e_sLKnafzEq0NLC9xup_orxQaaFmDHV1i0S5ZvQ/edit?usp=sharing">Adaline (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2b_NNDL_adaline.html">6. Training Adaline (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/30/2025] Gradient Descent, stochastic GD, Logistic Regression and Other classifiers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/13GMGu7k5PQtn4QsOYRgAMiUcuZyA2xREq16HjWzW2W4/edit?usp=sharing">Stochastic Gradient Descent (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3_NNDL_gradient_descent.html">7. Gradient Descent, Stochastic Gradient Descent, Mini-batch GD (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1geYpTbIyNOa3GlhDkbCy9IOQ0iiTl_FNB4Dr6cLmBqs/edit?usp=sharing">An Intro to Logistic Regression, Regularization, linear (and non-linear) boundaries (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3b_NNDL_logistic_regression.html">8. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/4/2025] Building Training Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1UQVjqw57pJf_tmHxfIQty0DBgoD9UserRgs09p7T3ZU/edit?usp=sharing">Building Training Datasets (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_04_2025_lec4_datapreprocessing.html">9. Data Preprocessing (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/6/2025] Regularization (Continued, see 1/30/2025)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_06_2025_lec3b_NNDL_logistic_regression.html">10. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/11/2025] Model Evaluation, Hyperparameter Tuning: Examples and Discussion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_11_2025_modeleval.html">11. Model Evaluation, Hyperparameter Tuning (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/13/2025] Building Multi-Layer Neural Networks from scratch + discussion on assignment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1TFkGvstL8G2GRD7V3GLCjSIB5sERn03UqkWYvsDkDBo/edit?usp=sharing"> Adding hidden layers + Math of Backprop (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.13.2025_lec6_MLP.html">12. Multi-Layer Perceptron (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/18/2024] Building Multi-Layer Neural Networks with PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_18_2025_lec8_pytorch.html">13. Using PyTorch preflight (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_18_2025_lec8_NN.html">14. Using torch.nn (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/25 - 2/27 2025] PyTorch and Autograd</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_25_2025_lec9_pytorch.html">15. Using PyTorch to build Neural Networks (continue)</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="02_27_2025_lec10_pytorch.html">17. Autograd with PyTorch (continue)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/4 - 3/6 2025] CNN with PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_04_2025_lec11_CNN.html">18. Using PyTorch with CNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_06_2025_lec12_CNN_v2.html">19. Using CNN and Celeb Dataset</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://adamharley.com/nn_vis/">(A really nice and well-known resource:) Interactive Node-Link Visualization of Convolutional Neural Networks by Adam Harley</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/18/2025] Explainable AI using Grad-CAM for visual explanations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lec13_Introduction_to_X_AI_via_grad_cam.html">20. Explainable AI (XAI) and Grad-CAM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/20/2025] CNN: from Classification to Regression Tasks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_20_2025_cnn_regr.html">21. age prediciton based on face images</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/25 - 3/26 - 4/1 - 2025] Recurrent Neural Network</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1X8Tq_L4ChK8zh5DDts34N6w-2IAmNw12n7fLwJnzRdM/edit?usp=sharing">Introduction to Sequential Data and Time Series Data; Intro to RNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lec16_RNN_2_new.html">22. LSTM Recurrent Neural Networks (updated)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[4/3 - 4/8 - 4/10 - 2025] Generative Adversarial Networks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1p9H8dirIe2YJU1dn7fiHTc5H--HKO5mjuuvqvbde5O8/edit?usp=sharing">Introduction to GAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_03_2025_GAN_part1.html">23. Vanilla GAN Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_08_2025_lec17_GAN_part2.html">24. DCGAN</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">25. Wasserstein GAN</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="referencesmc.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/cfteach/NNDL_2025/blob/webpage-src/NNDL_2025/NNDL_2025/lec17_GAN_part3.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025/edit/webpage-src/NNDL_2025/NNDL_2025/lec17_GAN_part3.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025/issues/new?title=Issue%20on%20page%20%2Flec17_GAN_part3.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/lec17_GAN_part3.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Generative Adverserial Network</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-wgan-gp-to-train-the-dcgan-model">25.1. Implementing WGAN-GP to train the DCGAN model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-drawbacks-of-vanilla-gan">25.1.1. <strong>Key Drawbacks of Vanilla GAN</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wasserstein-distance-a-better-metric-for-gans">25.1.2. <strong>Wasserstein Distance: A Better Metric for GANs</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kantorovich-rubinstein-duality">25.1.3. <strong>Kantorovich-Rubinstein Duality</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-wgan-overcomes-gan-challenges">25.1.4. <strong>How WGAN Overcomes GAN Challenges</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wasserstein-gan-with-gradient-penalty-wgan-gp">25.2. <strong>Wasserstein GAN with Gradient Penalty (WGAN-GP)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enforcing-the-1-lipschitz-constraint-wgan-vs-wgan-gp">25.2.1. <strong>Enforcing the 1-Lipschitz Constraint: WGAN vs. WGAN-GP</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-wgan-gp-works">25.2.2. <strong>How WGAN-GP Works</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-penalty">25.2.3. 1. Gradient Penalty</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wgan-gp">25.2.4. 2. <strong>WGAN-GP</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="generative-adverserial-network">
+<h1><span class="section-number">25. </span>Generative Adverserial Network<a class="headerlink" href="#generative-adverserial-network" title="Link to this heading">#</a></h1>
+<section id="implementing-wgan-gp-to-train-the-dcgan-model">
+<h2><span class="section-number">25.1. </span>Implementing WGAN-GP to train the DCGAN model<a class="headerlink" href="#implementing-wgan-gp-to-train-the-dcgan-model" title="Link to this heading">#</a></h2>
+<section id="key-drawbacks-of-vanilla-gan">
+<h3><span class="section-number">25.1.1. </span><strong>Key Drawbacks of Vanilla GAN</strong><a class="headerlink" href="#key-drawbacks-of-vanilla-gan" title="Link to this heading">#</a></h3>
+<p>This is a great paper to read on the problems of Vanilla GAN <a class="reference external" href="https://ieeexplore.ieee.org/document/9266012/">Source: <em>Why are Generative Adversarial Networks so Fascinating and Annoying?</em></a></p>
+<ul class="simple">
+<li><p><strong>Mode Collapse</strong>:</p>
+<ul>
+<li><p><em>What it is</em>: Mode collapse occurs when the Generator starts producing very similar outputs regardless of input variation. This causes it to ignore certain parts of the data distribution, leading to a lack of diversity in generated samples.</p></li>
+<li><p><em>Why it happens</em>: The adversarial training can make the Generator overfit to a few patterns the Discriminator fails to distinguish, resulting in repetitive outputs.</p></li>
+</ul>
+</li>
+<li><p><strong>Training Instability</strong>:</p>
+<ul>
+<li><p><em>What it is</em>: GAN training is notoriously unstable, with the Generator and Discriminator often oscillating without convergence.</p></li>
+<li><p><em>Why it happens</em>: The loss function doesn’t offer a clear gradient signal, often making it hard to strike a balance in the adversarial game. Tiny changes can lead to massive shifts in both the Generator’s and Discriminator’s behaviors, making tuning difficult.</p></li>
+</ul>
+</li>
+<li><p><strong>Vanishing Gradient Problem</strong>:</p>
+<ul>
+<li><p><em>What it is</em>: When the Discriminator becomes too strong, it easily classifies fake samples, leading to very small gradients for the Generator. Consequently, the Generator’s updates become negligible, halting improvement.</p></li>
+<li><p><em>Why it happens</em>: The traditional cross-entropy loss used in GANs can suffer from saturating gradients when the Discriminator outperforms the Generator.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="wasserstein-distance-a-better-metric-for-gans">
+<h3><span class="section-number">25.1.2. </span><strong>Wasserstein Distance: A Better Metric for GANs</strong><a class="headerlink" href="#wasserstein-distance-a-better-metric-for-gans" title="Link to this heading">#</a></h3>
+<p>The <strong>Wasserstein distance (Earth Mover’s Distance)</strong> is a metric that measures the “effort” needed to transform one distribution into another. It provides a more meaningful way to measure the similarity between the real and generated data distributions. Unlike traditional GAN loss, which uses Jensen-Shannon divergence, the Wasserstein distance leads to more stable gradients, enabling more consistent training.</p>
+</section>
+<hr class="docutils" />
+<section id="kantorovich-rubinstein-duality">
+<h3><span class="section-number">25.1.3. </span><strong>Kantorovich-Rubinstein Duality</strong><a class="headerlink" href="#kantorovich-rubinstein-duality" title="Link to this heading">#</a></h3>
+<p>WGAN uses the <strong>Kantorovich-Rubinstein duality</strong> to approximate the Wasserstein distance between two distributions:</p>
+<div class="math notranslate nohighlight">
+\[
+W(P, Q) = \sup_{\|f\|_L \leq 1} (\mathbb{E}_{x \sim P}[f(x)] - \mathbb{E}_{y \sim Q}[f(y)])
+\]</div>
+<p>where ( P ) and ( Q ) are the real and generated distributions, and the supremum is taken over all <strong>1-Lipschitz</strong> functions ( <span class="math notranslate nohighlight">\(f\)</span> ). You want to find the function
+<span class="math notranslate nohighlight">\(f\)</span> that maximizes the difference in expectations between real and fake data.</p>
+<p>In Wasserstein GAN (WGAN), the <strong>Discriminator</strong> (called the <strong>Critic</strong>) is trained to approximate the 1-Lipschitz function <span class="math notranslate nohighlight">\(f\)</span>, assigning higher scores to real samples and lower scores to generated ones. The difference in the Critic’s outputs for real and generated samples estimates the Wasserstein distance between the two distributions. The <strong>Generator</strong> is then trained to minimize this distance by producing samples that maximize the Critic’s score, effectively pushing the generated distribution closer to the real one.</p>
+</section>
+<hr class="docutils" />
+<section id="how-wgan-overcomes-gan-challenges">
+<h3><span class="section-number">25.1.4. </span><strong>How WGAN Overcomes GAN Challenges</strong><a class="headerlink" href="#how-wgan-overcomes-gan-challenges" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Overview of WGAN</strong>: The WGAN model replaces the traditional cross-entropy loss with the Wasserstein loss, also known as the Earth-Mover distance, which measures the distance between real and generated data distributions more effectively. <a class="reference external" href="https://arxiv.org/abs/1701.07875">Source: <em>Wasserstein GAN</em></a></p></li>
+<li><p><strong>Advantages of WGAN</strong>:</p>
+<ul>
+<li><p><em>Better Gradient Flow</em>: By minimizing the Wasserstein distance, WGAN ensures that the gradient signal remains robust even when the Discriminator excels. This helps avoid the vanishing gradient problem and leads to more stable training.</p></li>
+<li><p><em>Less Mode Collapse</em>: WGAN’s loss function provides smoother gradients, reducing mode collapse issues. The Wasserstein distance gradually pulls the Generator closer to producing realistic samples across diverse outputs.</p></li>
+<li><p><em>Clip Weights for Stability</em>: the original WGAN implemented weight clipping in the Discriminator to ensure that it adheres to a Lipschitz constraint, which was thought to be crucial for calculating the Wasserstein distance and further stabilizing the training. This approach was later found to be problematic — it can lead to underfitting and limit the Critic’s capacity. The WGAN-GP (with Gradient Penalty) is a more standard approach. See next comment.</p></li>
+</ul>
+</li>
+<li><p><strong>Limitations of WGAN</strong>:</p>
+<ul>
+<li><p><em>Weight Clipping Sensitivity</em>: Setting the clipping range is delicate; inappropriate values can still lead to gradient issues. To address this, further improvements (e.g., WGAN-GP) introduced gradient penalty to enforce the Lipschitz constraint more naturally.</p></li>
+</ul>
+</li>
+</ul>
+<p>With WGAN we still have exploding gradients problem due to the clipping of weights of the `critic’ (Discriminator).</p>
+<p>We will be implementing Wasserstein GAN with Gradient Penalty</p>
+</section>
+</section>
+<hr class="docutils" />
+<section id="wasserstein-gan-with-gradient-penalty-wgan-gp">
+<h2><span class="section-number">25.2. </span><strong>Wasserstein GAN with Gradient Penalty (WGAN-GP)</strong><a class="headerlink" href="#wasserstein-gan-with-gradient-penalty-wgan-gp" title="Link to this heading">#</a></h2>
+<p>The WGAN minimizes the <strong>Wasserstein distance</strong> (or Earth Mover’s Distance, EMD) between the real and generated data distributions, providing better gradient flow and addressing some of GAN’s limitations.</p>
+<p>However, implementing WGAN comes with its own challenges, specifically enforcing the <strong>1-Lipschitz constraint</strong> on the discriminator, which is necessary to approximate the Wasserstein distance. The <strong>Wasserstein GAN with Gradient Penalty (WGAN-GP)</strong> improves upon WGAN by using a <strong>gradient penalty</strong> to enforce the 1-Lipschitz constraint on the Critic, leading to even more stable training and higher-quality results.</p>
+<hr class="docutils" />
+<section id="enforcing-the-1-lipschitz-constraint-wgan-vs-wgan-gp">
+<h3><span class="section-number">25.2.1. </span><strong>Enforcing the 1-Lipschitz Constraint: WGAN vs. WGAN-GP</strong><a class="headerlink" href="#enforcing-the-1-lipschitz-constraint-wgan-vs-wgan-gp" title="Link to this heading">#</a></h3>
+<p>For the Kantorovich-Rubinstein duality to hold, <span class="math notranslate nohighlight">\( f \)</span> must be 1-Lipschitz, meaning the Critic’s gradient norm should be at most 1. <strong>WGAN</strong> originally enforced this by <strong>clipping the weights</strong> of the Critic to a small range (e.g., <span class="math notranslate nohighlight">\([-0.01, 0.01]\)</span>), but this led to degraded performance and limited capacity for the Critic.</p>
+<p><strong>WGAN-GP</strong> introduced an improved approach, using a <strong>gradient penalty</strong> to enforce the 1-Lipschitz constraint in a smoother and more stable way.</p>
+</section>
+<hr class="docutils" />
+<section id="how-wgan-gp-works">
+<h3><span class="section-number">25.2.2. </span><strong>How WGAN-GP Works</strong><a class="headerlink" href="#how-wgan-gp-works" title="Link to this heading">#</a></h3>
+</section>
+<section id="gradient-penalty">
+<h3><span class="section-number">25.2.3. </span>1. Gradient Penalty<a class="headerlink" href="#gradient-penalty" title="Link to this heading">#</a></h3>
+<p>The <strong>gradient penalty</strong> enforces the 1-Lipschitz constraint by penalizing the norm of the gradients of the Critic’s output with respect to its input. This is done as follows:</p>
+<ol class="arabic">
+<li><p><strong>Interpolate Between Real and Generated Samples</strong>:</p>
+<ul>
+<li><p>For each pair of real and generated samples, an <strong>interpolated sample</strong> is created by linearly interpolating between the real and fake data points.</p></li>
+<li><p>The interpolated data point <span class="math notranslate nohighlight">\( \text{interpolated} \)</span> is computed as:</p>
+<div class="math notranslate nohighlight">
+\[
+     \text{interpolated} = \alpha \cdot \text{real} + (1 - \alpha) \cdot \text{generated}
+     \]</div>
+<p>where <span class="math notranslate nohighlight">\( \alpha \)</span> is a random number between 0 and 1.</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Compute the Critic’s Output on Interpolated Samples</strong>:</p>
+<ul class="simple">
+<li><p>The Critic outputs a score for these interpolated samples.</p></li>
+</ul>
+</li>
+<li><p><strong>Compute the Gradient of the Critic’s Output</strong>:</p>
+<ul class="simple">
+<li><p>The gradient of the Critic’s output with respect to the interpolated sample is calculated. The norm of this gradient (i.e., its magnitude) should ideally be close to 1.</p></li>
+</ul>
+</li>
+<li><p><strong>Apply the Gradient Penalty</strong>:</p>
+<ul>
+<li><p>The penalty term is computed as:</p>
+<div class="math notranslate nohighlight">
+\[
+     \text{gradient penalty} = \lambda \cdot \mathbb{E}\left[(\|\nabla_{\text{interpolated}} D(\text{interpolated})\|_2 - 1)^2\right]
+     \]</div>
+<p>where <span class="math notranslate nohighlight">\( \lambda \)</span> is a coefficient that controls the strength of the penalty.</p>
+</li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="wgan-gp">
+<h3><span class="section-number">25.2.4. </span>2. <strong>WGAN-GP</strong><a class="headerlink" href="#wgan-gp" title="Link to this heading">#</a></h3>
+<p>In WGAN-GP, the total system optimization involves two distinct losses: the Critic loss, which includes the Kantorovich-Rubinstein dual expression and a gradient penalty to enforce the 1-Lipschitz condition; and the Generator loss, which minimizes the same dual expression. The Kantorovich-Rubinstein criterion is effectively split between these two objectives — the Critic tries to maximize it, and the Generator tries to minimize it.</p>
+<div class="math notranslate nohighlight">
+\[
+L_D = \mathbb{E}_{x \sim P_\text{real}} [D(x)] - \mathbb{E}_{y \sim P_\text{gen}} [D(y)] + \text{gradient penalty}
+\]</div>
+<p>This loss encourages the Critic to assign high scores to real samples and low scores to fake samples while enforcing the 1-Lipschitz constraint. The gradient penalty is part of the Critic’s loss.</p>
+<p>The Generator’s objective is to minimize the Wasserstein distance, which is equivalent to:</p>
+<div class="math notranslate nohighlight">
+\[
+L_G = -\mathbb{E}_{y \sim P_\text{gen}} [D(y)]
+\]</div>
+<p>By minimizing this, the Generator attempts to produce samples that the Critic cannot distinguish from real samples.</p>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GPU Available:&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.6.0+cu124
+GPU Available: True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+
+
+<span class="n">image_path</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">),</span> <span class="n">std</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="p">])</span>
+<span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">image_path</span><span class="p">,</span>
+                                           <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                           <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+                                           <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">## Set up the dataset</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="n">mnist_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">mnist_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+                      <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>ls<span class="w"> </span>-lrth
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>total 8.0K
+drwxr-xr-x 1 root root 4.0K Apr  7 13:43 sample_data
+drwxr-xr-x 3 root root 4.0K Apr 10 15:25 MNIST
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mode_z</span> <span class="o">==</span> <span class="s1">&#39;uniform&#39;</span><span class="p">:</span>
+        <span class="n">input_z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">mode_z</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+        <span class="n">input_z</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">input_z</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mode_z</span> <span class="o">=</span> <span class="s1">&#39;uniform&#39;</span>
+<span class="n">z_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">fixed_z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="n">image_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_samples</span><span class="p">(</span><span class="n">g_model</span><span class="p">,</span> <span class="n">input_z</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="n">g_output</span> <span class="o">=</span> <span class="n">g_model</span><span class="p">(</span><span class="n">input_z</span><span class="p">)</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">g_output</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">*</span><span class="n">image_size</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">images</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">make_generator_network_wgan</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">):</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">input_size</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                           <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">InstanceNorm2d</span><span class="p">(</span><span class="n">n_filters</span><span class="o">*</span><span class="mi">4</span><span class="p">),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+
+        <span class="c1"># InstanceNorm2d normalizes each sample (instance) independently, and channel-wise, across spatial dimensions (height and width).</span>
+        <span class="c1"># More effective for tasks like style transfer and generative models, where batch statistics can introduce artifacts.</span>
+        <span class="c1"># It normalizes each image and channel separately — not across the batch</span>
+        <span class="c1"># https://pytorch.org/docs/stable/generated/torch.nn.InstanceNorm2d.html</span>
+
+        <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="c1">#nn.InstanceNorm2d(n_filters*2),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+
+        <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="c1">#nn.InstanceNorm2d(n_filters),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+
+        <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+        <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">model</span>
+
+<span class="k">class</span> <span class="nc">DiscriminatorWGAN</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">network</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">n_filters</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1">#nn.InstanceNorm2d(n_filters * 2),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">n_filters</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_filters</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1">#nn.InstanceNorm2d(n_filters*4),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">n_filters</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1">#nn.Sigmoid()) Just let the output be raw real values to measure the Wasserstein distance</span>
+        <span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">network</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_filters</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">z_size</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+
+<span class="n">gen_model</span> <span class="o">=</span> <span class="n">make_generator_network_wgan</span><span class="p">(</span><span class="n">z_size</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">disc_model</span> <span class="o">=</span> <span class="n">DiscriminatorWGAN</span><span class="p">(</span><span class="n">n_filters</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="n">g_optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">gen_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="mf">0.0002</span><span class="p">)</span>
+<span class="n">d_optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">disc_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="mf">0.0002</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">grad</span> <span class="k">as</span> <span class="n">torch_grad</span>
+
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">grad</span> <span class="k">as</span> <span class="n">torch_grad</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">gradient_penalty</span><span class="p">(</span><span class="n">real_data</span><span class="p">,</span> <span class="n">generated_data</span><span class="p">,</span> <span class="n">lambda_gp</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">real_data</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">real_data</span><span class="o">.</span><span class="n">device</span>  <span class="c1"># Assume both real and fake are already on the same device</span>
+
+    <span class="c1"># Sample random weights for interpolation between real and fake samples</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Create interpolated data points</span>
+    <span class="c1"># Each point is a mix between real and fake, to evaluate the critic&#39;s smoothness</span>
+    <span class="n">interpolated</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">real_data</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="o">*</span> <span class="n">generated_data</span>
+    <span class="n">interpolated</span><span class="o">.</span><span class="n">requires_grad_</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Ensure PyTorch tracks gradients w.r.t. interpolated</span>
+
+    <span class="c1"># Pass interpolated data through the critic</span>
+    <span class="n">critic_scores</span> <span class="o">=</span> <span class="n">disc_model</span><span class="p">(</span><span class="n">interpolated</span><span class="p">)</span>  <span class="c1"># Output: shape [batch_size, 1]</span>
+
+    <span class="c1"># Compute gradients of the critic&#39;s output w.r.t. interpolated inputs</span>
+    <span class="c1"># grad_outputs = ones means: &quot;take raw gradients, per sample&quot;</span>
+    <span class="n">gradients</span> <span class="o">=</span> <span class="n">torch_grad</span><span class="p">(</span>
+        <span class="n">outputs</span><span class="o">=</span><span class="n">critic_scores</span><span class="p">,</span>
+        <span class="n">inputs</span><span class="o">=</span><span class="n">interpolated</span><span class="p">,</span>
+        <span class="n">grad_outputs</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">critic_scores</span><span class="p">),</span>  <span class="c1"># important trick: per-sample gradients</span>
+        <span class="n">create_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>   <span class="c1"># enables higher-order derivatives (needed for backprop through this)</span>
+        <span class="n">retain_graph</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>   <span class="c1"># keeps the graph if used again (e.g., generator step follows)</span>
+        <span class="n">only_inputs</span><span class="o">=</span><span class="kc">True</span>     <span class="c1"># deprecated, but keeps it tidy for older PyTorch versions: gradients only w.r.t. the inputs</span>
+    <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Extract the tensor from the returned tuple</span>
+
+    <span class="c1"># Flatten each sample&#39;s gradient to compute its L2 norm</span>
+    <span class="n">gradients</span> <span class="o">=</span> <span class="n">gradients</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>              <span class="c1"># Shape: [batch_size, num_elements]</span>
+    <span class="n">gradients_norm</span> <span class="o">=</span> <span class="n">gradients</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>               <span class="c1"># L2 norm per sample</span>
+
+    <span class="c1"># Optional: Plot gradient norms during training (for debugging/exploration)</span>
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">gradients_norm</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Gradient Norms of Interpolated Samples&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Sample Index&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;L2 Norm of Gradient&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="c1"># Compute the gradient penalty</span>
+    <span class="c1"># Penalize how far the norm is from 1 (ideal Lipschitz constraint)</span>
+    <span class="n">penalty</span> <span class="o">=</span> <span class="p">((</span><span class="n">gradients_norm</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>            <span class="c1"># Scalar</span>
+    <span class="k">return</span> <span class="n">lambda_gp</span> <span class="o">*</span> <span class="n">penalty</span>                              <span class="c1"># Scale by lambda (default = 10)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lets test it</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">real_data</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">mnist_dl</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">real_data</span> <span class="o">=</span> <span class="n">real_data</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">input_z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">generated_data</span> <span class="o">=</span> <span class="n">gen_model</span><span class="p">(</span><span class="n">input_z</span><span class="p">)</span>
+
+<span class="n">gradient_penalty</span><span class="p">(</span><span class="n">real_data</span><span class="p">,</span> <span class="n">generated_data</span><span class="p">,</span> <span class="n">plot</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/23b2d5424e14dfda1b21095a0d1df12ceab18c31fab1eb0f7e1c7ccce29ecde9.png" src="_images/23b2d5424e14dfda1b21095a0d1df12ceab18c31fab1eb0f7e1c7ccce29ecde9.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor(9.3907, device=&#39;cuda:0&#39;, grad_fn=&lt;MulBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Train the discriminator</span>
+
+<span class="k">def</span> <span class="nf">d_train_wgan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">disc_model</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="c1"># Generate fake samples</span>
+    <span class="n">input_z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">g_output</span> <span class="o">=</span> <span class="n">gen_model</span><span class="p">(</span><span class="n">input_z</span><span class="p">)</span>
+
+    <span class="c1"># Compute critic scores</span>
+    <span class="n">d_real</span> <span class="o">=</span> <span class="n">disc_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">d_generated</span> <span class="o">=</span> <span class="n">disc_model</span><span class="p">(</span><span class="n">g_output</span><span class="p">)</span>
+
+    <span class="c1"># WGAN-GP loss: maximize real - fake, penalize Lipschitz violations</span>
+    <span class="n">gp</span> <span class="o">=</span> <span class="n">gradient_penalty</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">g_output</span><span class="o">.</span><span class="n">detach</span><span class="p">())</span>
+    <span class="n">d_loss</span> <span class="o">=</span> <span class="n">d_generated</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">d_real</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">+</span> <span class="n">gp</span>
+
+    <span class="c1"># Update Critic</span>
+    <span class="n">d_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">d_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">d_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Train the generator</span>
+
+<span class="k">def</span> <span class="nf">g_train_wgan</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">gen_model</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">input_z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">g_output</span> <span class="o">=</span> <span class="n">gen_model</span><span class="p">(</span><span class="n">input_z</span><span class="p">)</span>
+
+    <span class="c1"># Critic score for generated data</span>
+    <span class="n">d_generated</span> <span class="o">=</span> <span class="n">disc_model</span><span class="p">(</span><span class="n">g_output</span><span class="p">)</span>
+
+    <span class="c1"># Generator loss (want the Critic to rate fake as real → high score)</span>
+    <span class="n">g_loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">d_generated</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+    <span class="c1"># Backprop and update Generator only</span>
+    <span class="n">g_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">g_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">g_loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper function to display generated images</span>
+<span class="k">def</span> <span class="nf">show_generated_images</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">epoch</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="p">(</span><span class="n">images</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># Rescale from [-1, 1] to [0, 1]</span>
+
+    <span class="n">images</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">images</span> <span class="c1"># black hand-written digits on white background</span>
+
+    <span class="c1"># Ensure shape is [N, C, H, W]</span>
+    <span class="k">if</span> <span class="n">images</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>  <span class="c1"># If shape is [N, H, W], unsqueeze channel</span>
+        <span class="n">images</span> <span class="o">=</span> <span class="n">images</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">make_grid</span><span class="p">(</span><span class="n">images</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">pad_value</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+
+
+    <span class="n">npimg</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">npimg</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>  <span class="c1"># no smoothing</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">&quot;off&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">epoch</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show initial untrained Generator output (Epoch 0)</span>
+<span class="n">gen_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">create_samples</span><span class="p">(</span><span class="n">gen_model</span><span class="p">,</span> <span class="n">fixed_z</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>  <span class="c1"># [B, 1, 28, 28]</span>
+    <span class="n">show_generated_images</span><span class="p">(</span><span class="n">samples</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span> <span class="n">epoch</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Show Epoch 0</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/88e0892278dedf7bbb335d96fbf82fd3088561f227a0519473221eae8900872b.png" src="_images/88e0892278dedf7bbb335d96fbf82fd3088561f227a0519473221eae8900872b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epoch_samples_wgan</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">lambda_gp</span> <span class="o">=</span> <span class="mf">10.0</span>
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">critic_iterations</span> <span class="o">=</span> <span class="mi">5</span>
+
+
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+
+    <span class="n">gen_model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">d_losses</span><span class="p">,</span> <span class="n">g_losses</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mnist_dl</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">critic_iterations</span><span class="p">):</span> <span class="c1"># This matches the WGAN training strategy of training the Critic more often than the Generator</span>
+            <span class="n">d_loss</span> <span class="o">=</span> <span class="n">d_train_wgan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>       <span class="c1"># More Critic updates = better distance estimates = more meaningful Generator updates.</span>
+
+        <span class="n">d_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_loss</span><span class="p">)</span>
+        <span class="n">g_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g_train_wgan</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2"> | D Loss: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">d_losses</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> &quot;</span>
+          <span class="sa">f</span><span class="s2">&quot;| G Loss: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">g_losses</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Generate and store samples using a fixed latent vector</span>
+    <span class="n">gen_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">create_samples</span><span class="p">(</span><span class="n">gen_model</span><span class="p">,</span> <span class="n">fixed_z</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span>  <span class="c1"># Assumes shape [B, 1, H, W]</span>
+        <span class="n">epoch_samples_wgan</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+        <span class="c1"># Display the first 16 samples visually</span>
+        <span class="n">show_generated_images</span><span class="p">(</span><span class="n">samples</span><span class="p">[:</span><span class="mi">16</span><span class="p">],</span> <span class="n">epoch</span><span class="o">=</span><span class="n">epoch</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 001 | D Loss: -10.5601 | G Loss: -0.8329
+</pre></div>
+</div>
+<img alt="_images/969e10648480866a848d757c60a5e384a8397688b2468e84c7ff3e50b7e1019e.png" src="_images/969e10648480866a848d757c60a5e384a8397688b2468e84c7ff3e50b7e1019e.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 002 | D Loss: -4.4782 | G Loss: -0.2236
+</pre></div>
+</div>
+<img alt="_images/83f62e032b197b23842f243eb5fc433d14be2f9c50f1dc5ee78a8ab6e4b75b1c.png" src="_images/83f62e032b197b23842f243eb5fc433d14be2f9c50f1dc5ee78a8ab6e4b75b1c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 003 | D Loss: -3.9487 | G Loss: 0.3161
+</pre></div>
+</div>
+<img alt="_images/8b6148a7402eae3fdf6e9f2ffb06bd0d612827594668cab854801e2bb7b7f04d.png" src="_images/8b6148a7402eae3fdf6e9f2ffb06bd0d612827594668cab854801e2bb7b7f04d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 004 | D Loss: -3.4228 | G Loss: -0.6694
+</pre></div>
+</div>
+<img alt="_images/4de2c2b39b20e957df3b43c7c9c453b6eadb9e41976912ed3320d5b0bb572948.png" src="_images/4de2c2b39b20e957df3b43c7c9c453b6eadb9e41976912ed3320d5b0bb572948.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 005 | D Loss: -3.1512 | G Loss: -0.8490
+</pre></div>
+</div>
+<img alt="_images/cb6eca2faa605652eaef8550a04e54aa3346505accc1695d78c5f20d182037d0.png" src="_images/cb6eca2faa605652eaef8550a04e54aa3346505accc1695d78c5f20d182037d0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 006 | D Loss: -2.9417 | G Loss: -0.9492
+</pre></div>
+</div>
+<img alt="_images/a143ed2492730c3cad8d0f0adca4a28c42b82473112bd5bd636b8d7adb8615e6.png" src="_images/a143ed2492730c3cad8d0f0adca4a28c42b82473112bd5bd636b8d7adb8615e6.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 007 | D Loss: -2.8161 | G Loss: -0.9566
+</pre></div>
+</div>
+<img alt="_images/4aa506855620ffc8ee78b8a9531acadd3ac64a0de46660cd642507e76a9262a1.png" src="_images/4aa506855620ffc8ee78b8a9531acadd3ac64a0de46660cd642507e76a9262a1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 008 | D Loss: -2.6094 | G Loss: -1.1840
+</pre></div>
+</div>
+<img alt="_images/ec89f0a45a94d6b63ab122243a23d7edae9f571dcc94ec05963e86ecd1cd9b9c.png" src="_images/ec89f0a45a94d6b63ab122243a23d7edae9f571dcc94ec05963e86ecd1cd9b9c.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 009 | D Loss: -2.4763 | G Loss: -1.1030
+</pre></div>
+</div>
+<img alt="_images/fd678a1f4ce06fc30c749ad0fcda4994a44507a548b47f14b079b173887e5074.png" src="_images/fd678a1f4ce06fc30c749ad0fcda4994a44507a548b47f14b079b173887e5074.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 010 | D Loss: -2.4654 | G Loss: -0.8249
+</pre></div>
+</div>
+<img alt="_images/3f8d186bd086f05c95770d68a115505aaf906d3be1e0ee2fd5602b46a0a7b991.png" src="_images/3f8d186bd086f05c95770d68a115505aaf906d3be1e0ee2fd5602b46a0a7b991.png" />
+</div>
+</div>
+<p>During middle epochs, we do expect D loss starting to rise (less negative, more hard for the critic to distinguish) and G loss to become more negative (better generation).</p>
+<p>A healthy training should be characterized by:</p>
+<ul class="simple">
+<li><p>D loss gradually increases (toward 0)</p></li>
+<li><p>G loss gradually decreases (more negative)</p></li>
+<li><p>Generated samples become clearer</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">selected_epochs = [1, 2, 4, 10, 50]</span>
+<span class="sd"># selected_epochs = [1, 10, 20, 30, 50, 70]</span>
+<span class="sd">fig = plt.figure(figsize=(10, 14))</span>
+<span class="sd">for i,e in enumerate(selected_epochs):</span>
+<span class="sd">    for j in range(5):</span>
+<span class="sd">        ax = fig.add_subplot(6, 5, i*5+j+1)</span>
+<span class="sd">        ax.set_xticks([])</span>
+<span class="sd">        ax.set_yticks([])</span>
+<span class="sd">        if j == 0:</span>
+<span class="sd">            ax.text(</span>
+<span class="sd">                -0.06, 0.5, f&#39;Epoch {e}&#39;,</span>
+<span class="sd">                rotation=90, size=18, color=&#39;red&#39;,</span>
+<span class="sd">                horizontalalignment=&#39;right&#39;,</span>
+<span class="sd">                verticalalignment=&#39;center&#39;,</span>
+<span class="sd">                transform=ax.transAxes)</span>
+
+<span class="sd">        image = epoch_samples_wgan[e-1][j]</span>
+<span class="sd">        ax.imshow(image, cmap=&#39;gray_r&#39;)</span>
+
+<span class="sd">plt.show()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cfteach/NNDL_2025",
+            ref: "webpage-src",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="04_08_2025_lec17_GAN_part2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">24. </span>Generative Adverserial Network</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="referencesmc.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">References</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-wgan-gp-to-train-the-dcgan-model">25.1. Implementing WGAN-GP to train the DCGAN model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-drawbacks-of-vanilla-gan">25.1.1. <strong>Key Drawbacks of Vanilla GAN</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wasserstein-distance-a-better-metric-for-gans">25.1.2. <strong>Wasserstein Distance: A Better Metric for GANs</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kantorovich-rubinstein-duality">25.1.3. <strong>Kantorovich-Rubinstein Duality</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-wgan-overcomes-gan-challenges">25.1.4. <strong>How WGAN Overcomes GAN Challenges</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wasserstein-gan-with-gradient-penalty-wgan-gp">25.2. <strong>Wasserstein GAN with Gradient Penalty (WGAN-GP)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enforcing-the-1-lipschitz-constraint-wgan-vs-wgan-gp">25.2.1. <strong>Enforcing the 1-Lipschitz Constraint: WGAN vs. WGAN-GP</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-wgan-gp-works">25.2.2. <strong>How WGAN-GP Works</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-penalty">25.2.3. 1. Gradient Penalty</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#wgan-gp">25.2.4. 2. <strong>WGAN-GP</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Cristiano Fanelli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  NNDL_2025
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
