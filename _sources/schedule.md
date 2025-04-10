@@ -204,7 +204,7 @@ Last update: (4/2/2025)
 </table>
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 3 (assigned Apr 8; due Apr 15)</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 3 (assigned Apr 10; due Apr 17)</strong></span></td>
 </tr>
 <tr>
 <td colspan="7" align="center"><span style="color:purple"><strong>Readings: Raschka, Chap. 17</strong></span></td>
@@ -221,7 +221,7 @@ Last update: (4/2/2025)
 <table>
 
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong> Reminder Assignment 3 due Apr 15 (new date)
+<td colspan="7" align="center"><span style="color:red"><strong> Reminder Assignment 3 due Apr 17 (new date)
 </tr>
 <tr>
 <td colspan="7" align="center"><span style="color:red"><strong>Assignment 4 (assigned Apr 19; due Apr 27)</strong></span></td>
