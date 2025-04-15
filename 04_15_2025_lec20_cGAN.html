@@ -1,0 +1,1616 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>26. Conditional Generative Adverserial Network &#8212; Neural Networks and Deep Learning - Spring 2025</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/tabs.css?v=4c969af8" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=87e54e7c" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script src="_static/tabs.js?v=3ee01567"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script kind="utterances">
+
+    var commentsRunWhenDOMLoaded = cb => {
+    if (document.readyState != 'loading') {
+        cb()
+    } else if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', cb)
+    } else {
+        document.attachEvent('onreadystatechange', function() {
+        if (document.readyState == 'complete') cb()
+        })
+    }
+}
+
+var addUtterances = () => {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://utteranc.es/client.js";
+    script.async = "async";
+
+    script.setAttribute("repo", "cfteach/NNDL_2025");
+    script.setAttribute("issue-term", "pathname");
+    script.setAttribute("theme", "github-light");
+    script.setAttribute("label", "💬 comment");
+    script.setAttribute("crossorigin", "anonymous");
+
+    sections = document.querySelectorAll("div.section");
+    if (sections !== null) {
+        section = sections[sections.length-1];
+        section.appendChild(script);
+    }
+}
+commentsRunWhenDOMLoaded(addUtterances);
+</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '04_15_2025_lec20_cGAN';</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/04_15_2025_lec20_cGAN.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="References" href="referencesmc.html" />
+    <link rel="prev" title="25. Generative Adverserial Network" href="lec17_GAN_part3.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">This page is being updated</div>
+</aside>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logowm1.png" class="logo__image only-light" alt="Neural Networks and Deep Learning - Spring 2025 - Home"/>
+    <script>document.write(`<img src="_static/logowm1.png" class="logo__image only-dark" alt="Neural Networks and Deep Learning - Spring 2025 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to Neural Networks and Deep Learning 2025 (NNDL-2025)
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Syllabus</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1SDP2tsxEkxrWSATzJieMX6zk63FfYTwH/view?usp=sharing">Syllabus (last update 1/23/2025)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Schedule</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="schedule.html">Schedule</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Assignments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1FTYc_JyeStYWXuskukHhw1B3AAFJyb7N/view?usp=sharing">Assignment 1, Deep Neural Networks from Scratch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Steven_Morse_Assign1.html">Solution to Assignment 1, by Steven Morse</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1ime_ivKnYQURPyaQl710-n5g9-IyqwRf/view?usp=sharing">Assignment 2, Convolutional Neural Networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Kaibu_Feng_Assign2_sol.html">Solution to Assignment 2, by Kaibu Feng</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1OlJ-Z7NmJ90G2OjdIfvxVGydzOusIzIK/view?usp=share_link">Assignment 3, Generative Adversarial Networks</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Intro</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1mgFybK0KbOyRPinAU8r4lRd-9JzJpyEtPPzX6Sr4MuI/edit?usp=sharing">Welcome and Intro by Prof. C.Fanelli</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Intro to Modeling</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1BV2-N-c1bq4yx1IsPMW4fhC9i1SCdRAU/edit?usp=sharing&amp;ouid=113195593718692427789&amp;rtpof=true&amp;sd=true">Linear Regression (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linear_Regression_1_class.html">1. Linear Regression (Jupyter Notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Introduction to git</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/GIT-course/intro_to_git.html">2. Brief course on <code class="docutils literal notranslate"><span class="pre">git</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/VCS.html">2.1. Version Control System (VCS)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/git_basics.html">2.2. What is Git?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/git_configure.html">2.3. Configuring your <code class="docutils literal notranslate"><span class="pre">git</span></code></a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/GIT-course/git_exercises.html">3. Exercises on <code class="docutils literal notranslate"><span class="pre">git</span></code></a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-1.html">3.1. Exercise 1: Basic Git Commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-2.html">3.2. Exercise 2: Commits, push and branches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-3.html">3.3. Advanced exercises</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/GIT-course/Exercise-4.html">3.4. GitHub Actions and Workflow Tutorial</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Using VS-Code</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Day-1/VS-code.html">Installing Visual Studio Code</a></li>
+
+
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Introduction to High Performance Computing (HPC)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="Day-1/HPC-course/intro_to_HPC_HTC.html">4. Introduction to High Performance Computing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/intro_to_HPC.html">4.1. High Performance Computing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/ssh_login.html">4.2. SSH into a Front-End Node Using Proxy Jump</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/file_systems_WM.html">4.3. William &amp; Mary Research Computing: File Systems Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Day-1/HPC-course/SLURM_commands2.html">4.4. Introduction to SLURM</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference external" href="https://d8a-science.github.io/hpc-gitbook/">Other Resources: Distributed ML @ W&amp;M</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/D8A-SCIENCE/hpc-gitbook">Other Resources: Student Manual for using the HPC @ W&amp;M for Data Science</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[Pre-flight] Linux Commands</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://www.wm.edu/offices/it/services/researchcomputing/using/tutorials/">Linux Commands</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/28/2025] Linear Classifiers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1ihKM2j-tiXrbty8Btvn0QlHNX4WUd3XSR6_40HPBK6Q/edit?usp=sharing">Perceptrons (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://drive.google.com/file/d/1mU67w6GAhIWNFoO98AF7u8in2C-Op4Ag/view?usp=sharing">Perceptron - Proof of Convergence (PDF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2_NNDL_perceptron.html">5. Training a Perceptron (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1uWc1e_sLKnafzEq0NLC9xup_orxQaaFmDHV1i0S5ZvQ/edit?usp=sharing">Adaline (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_25_2025_lec2b_NNDL_adaline.html">6. Training Adaline (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[1/30/2025] Gradient Descent, stochastic GD, Logistic Regression and Other classifiers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/13GMGu7k5PQtn4QsOYRgAMiUcuZyA2xREq16HjWzW2W4/edit?usp=sharing">Stochastic Gradient Descent (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3_NNDL_gradient_descent.html">7. Gradient Descent, Stochastic Gradient Descent, Mini-batch GD (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1geYpTbIyNOa3GlhDkbCy9IOQ0iiTl_FNB4Dr6cLmBqs/edit?usp=sharing">An Intro to Logistic Regression, Regularization, linear (and non-linear) boundaries (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_30_2025_lec3b_NNDL_logistic_regression.html">8. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/4/2025] Building Training Datasets</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1UQVjqw57pJf_tmHxfIQty0DBgoD9UserRgs09p7T3ZU/edit?usp=sharing">Building Training Datasets (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_04_2025_lec4_datapreprocessing.html">9. Data Preprocessing (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/6/2025] Regularization (Continued, see 1/30/2025)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_06_2025_lec3b_NNDL_logistic_regression.html">10. Logistic Regression, Regularization, linear (and non-linear) boundaries (Preview)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/11/2025] Model Evaluation, Hyperparameter Tuning: Examples and Discussion</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_11_2025_modeleval.html">11. Model Evaluation, Hyperparameter Tuning (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/13/2025] Building Multi-Layer Neural Networks from scratch + discussion on assignment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1TFkGvstL8G2GRD7V3GLCjSIB5sERn03UqkWYvsDkDBo/edit?usp=sharing"> Adding hidden layers + Math of Backprop (lecture slides)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02.13.2025_lec6_MLP.html">12. Multi-Layer Perceptron (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/18/2024] Building Multi-Layer Neural Networks with PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_18_2025_lec8_pytorch.html">13. Using PyTorch preflight (Jupyter notebook)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_18_2025_lec8_NN.html">14. Using torch.nn (Jupyter notebook)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[2/25 - 2/27 2025] PyTorch and Autograd</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_25_2025_lec9_pytorch.html">15. Using PyTorch to build Neural Networks (continue)</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="02_27_2025_lec10_pytorch.html">17. Autograd with PyTorch (continue)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/4 - 3/6 2025] CNN with PyTorch</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_04_2025_lec11_CNN.html">18. Using PyTorch with CNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_06_2025_lec12_CNN_v2.html">19. Using CNN and Celeb Dataset</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://adamharley.com/nn_vis/">(A really nice and well-known resource:) Interactive Node-Link Visualization of Convolutional Neural Networks by Adam Harley</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/18/2025] Explainable AI using Grad-CAM for visual explanations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lec13_Introduction_to_X_AI_via_grad_cam.html">20. Explainable AI (XAI) and Grad-CAM</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/20/2025] CNN: from Classification to Regression Tasks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_20_2025_cnn_regr.html">21. age prediciton based on face images</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[3/25 - 3/26 - 4/1 - 2025] Recurrent Neural Network</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1X8Tq_L4ChK8zh5DDts34N6w-2IAmNw12n7fLwJnzRdM/edit?usp=sharing">Introduction to Sequential Data and Time Series Data; Intro to RNN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lec16_RNN_2_new.html">22. LSTM Recurrent Neural Networks (updated)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[4/3 - 4/8 - 4/10 - 4/15 - 2025] Generative Adversarial Networks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://docs.google.com/presentation/d/1p9H8dirIe2YJU1dn7fiHTc5H--HKO5mjuuvqvbde5O8/edit?usp=sharing">Introduction to GAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_03_2025_GAN_part1.html">23. Vanilla GAN Notebook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_08_2025_lec17_GAN_part2.html">24. Deep Convolutional Generative Adversarial Network (DCGAN)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lec17_GAN_part3.html">25. Wasserstein GAN (WGAN)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">26. Conditional DCGAN (cDCGAN)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="referencesmc.html">References</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/cfteach/NNDL_2025/blob/webpage-src/NNDL_2025/NNDL_2025/04_15_2025_lec20_cGAN.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch on Colab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img alt="Colab logo" src="_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="initThebeSBT()"
+  class="btn btn-sm btn-launch-thebe dropdown-item"
+  title="Launch Thebe"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="btn__text-container">Live Code</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025/edit/webpage-src/NNDL_2025/NNDL_2025/04_15_2025_lec20_cGAN.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/cfteach/NNDL_2025/issues/new?title=Issue%20on%20page%20%2F04_15_2025_lec20_cGAN.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/04_15_2025_lec20_cGAN.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Conditional Generative Adverserial Network</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-conditional-gan-for-mnist-dataset">26.1. Using Conditional GAN for MNIST dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-idea">26.1.1. 1. <strong>Core Idea</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generator-architecture">26.1.2. 2. <strong>Generator Architecture</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discriminator-architecture">26.1.3. 3. <strong>Discriminator Architecture</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-distributions">26.1.3.1. <strong>Conditional Probability Distributions</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">26.1.3.2. <strong>Objective Function</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">26.1.4. 4. <strong>Loss Function</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#discriminator-loss">26.1.4.1. <strong>Discriminator Loss</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#generator-loss">26.1.4.2. <strong>Generator Loss</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-the-loss-functions">26.2. 5. Combining the Loss Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-objective">26.2.1. 6. <strong>Training Objective</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-process">26.2.1.1. <strong>Training Process</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-benefits">26.2.2. 7. <strong>Applications and Benefits</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">26.2.3. Summary Table</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-dcgan-model">26.3. Train the DCGAN model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-considerations">26.3.1. Practical Considerations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stabilizing-training">26.3.2. <strong>Stabilizing Training</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function-variations">26.3.2.1. <strong>Loss Function Variations</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditioning-methods">26.3.2.2. <strong>Conditioning Methods</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-tips">26.3.2.3. <strong>Implementation Tips</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">26.4. Summary</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="conditional-generative-adverserial-network">
+<h1><span class="section-number">26. </span>Conditional Generative Adverserial Network<a class="headerlink" href="#conditional-generative-adverserial-network" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<section id="using-conditional-gan-for-mnist-dataset">
+<h2><span class="section-number">26.1. </span>Using Conditional GAN for MNIST dataset<a class="headerlink" href="#using-conditional-gan-for-mnist-dataset" title="Link to this heading">#</a></h2>
+<p>The primary difference between a <strong>DCGAN</strong> (Deep Convolutional GAN) and a <strong>Conditional DCGAN (cDCGAN)</strong> lies in the use of <strong>conditioning information</strong>. Let’s break down these distinctions clearly:</p>
+<section id="core-idea">
+<h3><span class="section-number">26.1.1. </span>1. <strong>Core Idea</strong><a class="headerlink" href="#core-idea" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>DCGAN</strong>: A DCGAN generates images without any control over the content. It generates realistic-looking samples based solely on random noise input, learning to mimic the distribution of a dataset without any particular focus on classes or categories.</p></li>
+<li><p><strong>Conditional DCGAN (cDCGAN)</strong>: A cDCGAN generates images conditioned on specific labels or auxiliary information. For example, on the MNIST dataset, a cDCGAN can be trained to generate images of specific digits (0-9) by providing label information (the digit) along with the noise vector.</p></li>
+<li><p>Some resources:</p>
+<ul>
+<li><p><a class="github reference external" href="https://github.com/togheppi/cDCGAN">togheppi/cDCGAN</a></p></li>
+<li><p><a class="github reference external" href="https://github.com/znxlwm/pytorch-MNIST-CelebA-cGAN-cDCGAN">znxlwm/pytorch-MNIST-CelebA-cGAN-cDCGAN</a></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="generator-architecture">
+<h3><span class="section-number">26.1.2. </span>2. <strong>Generator Architecture</strong><a class="headerlink" href="#generator-architecture" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>DCGAN Generator</strong>: Takes a random noise vector as input and transforms it through a series of convolutional layers to generate an image. It does not take any class information, so there’s no control over what type of image (e.g., which digit) it generates.</p></li>
+<li><p><strong>cDCGAN Generator</strong>: In addition to the noise vector, the generator receives a <strong>label embedding</strong> that represents the conditioning information (e.g., digit label 0-9). The noise and label embedding are concatenated and fed together through the generator’s convolutional layers. This allows the generator to create images specific to the input label.</p></li>
+</ul>
+</section>
+<section id="discriminator-architecture">
+<h3><span class="section-number">26.1.3. </span>3. <strong>Discriminator Architecture</strong><a class="headerlink" href="#discriminator-architecture" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>DCGAN Discriminator</strong>: The DCGAN discriminator only receives an image (either real or generated) as input and learns to classify it as real or fake. It does not consider any additional information about the image’s content.</p></li>
+<li><p><strong>cDCGAN Discriminator</strong>: The cDCGAN discriminator receives both an image and its corresponding label as input. The label is embedded and concatenated with the image data. This setup helps the discriminator to determine if the generated image is not only realistic but also matches the provided label, making it a more nuanced judge in the adversarial process.</p></li>
+</ul>
+<p><img alt="Example of Conditional GAN" src="https://machinelearningmastery.com/wp-content/uploads/2019/05/Example-of-a-Conditional-Generator-and-a-Conditional-Discriminator-in-a-Conditional-Generative-Adversarial-Network-1024x887.png" /></p>
+<section id="conditional-probability-distributions">
+<h4><span class="section-number">26.1.3.1. </span><strong>Conditional Probability Distributions</strong><a class="headerlink" href="#conditional-probability-distributions" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Real Data Distribution:</strong> <span class="math notranslate nohighlight">\( p_{\text{data}}(x | y) \)</span></p></li>
+<li><p><strong>Generator’s Distribution:</strong> <span class="math notranslate nohighlight">\( p_G(x | y) \)</span></p></li>
+</ul>
+<p>The <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> could be thought of as channels in the image, and <span class="math notranslate nohighlight">\(y\)</span> could be thought of as the class label embedded as another channel. (This is one of the way of implementing cGANs.)</p>
+</section>
+<section id="objective-function">
+<h4><span class="section-number">26.1.3.2. </span><strong>Objective Function</strong><a class="headerlink" href="#objective-function" title="Link to this heading">#</a></h4>
+<p>The value function <span class="math notranslate nohighlight">\( V(G, D) \)</span> for a cGAN is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\min_G \max_D V(G, D) = \mathbb{E}_{x \sim p_{\text{data}}(x)} [\log D(x | y)] + \mathbb{E}_{z \sim p_z(z)} [\log (1 - D(G(z | y) | y))]
+\]</div>
+</section>
+</section>
+<section id="loss-function">
+<h3><span class="section-number">26.1.4. </span>4. <strong>Loss Function</strong><a class="headerlink" href="#loss-function" title="Link to this heading">#</a></h3>
+<p>In cGANs, both the Generator and the Discriminator are conditioned on <span class="math notranslate nohighlight">\(y\)</span>. The loss functions are modified to incorporate this conditioning, allowing the model to learn the joint distribution of data and conditioning variables.</p>
+<section id="discriminator-loss">
+<h4><span class="section-number">26.1.4.1. </span><strong>Discriminator Loss</strong><a class="headerlink" href="#discriminator-loss" title="Link to this heading">#</a></h4>
+<p>The Discriminator aims to maximize the probability of correctly classifying real and generated data. The loss function for the Discriminator <span class="math notranslate nohighlight">\(D\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_D = -\mathbb{E}_{x \sim p_{\text{data}}(x)} [\log D(x | y)] - \mathbb{E}_{z \sim p_z(z)} [\log (1 - D(G(z | y) | y))]
+\]</div>
+</section>
+<section id="generator-loss">
+<h4><span class="section-number">26.1.4.2. </span><strong>Generator Loss</strong><a class="headerlink" href="#generator-loss" title="Link to this heading">#</a></h4>
+<p>The Generator tries to minimize the probability that the Discriminator correctly identifies its outputs as fake. The loss function for the Generator <span class="math notranslate nohighlight">\( G \)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_G = -\mathbb{E}_{z \sim p_z(z)} [\log D(G(z | y) | y)]
+\]</div>
+<p>Alternatively, to improve gradient flow, the Generator’s loss can be formulated using the <strong>least squares loss</strong> or other variations.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="combining-the-loss-functions">
+<h2><span class="section-number">26.2. </span>5. Combining the Loss Functions<a class="headerlink" href="#combining-the-loss-functions" title="Link to this heading">#</a></h2>
+<p>The training of a cGAN involves optimizing both <span class="math notranslate nohighlight">\( G \)</span> and <span class="math notranslate nohighlight">\( D \)</span> simultaneously. However, since <span class="math notranslate nohighlight">\( G \)</span> and <span class="math notranslate nohighlight">\( D \)</span> have opposing objectives, their loss functions are optimized alternately:</p>
+<ol class="arabic simple">
+<li><p><strong>Update Discriminator <span class="math notranslate nohighlight">\( D \)</span>:</strong> Maximize <span class="math notranslate nohighlight">\( \mathcal{L}_D \)</span></p></li>
+<li><p><strong>Update Generator <span class="math notranslate nohighlight">\( G \)</span>:</strong> Minimize <span class="math notranslate nohighlight">\( \mathcal{L}_G \)</span></p></li>
+</ol>
+<p>The losses are combined in the sense that the optimization of one depends on the performance of the other. However, they are not summed together; instead, they are used to update their respective networks during training iterations.</p>
+<hr class="docutils" />
+<section id="training-objective">
+<h3><span class="section-number">26.2.1. </span>6. <strong>Training Objective</strong><a class="headerlink" href="#training-objective" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>DCGAN</strong>: Trains the generator to produce images that look as real as possible, while the discriminator is trained to differentiate between real and fake images.</p></li>
+<li><p><strong>cDCGAN</strong>: Trains the generator not only to create realistic images but also to create images that match the specified class label. The discriminator is trained to recognize if the image aligns with the label, adding a <strong>class-matching constraint</strong> on top of the real-vs-fake classification.</p></li>
+</ul>
+<section id="training-process">
+<h4><span class="section-number">26.2.1.1. </span><strong>Training Process</strong><a class="headerlink" href="#training-process" title="Link to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>Discriminator Update:</strong></p>
+<ul class="simple">
+<li><p><strong>Goal:</strong> Maximize <span class="math notranslate nohighlight">\( V(G, D) \)</span> with respect to <span class="math notranslate nohighlight">\( D \)</span></p></li>
+<li><p><strong>Loss Function:</strong></p></li>
+</ul>
+</li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_D = -\left( \mathbb{E}_{x \sim p_{\text{data}}(x)} [\log D(x | y)] + \mathbb{E}_{z \sim p_z(z)} [\log (1 - D(G(z | y) | y))] \right)
+\]</div>
+<ul class="simple">
+<li><p><strong>Optimization:</strong> Update <span class="math notranslate nohighlight">\( D \)</span> to minimize <span class="math notranslate nohighlight">\( \mathcal{L}_D \)</span></p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Generator Update:</strong></p>
+<ul class="simple">
+<li><p><strong>Goal:</strong> Minimize <span class="math notranslate nohighlight">\( V(G, D) \)</span> with respect to <span class="math notranslate nohighlight">\( G \)</span></p></li>
+<li><p><strong>Loss Function:</strong></p></li>
+</ul>
+</li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_G = -\mathbb{E}_{z \sim p_z(z)} [\log D(G(z | y) | y)]
+\]</div>
+<ul class="simple">
+<li><p><strong>Optimization:</strong> Update <span class="math notranslate nohighlight">\( G \)</span> to minimize <span class="math notranslate nohighlight">\( \mathcal{L}_G \)</span></p></li>
+</ul>
+</section>
+</section>
+<section id="applications-and-benefits">
+<h3><span class="section-number">26.2.2. </span>7. <strong>Applications and Benefits</strong><a class="headerlink" href="#applications-and-benefits" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>DCGAN</strong>: Useful for general image generation tasks where specific control over the image content isn’t required. It’s often used for tasks like unsupervised feature learning and image generation in unstructured datasets.</p></li>
+<li><p><strong>cDCGAN</strong>: Useful when specific control over the image content is needed, such as generating images of specific categories or classes. Conditioning information provides control, making it ideal for applications like digit generation in MNIST, where you may want to generate images of a specific digit (0-9), or face generation, where specific attributes can be targeted.</p></li>
+</ul>
+</section>
+<section id="summary-table">
+<h3><span class="section-number">26.2.3. </span>Summary Table<a class="headerlink" href="#summary-table" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>DCGAN</p></th>
+<th class="head"><p>Conditional DCGAN (cDCGAN)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Input to Generator</strong></p></td>
+<td><p>Noise vector</p></td>
+<td><p>Noise vector + label embedding</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Input to Discriminator</strong></p></td>
+<td><p>Image</p></td>
+<td><p>Image + label embedding</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Output Control</strong></p></td>
+<td><p>Random (no control over class/type)</p></td>
+<td><p>Controlled by label (e.g., generates specific digits)</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Generator’s Goal</strong></p></td>
+<td><p>Generate realistic images</p></td>
+<td><p>Generate realistic images of a specific class</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Discriminator’s Goal</strong></p></td>
+<td><p>Distinguish real vs. fake images</p></td>
+<td><p>Distinguish if the image is real and matches the label</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr class="docutils" />
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GPU Available:&quot;</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">())</span>
+
+<span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cpu&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.6.0+cu124
+GPU Available: True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="train-the-dcgan-model">
+<h2><span class="section-number">26.3. </span>Train the DCGAN model<a class="headerlink" href="#train-the-dcgan-model" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+
+<span class="c1"># Set device</span>
+<span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load MNIST dataset</span>
+<span class="n">image_path</span> <span class="o">=</span> <span class="s1">&#39;./&#39;</span>
+<span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="o">.</span><span class="n">Compose</span><span class="p">([</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+    <span class="n">transforms</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,),</span> <span class="n">std</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,))</span>
+<span class="p">])</span>
+<span class="n">mnist_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">MNIST</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="n">image_path</span><span class="p">,</span>
+                                           <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                           <span class="n">transform</span><span class="o">=</span><span class="n">transform</span><span class="p">,</span>
+                                           <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">mnist_dl</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">mnist_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 9.91M/9.91M [00:10&lt;00:00, 913kB/s] 
+100%|██████████| 28.9k/28.9k [00:00&lt;00:00, 134kB/s]
+100%|██████████| 1.65M/1.65M [00:01&lt;00:00, 1.28MB/s]
+100%|██████████| 4.54k/4.54k [00:00&lt;00:00, 6.40MB/s]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generator network with conditioning (for cDCGAN)</span>
+
+<span class="k">class</span> <span class="nc">ConditionalGenerator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConditionalGenerator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">z_dim</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1">#z_dim + z_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_bn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial_act</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Project z again to match shape for residual injection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">noise_injection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">z_dim</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">upsample</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+
+            <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+
+            <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">noise</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="c1">#label_embedding = self.label_embedding(labels).unsqueeze(2).unsqueeze(3)  # (B, z_dim, 1, 1)</span>
+        <span class="c1">#input = torch.cat([noise, label_embedding], dim=1)  # (B, 2*z_dim, 1, 1)</span>
+
+        <span class="n">label_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_embedding</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">noise</span> <span class="o">*</span> <span class="n">label_embedding</span>  <span class="c1"># Element-wise multiplication</span>
+
+
+        <span class="c1"># Initial upsampling</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_bn</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_act</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="c1"># Inject noise directly into feature map (residual connection)</span>
+        <span class="n">noise_injected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_injection</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span> <span class="o">+</span> <span class="n">noise_injected</span>  <span class="c1"># Broadcasted addition</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">upsample</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+<span class="c1"># Discriminator network with conditioning (for cDCGAN)</span>
+<span class="k">class</span> <span class="nc">ConditionalDiscriminator</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">,</span> <span class="n">img_size</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Size</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">])):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConditionalDiscriminator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># Embedding layer for labels:</span>
+        <span class="c1"># This layer takes the class label (e.g., digits 0-9 in MNIST) and produces a vector</span>
+        <span class="c1"># representation, which will be reshaped and concatenated with the input image.</span>
+        <span class="c1"># In a standard DCGAN, there is no need for this label embedding because the discriminator</span>
+        <span class="c1"># only receives the image without any additional class information.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img_size</span> <span class="o">=</span> <span class="n">img_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">img_size</span><span class="o">.</span><span class="n">numel</span><span class="p">())</span> <span class="c1"># numel returns the total number of elements in a tensor, e.g., 1 × 28 × 28 = 784</span>
+
+        <span class="c1"># Main Discriminator Network:</span>
+        <span class="c1"># Similar to DCGAN, we use a series of convolutional layers to process the input.</span>
+        <span class="c1"># However, the input now has an extra channel to accommodate the concatenated label.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="c1"># Input layer: (2 channels, 28x28) where the 2 channels are the image and label embedding</span>
+            <span class="c1"># Conv2d: in_channels=2, out_channels=n_filters, kernel=4, stride=2, padding=1</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># Output: (batch_size, n_filters, 14, 14)</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout2d</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
+
+            <span class="c1"># Additional convolutional layers to downsample and extract features</span>
+            <span class="c1"># Conv2d: in_channels=n_filters, out_channels=n_filters*2, kernel=4, stride=2, padding=1</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">n_filters</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># Output: (batch_size, n_filters*2, 7, 7)</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Dropout2d</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>
+
+            <span class="c1"># Conv2d: in_channels=n_filters*2, out_channels=n_filters*4, kernel=3, stride=2, padding=1</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># Output: (batch_size, n_filters*4, 4, 4)</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+
+            <span class="c1"># Final layer outputs a single value indicating real/fake classification</span>
+            <span class="c1"># Conv2d: in_channels=n_filters*4, out_channels=1, kernel=4, stride=1, padding=0</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># Output: (batch_size, 1, 1, 1)</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Sigmoid</span><span class="p">()</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="c1"># Conditional Input Preparation:</span>
+        <span class="c1"># For each input label, we use the embedding layer to convert it into a 28x28 feature map</span>
+        <span class="c1"># that matches the spatial dimensions of the input image. This embedding acts as a &quot;template&quot;</span>
+        <span class="c1"># guiding the discriminator in recognizing if the image matches the class label.</span>
+        <span class="n">label_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_embedding</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">labels</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_size</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_size</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">img_size</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="c1"># Concatenate image and label embedding along the channel dimension:</span>
+        <span class="c1"># The discriminator now receives both the image and label information as input.</span>
+        <span class="c1"># In a standard DCGAN, only the image is passed in, so the discriminator only learns to</span>
+        <span class="c1"># differentiate real vs. fake without considering specific classes.</span>
+        <span class="nb">input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">img</span><span class="p">,</span> <span class="n">label_embedding</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Forward pass through the discriminator model</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize models</span>
+<span class="n">z_size</span> <span class="o">=</span> <span class="mi">128</span>
+<span class="n">n_classes</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">n_filters</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+<span class="n">gen_model</span> <span class="o">=</span> <span class="n">ConditionalGenerator</span><span class="p">(</span><span class="n">z_size</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">gen_model</span><span class="p">)</span>
+<span class="n">disc_model</span> <span class="o">=</span> <span class="n">ConditionalDiscriminator</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">disc_model</span><span class="p">)</span>
+
+<span class="c1"># Loss and optimizers</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BCELoss</span><span class="p">()</span>
+<span class="n">g_optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">gen_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0003</span><span class="p">)</span>
+<span class="n">d_optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">disc_model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.0002</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ConditionalGenerator(
+  (label_embedding): Embedding(10, 128)
+  (initial): ConvTranspose2d(128, 256, kernel_size=(4, 4), stride=(1, 1), bias=False)
+  (initial_bn): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+  (initial_act): LeakyReLU(negative_slope=0.2, inplace=True)
+  (noise_injection): Sequential(
+    (0): Conv2d(128, 256, kernel_size=(1, 1), stride=(1, 1))
+    (1): Tanh()
+  )
+  (upsample): Sequential(
+    (0): ConvTranspose2d(256, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    (1): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (2): LeakyReLU(negative_slope=0.2, inplace=True)
+    (3): ConvTranspose2d(128, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (4): BatchNorm2d(64, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): LeakyReLU(negative_slope=0.2, inplace=True)
+    (6): ConvTranspose2d(64, 1, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (7): Tanh()
+  )
+)
+ConditionalDiscriminator(
+  (label_embedding): Embedding(10, 784)
+  (model): Sequential(
+    (0): Conv2d(2, 64, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (1): LeakyReLU(negative_slope=0.2, inplace=True)
+    (2): Dropout2d(p=0.3, inplace=False)
+    (3): Conv2d(64, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1), bias=False)
+    (4): BatchNorm2d(128, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (5): LeakyReLU(negative_slope=0.2, inplace=True)
+    (6): Dropout2d(p=0.3, inplace=False)
+    (7): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1), bias=False)
+    (8): BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+    (9): LeakyReLU(negative_slope=0.2, inplace=True)
+    (10): Conv2d(256, 1, kernel_size=(4, 4), stride=(1, 1), bias=False)
+    (11): Sigmoid()
+  )
+)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Helper functions</span>
+<span class="k">def</span> <span class="nf">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;uniform&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;normal&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Train the discriminator (for cDCGAN)</span>
+<span class="k">def</span> <span class="nf">d_train</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="c1"># Zero the gradients for the discriminator</span>
+    <span class="n">disc_model</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="c1"># Train discriminator with a real batch</span>
+    <span class="c1"># ======================================</span>
+    <span class="c1"># In a Conditional GAN, we not only provide real images (x) but also the corresponding labels.</span>
+    <span class="c1"># These labels allow the discriminator to understand the &quot;context&quot; of each real image.</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># Move images to the device (e.g., GPU)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># Move labels to the device</span>
+
+    <span class="c1"># Real labels for real images</span>
+    <span class="n">d_labels_real</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="c1"># Get discriminator&#39;s prediction on real images with correct labels</span>
+    <span class="n">d_proba_real</span> <span class="o">=</span> <span class="n">disc_model</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>  <span class="c1"># In a DCGAN, only x (images) would be used here</span>
+    <span class="n">d_loss_real</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">d_proba_real</span><span class="p">,</span> <span class="n">d_labels_real</span><span class="p">)</span>  <span class="c1"># Compute loss for real images</span>
+
+    <span class="c1"># Train discriminator on a fake batch</span>
+    <span class="c1"># ===================================</span>
+    <span class="c1"># To generate a fake batch, we use random noise and random labels. The generator uses</span>
+    <span class="c1"># both to create images that correspond to specific labels.</span>
+    <span class="n">input_z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">fake_labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># Random labels</span>
+    <span class="n">g_output</span> <span class="o">=</span> <span class="n">gen_model</span><span class="p">(</span><span class="n">input_z</span><span class="p">,</span> <span class="n">fake_labels</span><span class="p">)</span>  <span class="c1"># Generate images conditioned on these labels</span>
+
+    <span class="c1"># Get discriminator&#39;s prediction on fake images with fake labels</span>
+    <span class="n">d_proba_fake</span> <span class="o">=</span> <span class="n">disc_model</span><span class="p">(</span><span class="n">g_output</span><span class="p">,</span> <span class="n">fake_labels</span><span class="p">)</span>  <span class="c1"># In a DCGAN, labels aren&#39;t used here</span>
+    <span class="n">d_labels_fake</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="c1"># Compute loss for fake images</span>
+    <span class="n">d_loss_fake</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">d_proba_fake</span><span class="p">,</span> <span class="n">d_labels_fake</span><span class="p">)</span>
+
+    <span class="c1"># Gradient backpropagation &amp; update ONLY discriminator&#39;s parameters</span>
+    <span class="n">d_loss</span> <span class="o">=</span> <span class="n">d_loss_real</span> <span class="o">+</span> <span class="n">d_loss_fake</span>
+    <span class="n">d_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">d_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Return discriminator loss and probabilities for analysis</span>
+    <span class="k">return</span> <span class="n">d_loss</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">(),</span> <span class="n">d_proba_real</span><span class="o">.</span><span class="n">detach</span><span class="p">(),</span> <span class="n">d_proba_fake</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Train the generator (for cDCGAN)</span>
+<span class="k">def</span> <span class="nf">g_train</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+    <span class="c1"># Zero the gradients for the generator</span>
+    <span class="n">gen_model</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="c1"># Get batch size from the input images</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Generate a batch of noise vectors and random labels for the fake images</span>
+    <span class="n">input_z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">g_labels_real</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># Real labels for generator loss</span>
+
+    <span class="c1"># Generate random labels for conditioning the fake images</span>
+    <span class="n">fake_labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_classes</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,),</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>  <span class="c1"># Random labels</span>
+
+    <span class="c1"># Generate fake images conditioned on random labels</span>
+    <span class="n">g_output</span> <span class="o">=</span> <span class="n">gen_model</span><span class="p">(</span><span class="n">input_z</span><span class="p">,</span> <span class="n">fake_labels</span><span class="p">)</span>  <span class="c1"># In a DCGAN, labels are not used</span>
+
+    <span class="c1"># Get discriminator&#39;s prediction on the fake images and labels</span>
+    <span class="n">d_proba_fake</span> <span class="o">=</span> <span class="n">disc_model</span><span class="p">(</span><span class="n">g_output</span><span class="p">,</span> <span class="n">fake_labels</span><span class="p">)</span>  <span class="c1"># In a DCGAN, labels are not included</span>
+    <span class="n">g_loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">d_proba_fake</span><span class="p">,</span> <span class="n">g_labels_real</span><span class="p">)</span>  <span class="c1"># Goal: make discriminator believe fake images are real</span>
+
+    <span class="c1"># Gradient backpropagation &amp; optimize ONLY generator&#39;s parameters</span>
+    <span class="n">g_loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">g_optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="c1"># Return generator loss for analysis</span>
+    <span class="k">return</span> <span class="n">g_loss</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fixed_labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_classes</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">batch_size</span> <span class="o">//</span> <span class="n">n_classes</span><span class="p">)[:</span><span class="n">batch_size</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="p">(</span><span class="n">fixed_labels</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">fixed_labels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>torch.Size([128])
+tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3,
+        4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7,
+        8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1,
+        2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5,
+        6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+        0, 1, 2, 3, 4, 5, 6, 7], device=&#39;cuda:0&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mode_z</span> <span class="o">=</span> <span class="s1">&#39;uniform&#39;</span>
+<span class="n">fixed_z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">fixed_labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_classes</span><span class="p">)</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">batch_size</span> <span class="o">//</span> <span class="n">n_classes</span><span class="p">)[:</span><span class="n">batch_size</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_samples</span><span class="p">(</span><span class="n">g_model</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">input_z</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">):</span>
+    <span class="n">g_output</span> <span class="o">=</span> <span class="n">g_model</span><span class="p">(</span><span class="n">input_z</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">g_output</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="o">*</span><span class="n">image_size</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">images</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+
+
+<span class="n">epoch_samples</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">gen_model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="n">d_losses</span><span class="p">,</span> <span class="n">g_losses</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mnist_dl</span><span class="p">):</span>
+        <span class="n">d_loss</span><span class="p">,</span> <span class="n">d_proba_real</span><span class="p">,</span> <span class="n">d_proba_fake</span> <span class="o">=</span> <span class="n">d_train</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">d_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_loss</span><span class="p">)</span>
+        <span class="n">g_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">g_train</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">:</span><span class="s1">03d</span><span class="si">}</span><span class="s1"> | Avg Losses &gt;&gt;&#39;</span>
+          <span class="sa">f</span><span class="s1">&#39; G/D </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">g_losses</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span>
+          <span class="sa">f</span><span class="s1">&#39;/</span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="n">d_losses</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">gen_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">epoch_samples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">create_samples</span><span class="p">(</span><span class="n">gen_model</span><span class="p">,</span> <span class="n">fixed_labels</span><span class="p">,</span> <span class="n">fixed_z</span><span class="p">,</span> <span class="n">batch_size</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 001 | Avg Losses &gt;&gt; G/D 1.3045/1.0568
+Epoch 002 | Avg Losses &gt;&gt; G/D 1.3590/1.1061
+Epoch 003 | Avg Losses &gt;&gt; G/D 1.1801/1.1249
+Epoch 004 | Avg Losses &gt;&gt; G/D 1.1394/1.1611
+Epoch 005 | Avg Losses &gt;&gt; G/D 1.0972/1.1993
+Epoch 006 | Avg Losses &gt;&gt; G/D 1.0568/1.1764
+Epoch 007 | Avg Losses &gt;&gt; G/D 1.0538/1.2054
+Epoch 008 | Avg Losses &gt;&gt; G/D 1.0619/1.2110
+Epoch 009 | Avg Losses &gt;&gt; G/D 1.0554/1.2226
+Epoch 010 | Avg Losses &gt;&gt; G/D 0.9812/1.2321
+Epoch 011 | Avg Losses &gt;&gt; G/D 1.0352/1.2613
+Epoch 012 | Avg Losses &gt;&gt; G/D 0.9815/1.2282
+Epoch 013 | Avg Losses &gt;&gt; G/D 1.0122/1.2421
+Epoch 014 | Avg Losses &gt;&gt; G/D 0.9789/1.2596
+Epoch 015 | Avg Losses &gt;&gt; G/D 0.9296/1.2568
+Epoch 016 | Avg Losses &gt;&gt; G/D 0.9582/1.2712
+Epoch 017 | Avg Losses &gt;&gt; G/D 0.9345/1.2588
+Epoch 018 | Avg Losses &gt;&gt; G/D 0.9795/1.2617
+Epoch 019 | Avg Losses &gt;&gt; G/D 0.9454/1.2747
+Epoch 020 | Avg Losses &gt;&gt; G/D 0.9069/1.2905
+Epoch 021 | Avg Losses &gt;&gt; G/D 0.9403/1.2760
+Epoch 022 | Avg Losses &gt;&gt; G/D 0.9052/1.2977
+Epoch 023 | Avg Losses &gt;&gt; G/D 0.8986/1.2856
+Epoch 024 | Avg Losses &gt;&gt; G/D 0.9336/1.2885
+Epoch 025 | Avg Losses &gt;&gt; G/D 0.9167/1.2993
+Epoch 026 | Avg Losses &gt;&gt; G/D 0.8909/1.2968
+Epoch 027 | Avg Losses &gt;&gt; G/D 0.8940/1.2939
+Epoch 028 | Avg Losses &gt;&gt; G/D 0.8784/1.3236
+Epoch 029 | Avg Losses &gt;&gt; G/D 0.8896/1.3139
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="n">selected_epochs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">29</span><span class="p">]</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">selected_epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">i</span><span class="o">*</span><span class="mi">10</span><span class="o">+</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                <span class="o">-</span><span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Epoch </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+                <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
+                <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>
+                <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+
+        <span class="n">image</span> <span class="o">=</span> <span class="n">epoch_samples</span><span class="p">[</span><span class="n">e</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5084c996e8b76362a226642010f703c2465a75e9af70cf26381f8e812e722511.png" src="_images/5084c996e8b76362a226642010f703c2465a75e9af70cf26381f8e812e722511.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">torchvision.utils</span> <span class="kn">import</span> <span class="n">make_grid</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">digit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_classes</span><span class="p">):</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">z_size</span><span class="p">,</span> <span class="n">mode_z</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">10</span><span class="p">,),</span> <span class="n">digit</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="n">create_samples</span><span class="p">(</span><span class="n">gen_model</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">digit</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">digit</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">axs</span><span class="p">[</span><span class="n">digit</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Label </span><span class="si">{</span><span class="n">digit</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Rows = Same Label, Varying z&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/904b920e297d09bc0857d90e4588a1ffb6973e83ec52b29699f372b48cbf3236.png" src="_images/904b920e297d09bc0857d90e4588a1ffb6973e83ec52b29699f372b48cbf3236.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#  Generate a Digit by Label</span>
+
+
+<span class="k">def</span> <span class="nf">generate_digit_by_label</span><span class="p">(</span><span class="n">gen_model</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">z_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">):</span>
+    <span class="n">gen_model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="n">label_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">label</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">device</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">generated</span> <span class="o">=</span> <span class="n">gen_model</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">label_tensor</span><span class="p">)</span>
+
+    <span class="n">image</span> <span class="o">=</span> <span class="p">(</span><span class="n">generated</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated Digit: </span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">generate_digit_by_label</span><span class="p">(</span><span class="n">gen_model</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">z_dim</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;uniform&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2c63aaa299f73e8f5d4c77f557ba04eb71014901053f1cf6aa07084a6f76946c.png" src="_images/2c63aaa299f73e8f5d4c77f557ba04eb71014901053f1cf6aa07084a6f76946c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">create_noise</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">z_size</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="n">images</span> <span class="o">=</span> <span class="n">gen_model</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
+
+<span class="c1"># Plot results</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Variation for Label 3&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/15967930175fee3c343b10e91adbb860afa382df652562cacf359c0eeac54ddf.png" src="_images/15967930175fee3c343b10e91adbb860afa382df652562cacf359c0eeac54ddf.png" />
+</div>
+</div>
+<section id="practical-considerations">
+<h3><span class="section-number">26.3.1. </span>Practical Considerations<a class="headerlink" href="#practical-considerations" title="Link to this heading">#</a></h3>
+</section>
+<section id="stabilizing-training">
+<h3><span class="section-number">26.3.2. </span><strong>Stabilizing Training</strong><a class="headerlink" href="#stabilizing-training" title="Link to this heading">#</a></h3>
+<p>GANs are notoriously difficult to train due to instability and mode collapse. Here are some techniques to stabilize training:</p>
+<ul class="simple">
+<li><p><strong>Label Smoothing:</strong> Use soft labels for the Discriminator (e.g., replace 1 with 0.9 for real images).</p></li>
+<li><p><strong>Feature Matching:</strong> Modify the Generator’s loss to match features from intermediate layers of the Discriminator.</p></li>
+<li><p><strong>Gradient Penalty:</strong> Add a penalty term to the Discriminator’s loss to enforce Lipschitz continuity.</p></li>
+</ul>
+<section id="loss-function-variations">
+<h4><span class="section-number">26.3.2.1. </span><strong>Loss Function Variations</strong><a class="headerlink" href="#loss-function-variations" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Least Squares GAN (LSGAN):</strong></p>
+<ul>
+<li><p><strong>Discriminator Loss:</strong></p></li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_D = \frac{1}{2} \mathbb{E}_{x \sim p_{\text{data}}(x)} [(D(x | y) - 1)^2] + \frac{1}{2} \mathbb{E}_{z \sim p_z(z)} [D(G(z | y) | y)^2]
+\]</div>
+<ul class="simple">
+<li><p><strong>Generator Loss:</strong></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_G = \frac{1}{2} \mathbb{E}_{z \sim p_z(z)} [(D(G(z | y) | y) - 1)^2]
+\]</div>
+<ul class="simple">
+<li><p><strong>Wasserstein GAN (WGAN):</strong></p>
+<ul>
+<li><p>Introduces the Wasserstein distance as a measure of divergence.</p></li>
+<li><p><strong>Discriminator (Critic) Loss:</strong></p></li>
+</ul>
+</li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_D = \mathbb{E}_{x \sim p_{\text{data}}(x)} [D(x | y)] - \mathbb{E}_{z \sim p_z(z)} [D(G(z | y) | y)]
+\]</div>
+<ul class="simple">
+<li><p><strong>Generator Loss:</strong></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_G = -\mathbb{E}_{z \sim p_z(z)} [D(G(z | y) | y)]
+\]</div>
+</section>
+<section id="conditioning-methods">
+<h4><span class="section-number">26.3.2.2. </span><strong>Conditioning Methods</strong><a class="headerlink" href="#conditioning-methods" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Concatenation:</strong> Concatenate the conditioning variable <span class="math notranslate nohighlight">\( y \)</span> with the input at the input layer.</p></li>
+<li><p><strong>Projection:</strong> Use projection-based methods to incorporate <span class="math notranslate nohighlight">\( y \)</span> within the Discriminator.</p></li>
+</ul>
+</section>
+<section id="implementation-tips">
+<h4><span class="section-number">26.3.2.3. </span><strong>Implementation Tips</strong><a class="headerlink" href="#implementation-tips" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Batch Normalization:</strong> Apply carefully, considering the conditioning variables.</p></li>
+<li><p><strong>Learning Rates:</strong> Use different learning rates for <span class="math notranslate nohighlight">\( G \)</span> and <span class="math notranslate nohighlight">\( D \)</span>.</p></li>
+<li><p><strong>Optimizer Choice:</strong> Adam optimizer is commonly used with carefully tuned hyperparameters.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="summary">
+<h2><span class="section-number">26.4. </span>Summary<a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>Check out the extensive list of GAN from this interesting <a class="reference external" href="https://github.com/hindupuravinash/the-gan-zoo">repository</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "cfteach/NNDL_2025",
+            ref: "webpage-src",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lec17_GAN_part3.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">25. </span>Generative Adverserial Network</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="referencesmc.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">References</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-conditional-gan-for-mnist-dataset">26.1. Using Conditional GAN for MNIST dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-idea">26.1.1. 1. <strong>Core Idea</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#generator-architecture">26.1.2. 2. <strong>Generator Architecture</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discriminator-architecture">26.1.3. 3. <strong>Discriminator Architecture</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-distributions">26.1.3.1. <strong>Conditional Probability Distributions</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#objective-function">26.1.3.2. <strong>Objective Function</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function">26.1.4. 4. <strong>Loss Function</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#discriminator-loss">26.1.4.1. <strong>Discriminator Loss</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#generator-loss">26.1.4.2. <strong>Generator Loss</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#combining-the-loss-functions">26.2. 5. Combining the Loss Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-objective">26.2.1. 6. <strong>Training Objective</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#training-process">26.2.1.1. <strong>Training Process</strong></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-benefits">26.2.2. 7. <strong>Applications and Benefits</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-table">26.2.3. Summary Table</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#train-the-dcgan-model">26.3. Train the DCGAN model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-considerations">26.3.1. Practical Considerations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stabilizing-training">26.3.2. <strong>Stabilizing Training</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function-variations">26.3.2.1. <strong>Loss Function Variations</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conditioning-methods">26.3.2.2. <strong>Conditioning Methods</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-tips">26.3.2.3. <strong>Implementation Tips</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">26.4. Summary</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Cristiano Fanelli
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+<div class="extra_footer">
+  NNDL_2025
+</div>
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

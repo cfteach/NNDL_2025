@@ -7,7 +7,7 @@ The course schedule is updated regularly. Please check it frequently for the lat
 - J. Giroux (TA) office hours: Friday, 11:30-1:30, office ISC-1109
 
 
-Last update: (4/2/2025)
+Last update: (4/14/2025)
 
 ## Week 1 (Mon, Jan 20 - Sun, Jan 26)
 
@@ -200,7 +200,7 @@ Last update: (4/2/2025)
 |----------------|-------------------------------------------------|----------------------------------|-----------------------------------------|-----------------------------------------------|------------------------------------------|
 | 9:30am-11:30am|       |                 |              |    | Office hours (C. Fanelli, Prof) | 
 | 11:30am-1:30pm|       |                 |              |    | Office hours (J. Giroux, TA) | 
-| 2:00pm-3:20pm  | |  **Lecture:** Convolutional and Wasserstein GAN <br> **What to learn:** WGAN, DCGAN  |  | **Lecture:** conditional GAN | |
+| 2:00pm-3:20pm  | |  **Lecture:** Convolutional and Wasserstein GAN <br> **What to learn:** WGAN, DCGAN  |  | **Lecture:** WGAN | |
 </table>
 <table>
 <tr>
