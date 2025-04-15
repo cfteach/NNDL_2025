@@ -919,8 +919,9 @@ GPU Available: True
         <span class="nb">super</span><span class="p">(</span><span class="n">ConditionalGenerator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">label_embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span><span class="n">n_classes</span><span class="p">,</span> <span class="n">z_dim</span><span class="p">)</span>
+        <span class="c1"># each class mapped into a z_dim, hence [B, z_dim, 1, 1]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">z_dim</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1">#z_dim + z_dim</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initial</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">z_dim</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># (B, z_dim, 1, 1) -&gt; (B, n_filters*4, 4, 4)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_bn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">initial_act</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
@@ -928,18 +929,28 @@ GPU Available: True
         <span class="bp">self</span><span class="o">.</span><span class="n">noise_injection</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">z_dim</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span>
-        <span class="p">)</span>
+        <span class="p">)</span>  <span class="c1"># (B, z_dim, 1, 1) -&gt; (B, n_filters*4, 1, 1)</span>
 
+
+        <span class="c1"># input is (B, n_filters*4, 4, 4)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">upsample</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="c1"># torch.nn.ConvTranspose2d(in_channels, out_channels, kernel_size, stride, padding)</span>
+            <span class="c1"># o = (n-1)*s - 2p + k + o_p</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># o = 3*2 - 2 + 3 = 7</span>
+            <span class="c1">#  (B,n_filters*2,7,7)</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
 
             <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_filters</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># o = 6*2 - 2 + 4 = 14</span>
+            <span class="c1">#  (B,n_filters,14,14)</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">n_filters</span><span class="p">),</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">LeakyReLU</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
 
             <span class="n">nn</span><span class="o">.</span><span class="n">ConvTranspose2d</span><span class="p">(</span><span class="n">n_filters</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+            <span class="c1"># o = 13*2 - 2 + 4 = 28</span>
+            <span class="c1">#  (B,1,28,28)</span>
             <span class="n">nn</span><span class="o">.</span><span class="n">Tanh</span><span class="p">()</span>
         <span class="p">)</span>
 
@@ -949,15 +960,17 @@ GPU Available: True
 
         <span class="n">label_embedding</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_embedding</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="nb">input</span> <span class="o">=</span> <span class="n">noise</span> <span class="o">*</span> <span class="n">label_embedding</span>  <span class="c1"># Element-wise multiplication</span>
+        <span class="c1"># noise: [B, z_dim, 1, 1]</span>
+        <span class="c1"># label_embedding: [B, z_dim, 1, 1]</span>
 
 
         <span class="c1"># Initial upsampling</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>                           <span class="c1"># (B, z_dim, 1, 1) -&gt; (B, n_filters*4, 4, 4)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_bn</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">initial_act</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
 
         <span class="c1"># Inject noise directly into feature map (residual connection)</span>
-        <span class="n">noise_injected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_injection</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>
+        <span class="n">noise_injected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise_injection</span><span class="p">(</span><span class="n">noise</span><span class="p">)</span>        <span class="c1"># (B, z_dim, 1, 1) -&gt; (B, n_filters*4, 1, 1)</span>
         <span class="n">out</span> <span class="o">=</span> <span class="n">out</span> <span class="o">+</span> <span class="n">noise_injected</span>  <span class="c1"># Broadcasted addition</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">upsample</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
