@@ -902,10 +902,10 @@ GPU Available: True
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 9.91M/9.91M [00:10&lt;00:00, 913kB/s] 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 9.91M/9.91M [00:02&lt;00:00, 4.62MB/s]
 100%|██████████| 28.9k/28.9k [00:00&lt;00:00, 134kB/s]
-100%|██████████| 1.65M/1.65M [00:01&lt;00:00, 1.28MB/s]
-100%|██████████| 4.54k/4.54k [00:00&lt;00:00, 6.40MB/s]
+100%|██████████| 1.65M/1.65M [00:01&lt;00:00, 1.27MB/s]
+100%|██████████| 4.54k/4.54k [00:00&lt;00:00, 7.47MB/s]
 </pre></div>
 </div>
 </div>
@@ -1236,35 +1236,56 @@ tensor([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3,
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 001 | Avg Losses &gt;&gt; G/D 1.3045/1.0568
-Epoch 002 | Avg Losses &gt;&gt; G/D 1.3590/1.1061
-Epoch 003 | Avg Losses &gt;&gt; G/D 1.1801/1.1249
-Epoch 004 | Avg Losses &gt;&gt; G/D 1.1394/1.1611
-Epoch 005 | Avg Losses &gt;&gt; G/D 1.0972/1.1993
-Epoch 006 | Avg Losses &gt;&gt; G/D 1.0568/1.1764
-Epoch 007 | Avg Losses &gt;&gt; G/D 1.0538/1.2054
-Epoch 008 | Avg Losses &gt;&gt; G/D 1.0619/1.2110
-Epoch 009 | Avg Losses &gt;&gt; G/D 1.0554/1.2226
-Epoch 010 | Avg Losses &gt;&gt; G/D 0.9812/1.2321
-Epoch 011 | Avg Losses &gt;&gt; G/D 1.0352/1.2613
-Epoch 012 | Avg Losses &gt;&gt; G/D 0.9815/1.2282
-Epoch 013 | Avg Losses &gt;&gt; G/D 1.0122/1.2421
-Epoch 014 | Avg Losses &gt;&gt; G/D 0.9789/1.2596
-Epoch 015 | Avg Losses &gt;&gt; G/D 0.9296/1.2568
-Epoch 016 | Avg Losses &gt;&gt; G/D 0.9582/1.2712
-Epoch 017 | Avg Losses &gt;&gt; G/D 0.9345/1.2588
-Epoch 018 | Avg Losses &gt;&gt; G/D 0.9795/1.2617
-Epoch 019 | Avg Losses &gt;&gt; G/D 0.9454/1.2747
-Epoch 020 | Avg Losses &gt;&gt; G/D 0.9069/1.2905
-Epoch 021 | Avg Losses &gt;&gt; G/D 0.9403/1.2760
-Epoch 022 | Avg Losses &gt;&gt; G/D 0.9052/1.2977
-Epoch 023 | Avg Losses &gt;&gt; G/D 0.8986/1.2856
-Epoch 024 | Avg Losses &gt;&gt; G/D 0.9336/1.2885
-Epoch 025 | Avg Losses &gt;&gt; G/D 0.9167/1.2993
-Epoch 026 | Avg Losses &gt;&gt; G/D 0.8909/1.2968
-Epoch 027 | Avg Losses &gt;&gt; G/D 0.8940/1.2939
-Epoch 028 | Avg Losses &gt;&gt; G/D 0.8784/1.3236
-Epoch 029 | Avg Losses &gt;&gt; G/D 0.8896/1.3139
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epoch 001 | Avg Losses &gt;&gt; G/D 4.4991/0.2348
+Epoch 002 | Avg Losses &gt;&gt; G/D 4.1311/0.2754
+Epoch 003 | Avg Losses &gt;&gt; G/D 3.6849/0.3744
+Epoch 004 | Avg Losses &gt;&gt; G/D 2.6861/0.6474
+Epoch 005 | Avg Losses &gt;&gt; G/D 2.0610/0.8439
+Epoch 006 | Avg Losses &gt;&gt; G/D 1.7810/0.8526
+Epoch 007 | Avg Losses &gt;&gt; G/D 1.7568/0.8621
+Epoch 008 | Avg Losses &gt;&gt; G/D 1.6006/0.9888
+Epoch 009 | Avg Losses &gt;&gt; G/D 1.5149/0.9898
+Epoch 010 | Avg Losses &gt;&gt; G/D 1.3822/1.0436
+Epoch 011 | Avg Losses &gt;&gt; G/D 1.3257/1.1047
+Epoch 012 | Avg Losses &gt;&gt; G/D 1.2473/1.1295
+Epoch 013 | Avg Losses &gt;&gt; G/D 1.1824/1.1849
+Epoch 014 | Avg Losses &gt;&gt; G/D 1.1394/1.1972
+Epoch 015 | Avg Losses &gt;&gt; G/D 1.1285/1.2039
+Epoch 016 | Avg Losses &gt;&gt; G/D 1.1295/1.2027
+Epoch 017 | Avg Losses &gt;&gt; G/D 1.1030/1.2003
+Epoch 018 | Avg Losses &gt;&gt; G/D 1.0856/1.2085
+Epoch 019 | Avg Losses &gt;&gt; G/D 1.0236/1.2119
+Epoch 020 | Avg Losses &gt;&gt; G/D 1.0069/1.2375
+Epoch 021 | Avg Losses &gt;&gt; G/D 1.0442/1.2269
+Epoch 022 | Avg Losses &gt;&gt; G/D 0.9935/1.2431
+Epoch 023 | Avg Losses &gt;&gt; G/D 0.9744/1.2319
+Epoch 024 | Avg Losses &gt;&gt; G/D 1.0105/1.2330
+Epoch 025 | Avg Losses &gt;&gt; G/D 0.9907/1.2655
+Epoch 026 | Avg Losses &gt;&gt; G/D 0.9535/1.2556
+Epoch 027 | Avg Losses &gt;&gt; G/D 0.9626/1.2532
+Epoch 028 | Avg Losses &gt;&gt; G/D 0.9820/1.2821
+Epoch 029 | Avg Losses &gt;&gt; G/D 0.9307/1.2909
+Epoch 030 | Avg Losses &gt;&gt; G/D 0.9442/1.2664
+Epoch 031 | Avg Losses &gt;&gt; G/D 0.9464/1.2595
+Epoch 032 | Avg Losses &gt;&gt; G/D 0.9540/1.2707
+Epoch 033 | Avg Losses &gt;&gt; G/D 0.9512/1.2571
+Epoch 034 | Avg Losses &gt;&gt; G/D 0.9342/1.2812
+Epoch 035 | Avg Losses &gt;&gt; G/D 0.9587/1.2822
+Epoch 036 | Avg Losses &gt;&gt; G/D 0.9697/1.2965
+Epoch 037 | Avg Losses &gt;&gt; G/D 0.9213/1.2768
+Epoch 038 | Avg Losses &gt;&gt; G/D 0.9461/1.2625
+Epoch 039 | Avg Losses &gt;&gt; G/D 0.9786/1.2688
+Epoch 040 | Avg Losses &gt;&gt; G/D 0.9154/1.2823
+Epoch 041 | Avg Losses &gt;&gt; G/D 0.8929/1.2856
+Epoch 042 | Avg Losses &gt;&gt; G/D 0.9075/1.2966
+Epoch 043 | Avg Losses &gt;&gt; G/D 0.9428/1.2892
+Epoch 044 | Avg Losses &gt;&gt; G/D 0.9379/1.2762
+Epoch 045 | Avg Losses &gt;&gt; G/D 0.8922/1.3063
+Epoch 046 | Avg Losses &gt;&gt; G/D 0.8880/1.2910
+Epoch 047 | Avg Losses &gt;&gt; G/D 0.9105/1.2941
+Epoch 048 | Avg Losses &gt;&gt; G/D 0.9189/1.3033
+Epoch 049 | Avg Losses &gt;&gt; G/D 0.9122/1.2866
+Epoch 050 | Avg Losses &gt;&gt; G/D 0.9036/1.2754
 </pre></div>
 </div>
 </div>
@@ -1295,7 +1316,7 @@ Epoch 029 | Avg Losses &gt;&gt; G/D 0.8896/1.3139
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/5084c996e8b76362a226642010f703c2465a75e9af70cf26381f8e812e722511.png" src="_images/5084c996e8b76362a226642010f703c2465a75e9af70cf26381f8e812e722511.png" />
+<img alt="_images/d398cf6e0073397c130a772fea215bdec6dada42348022050867c706bed0c961.png" src="_images/d398cf6e0073397c130a772fea215bdec6dada42348022050867c706bed0c961.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1323,7 +1344,7 @@ Epoch 029 | Avg Losses &gt;&gt; G/D 0.8896/1.3139
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/904b920e297d09bc0857d90e4588a1ffb6973e83ec52b29699f372b48cbf3236.png" src="_images/904b920e297d09bc0857d90e4588a1ffb6973e83ec52b29699f372b48cbf3236.png" />
+<img alt="_images/a92f5279d1fa7031d48f21f231cd50a16b5c227507abcc0a25d5a97fab0f959b.png" src="_images/a92f5279d1fa7031d48f21f231cd50a16b5c227507abcc0a25d5a97fab0f959b.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1357,7 +1378,7 @@ Epoch 029 | Avg Losses &gt;&gt; G/D 0.8896/1.3139
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/2c63aaa299f73e8f5d4c77f557ba04eb71014901053f1cf6aa07084a6f76946c.png" src="_images/2c63aaa299f73e8f5d4c77f557ba04eb71014901053f1cf6aa07084a6f76946c.png" />
+<img alt="_images/bb5dabb1a30832bb9dd751795b1fd5874df72f8c38cca0ead77bd0b6ede613f3.png" src="_images/bb5dabb1a30832bb9dd751795b1fd5874df72f8c38cca0ead77bd0b6ede613f3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1379,7 +1400,7 @@ Epoch 029 | Avg Losses &gt;&gt; G/D 0.8896/1.3139
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/15967930175fee3c343b10e91adbb860afa382df652562cacf359c0eeac54ddf.png" src="_images/15967930175fee3c343b10e91adbb860afa382df652562cacf359c0eeac54ddf.png" />
+<img alt="_images/b401517746bb5a005de2629b7447a6f8edef7b7f5bb308224a5502501248fac9.png" src="_images/b401517746bb5a005de2629b7447a6f8edef7b7f5bb308224a5502501248fac9.png" />
 </div>
 </div>
 <section id="practical-considerations">
