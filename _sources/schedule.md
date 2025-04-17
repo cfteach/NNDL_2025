@@ -265,7 +265,7 @@ Last update: (4/14/2025)
 </table>
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Exams / presentations - May 5-9; May 12-13
+<td colspan="7" align="center"><span style="color:red"><strong>Exams / presentations - May 6, 2:00 PM – 5:00 PM, ISC 1291
  </strong></span></td>
 </tr>
 </table>
