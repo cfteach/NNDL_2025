@@ -7,7 +7,7 @@ The course schedule is updated regularly. Please check it frequently for the lat
 - J. Giroux (TA) office hours: Friday, 11:30-1:30, office ISC-1109
 
 
-Last update: (4/14/2025)
+Last update: (4/17/2025)
 
 ## Week 1 (Mon, Jan 20 - Sun, Jan 26)
 
@@ -204,7 +204,7 @@ Last update: (4/14/2025)
 </table>
 <table>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 3 (assigned Apr 10; due Apr 17)</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 3 (assigned Apr 10; due Apr 20)</strong></span></td>
 </tr>
 <tr>
 <td colspan="7" align="center"><span style="color:purple"><strong>Readings: Raschka, Chap. 17</strong></span></td>
@@ -221,10 +221,10 @@ Last update: (4/14/2025)
 <table>
 
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong> Reminder Assignment 3 due Apr 17 (new date)
+<td colspan="7" align="center"><span style="color:red"><strong> Reminder Assignment 3 due Apr 20 (new date)
 </tr>
 <tr>
-<td colspan="7" align="center"><span style="color:red"><strong>Assignment 4 (assigned Apr 19; due Apr 27)</strong></span></td>
+<td colspan="7" align="center"><span style="color:red"><strong>Assignment 4 (assigned Apr 21; due Apr 27)</strong></span></td>
 </tr>
 </table>
 <table>
