@@ -94,6 +94,8 @@ commentsRunWhenDOMLoaded(addUtterances);
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = '04_17_2025_lec21_GNN_part2_v2';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="canonical" href="https://cfteach.github.io/NNDL_2025/04_17_2025_lec21_GNN_part2_v2.html" />
@@ -356,7 +358,7 @@ commentsRunWhenDOMLoaded(addUtterances);
 <li class="toctree-l1"><a class="reference internal" href="lec17_GAN_part3.html">25. Wasserstein GAN (WGAN)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_15_2025_lec20_cGAN.html">26. Conditional DCGAN (cDCGAN)</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">[4/15 - 4/17 - 4/22 2025] Graph Neural Networks</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">[4/15 - 4/17 - 4/22 - 4/24 2025] Graph Neural Networks</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="04_15_2025_lec20_GNN_part1_v2.html">27. An Intorduction to GNN (part1)</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">28. GNN Notebook (part2)</a></li>
@@ -638,7 +640,20 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#name-molecule-name">28.3.8. <code class="docutils literal notranslate"><span class="pre">name</span></code> (Molecule Name)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pointers-to-advanced-graph-neural-network-literature">28.4. Pointers to advanced graph neural network literature</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nnconv-neural-message-passing-convolution">28.4. <strong>NNConv: Neural Message Passing Convolution</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">28.4.1. 🔍 How it works</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">28.4.2. Parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-conditioned-learning-with-nnconv">28.5. <strong>Edge-Conditioned Learning with NNConv</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-nnconv-is-it-a-gcn">28.5.1. 🤔 What is NNConv? Is it a GCN?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-shapes">28.5.2. Tensor Shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">28.5.3. Model Architecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-edge-conditioned">28.5.4. Why Edge-Conditioned?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extension-to-multiple-layers">28.6. <strong>Extension to Multiple Layers</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-non-edge-aware-case">28.7. <strong>The Non Edge-Aware Case</strong></a></li>
 </ul>
             </nav>
         </div>
@@ -664,7 +679,7 @@ Requirement already satisfied: torchvision in /usr/local/lib/python3.11/dist-pac
 Requirement already satisfied: torchaudio in /usr/local/lib/python3.11/dist-packages (2.6.0+cu124)
 Collecting torch-geometric
   Downloading torch_geometric-2.6.1-py3-none-any.whl.metadata (63 kB)
-     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">63.1/63.1 kB</span> <span class=" -Color -Color-Red">3.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">63.1/63.1 kB</span> <span class=" -Color -Color-Red">3.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hRequirement already satisfied: networkx in /usr/local/lib/python3.11/dist-packages (3.4.2)
 Requirement already satisfied: matplotlib in /usr/local/lib/python3.11/dist-packages (3.10.0)
 Requirement already satisfied: filelock in /usr/local/lib/python3.11/dist-packages (from torch) (3.18.0)
@@ -726,25 +741,25 @@ Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.1
 Downloading nvidia_cublas_cu12-12.4.5.8-py3-none-manylinux2014_x86_64.whl (363.4 MB)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">363.4/363.4 MB</span> <span class=" -Color -Color-Red">4.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_cuda_cupti_cu12-12.4.127-py3-none-manylinux2014_x86_64.whl (13.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">13.8/13.8 MB</span> <span class=" -Color -Color-Red">114.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">13.8/13.8 MB</span> <span class=" -Color -Color-Red">32.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_cuda_nvrtc_cu12-12.4.127-py3-none-manylinux2014_x86_64.whl (24.6 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">24.6/24.6 MB</span> <span class=" -Color -Color-Red">85.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">24.6/24.6 MB</span> <span class=" -Color -Color-Red">34.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_cuda_runtime_cu12-12.4.127-py3-none-manylinux2014_x86_64.whl (883 kB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">883.7/883.7 kB</span> <span class=" -Color -Color-Red">56.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">883.7/883.7 kB</span> <span class=" -Color -Color-Red">26.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_cudnn_cu12-9.1.0.70-py3-none-manylinux2014_x86_64.whl (664.8 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">664.8/664.8 MB</span> <span class=" -Color -Color-Red">1.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">664.8/664.8 MB</span> <span class=" -Color -Color-Red">754.8 kB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_cufft_cu12-11.2.1.3-py3-none-manylinux2014_x86_64.whl (211.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">211.5/211.5 MB</span> <span class=" -Color -Color-Red">6.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">211.5/211.5 MB</span> <span class=" -Color -Color-Red">5.2 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_curand_cu12-10.3.5.147-py3-none-manylinux2014_x86_64.whl (56.3 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">56.3/56.3 MB</span> <span class=" -Color -Color-Red">13.5 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">56.3/56.3 MB</span> <span class=" -Color -Color-Red">15.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_cusolver_cu12-11.6.1.9-py3-none-manylinux2014_x86_64.whl (127.9 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">127.9/127.9 MB</span> <span class=" -Color -Color-Red">7.4 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">127.9/127.9 MB</span> <span class=" -Color -Color-Red">7.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_cusparse_cu12-12.3.1.170-py3-none-manylinux2014_x86_64.whl (207.5 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">207.5/207.5 MB</span> <span class=" -Color -Color-Red">5.6 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">207.5/207.5 MB</span> <span class=" -Color -Color-Red">5.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading nvidia_nvjitlink_cu12-12.4.127-py3-none-manylinux2014_x86_64.whl (21.1 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.1/21.1 MB</span> <span class=" -Color -Color-Red">86.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.1/21.1 MB</span> <span class=" -Color -Color-Red">106.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hDownloading torch_geometric-2.6.1-py3-none-any.whl (1.1 MB)
-   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.1/1.1 MB</span> <span class=" -Color -Color-Red">69.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.1/1.1 MB</span> <span class=" -Color -Color-Red">67.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
 ?25hInstalling collected packages: nvidia-nvjitlink-cu12, nvidia-curand-cu12, nvidia-cufft-cu12, nvidia-cuda-runtime-cu12, nvidia-cuda-nvrtc-cu12, nvidia-cuda-cupti-cu12, nvidia-cublas-cu12, nvidia-cusparse-cu12, nvidia-cudnn-cu12, torch-geometric, nvidia-cusolver-cu12
   Attempting uninstall: nvidia-nvjitlink-cu12
     Found existing installation: nvidia-nvjitlink-cu12 12.5.82
@@ -815,13 +830,6 @@ Successfully installed nvidia-cublas-cu12-12.4.5.8 nvidia-cuda-cupti-cu12-12.4.1
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading https://data.pyg.org/datasets/qm9_v3.zip
-Extracting ./raw/qm9_v3.zip
-Processing...
-Using a pre-processed version of the dataset. Please install &#39;rdkit&#39; to alternatively process the raw data.
-Done!
-</pre></div>
-</div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>130831
 </pre></div>
 </div>
@@ -888,14 +896,14 @@ Done!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># for example:</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">dset</span><span class="p">[</span><span class="mi">124</span><span class="p">]</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dset</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data(x=[13, 11], edge_index=[2, 24], edge_attr=[24, 4], y=[1, 19], pos=[13, 3], idx=[1], name=&#39;gdb_128&#39;, z=[13])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data(x=[7, 11], edge_index=[2, 14], edge_attr=[14, 4], y=[1, 19], pos=[7, 3], idx=[1], name=&#39;gdb_17&#39;, z=[7])
 &lt;class &#39;torch_geometric.data.data.Data&#39;&gt;
 </pre></div>
 </div>
@@ -908,19 +916,64 @@ Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0., 1., 0., 0., 0., 6., 0., 0., 0., 0., 3.],
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0., 1., 0., 0., 0., 6., 0., 0., 0., 0., 2.],
         [0., 1., 0., 0., 0., 6., 0., 0., 0., 0., 2.],
-        [0., 1., 0., 0., 0., 6., 0., 0., 0., 0., 2.],
-        [0., 1., 0., 0., 0., 6., 0., 0., 0., 0., 1.],
         [0., 0., 0., 1., 0., 8., 0., 0., 0., 0., 0.],
         [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
         [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
         [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
-        [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
-        [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
-        [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
-        [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.],
         [1., 0., 0., 0., 0., 1., 0., 0., 0., 0., 0.]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># atomic number</span>
+<span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">[:,</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([6., 6., 8., 1., 1., 1., 1.])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 0, 2, 5, 6, 0, 1, 0, 0, 1, 1]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">edge_attr</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.],
+        [1., 0., 0., 0.]])
 </pre></div>
 </div>
 </div>
@@ -1048,13 +1101,39 @@ Done!
 
 <span class="c1"># Inspect the graph</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">edges</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0, {&#39;x&#39;: [0.0, 1.0, 0.0, 0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0, 3.0]}), (1, {&#39;x&#39;: [0.0, 1.0, 0.0, 0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0, 2.0]}), (2, {&#39;x&#39;: [0.0, 1.0, 0.0, 0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0, 2.0]}), (3, {&#39;x&#39;: [0.0, 1.0, 0.0, 0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0, 1.0]}), (4, {&#39;x&#39;: [0.0, 0.0, 0.0, 1.0, 0.0, 8.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (5, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (6, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (7, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (8, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (9, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (10, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (11, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (12, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]})]
-[(0, 1, {}), (0, 5, {}), (0, 6, {}), (0, 7, {}), (1, 0, {}), (1, 2, {}), (1, 8, {}), (1, 9, {}), (2, 1, {}), (2, 3, {}), (2, 10, {}), (2, 11, {}), (3, 2, {}), (3, 4, {}), (3, 12, {}), (4, 3, {}), (5, 0, {}), (6, 0, {}), (7, 0, {}), (8, 1, {}), (9, 1, {}), (10, 2, {}), (11, 2, {}), (12, 3, {})]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(0, {&#39;x&#39;: [0.0, 1.0, 0.0, 0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0, 2.0]}), (1, {&#39;x&#39;: [0.0, 1.0, 0.0, 0.0, 0.0, 6.0, 0.0, 0.0, 0.0, 0.0, 2.0]}), (2, {&#39;x&#39;: [0.0, 0.0, 0.0, 1.0, 0.0, 8.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (3, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (4, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (5, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]}), (6, {&#39;x&#39;: [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0]})]
+[(0, 1), (0, 2), (0, 3), (0, 4), (1, 0), (1, 2), (1, 5), (1, 6), (2, 0), (2, 1), (3, 0), (4, 0), (5, 1), (6, 1)]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mapping atomic numbers to elements and colors</span>
+<span class="n">atomic_number_to_element</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="s1">&#39;F&#39;</span><span class="p">}</span>
+<span class="n">atomic_number_to_color</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="s1">&#39;purple&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">atomic_number</span><span class="p">,</span> <span class="n">color</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">atomic_number_to_color</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">atomic_number_to_element</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;atomic_number: </span><span class="si">{</span><span class="n">atomic_number</span><span class="si">}</span><span class="s2">, element: </span><span class="si">{</span><span class="n">element</span><span class="si">}</span><span class="s2">, color: </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>atomic_number: 1, element: H, color: blue
+atomic_number: 6, element: C, color: green
+atomic_number: 7, element: N, color: red
+atomic_number: 8, element: O, color: yellow
+atomic_number: 9, element: F, color: purple
 </pre></div>
 </div>
 </div>
@@ -1065,9 +1144,6 @@ Done!
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 
-<span class="c1"># Mapping atomic numbers to elements and colors</span>
-<span class="n">atomic_number_to_element</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="s1">&#39;O&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="s1">&#39;F&#39;</span><span class="p">}</span>
-<span class="n">atomic_number_to_color</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="mi">6</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="mi">7</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="mi">8</span><span class="p">:</span> <span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="mi">9</span><span class="p">:</span> <span class="s1">&#39;purple&#39;</span><span class="p">}</span>
 
 <span class="c1"># Convert PyTorch Geometric graph to NetworkX</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">to_networkx</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -1079,8 +1155,8 @@ Done!
 
 <span class="c1"># Create a legend</span>
 <span class="n">legend_elements</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">atomic_number_to_element</span><span class="p">[</span><span class="n">element</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">atomic_number_to_color</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">Line2D</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">atomic_number_to_element</span><span class="p">[</span><span class="n">atomic_number</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">atomic_number</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">atomic_number_to_color</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
 <span class="p">]</span>
 
 <span class="c1"># Node labels using element symbols</span>
@@ -1093,9 +1169,10 @@ Done!
     <span class="c1">#labels=node_labels,</span>
     <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span>
-    <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span>
+    <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
     <span class="n">node_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
     <span class="n">font_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">arrows</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># This shows direction if G is a DiGraph</span>
 <span class="p">)</span>
 
 <span class="c1"># Add the legend</span>
@@ -1106,7 +1183,7 @@ Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/eb0f42220c99bb2062d7816d46ac9bd231996e9d0356d7d2fb59b8efa819c944.png" src="_images/eb0f42220c99bb2062d7816d46ac9bd231996e9d0356d7d2fb59b8efa819c944.png" />
+<img alt="_images/2c8a362d8c17b02d7302464b27cee47f08ab381cd8fd366d042a4174edda3ee8.png" src="_images/2c8a362d8c17b02d7302464b27cee47f08ab381cd8fd366d042a4174edda3ee8.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1119,11 +1196,80 @@ Done!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data(x=[13, 11], edge_index=[2, 24], edge_attr=[24, 4], y=[1, 19], pos=[13, 3], idx=[1], name=&#39;gdb_128&#39;, z=[13], new_attribute=[3])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data(x=[7, 11], edge_index=[2, 14], edge_attr=[14, 4], y=[1, 19], pos=[7, 3], idx=[1], name=&#39;gdb_17&#39;, z=[7], new_attribute=[3])
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">edge_index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4, 5, 6],
+        [1, 2, 3, 4, 0, 2, 5, 6, 0, 1, 0, 0, 1, 1]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Remove last edge and its attr</span>
+<span class="n">data</span><span class="o">.</span><span class="n">edge_index</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">data</span><span class="o">.</span><span class="n">edge_attr</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">edge_attr</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data(x=[7, 11], edge_index=[2, 13], edge_attr=[13, 4], y=[1, 19], pos=[7, 3], idx=[1], name=&#39;gdb_17&#39;, z=[7], new_attribute=[3])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert PyTorch Geometric graph to NetworkX</span>
+<span class="n">Gnew</span> <span class="o">=</span> <span class="n">to_networkx</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot the new graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">nx</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+    <span class="n">Gnew</span><span class="p">,</span>
+    <span class="c1">#labels=node_labels,</span>
+    <span class="n">with_labels</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">node_color</span><span class="o">=</span><span class="n">node_colors</span><span class="p">,</span>
+    <span class="n">edge_color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+    <span class="n">node_size</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+    <span class="n">font_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="n">arrows</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># This shows direction if G is a DiGraph</span>
+<span class="p">)</span>
+
+<span class="c1"># Add the legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="n">legend_elements</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Atomic Elements&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Molecular Graph with Element Symbols and Legend&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fca1dbefe339b6e289140e5464a5b8e6c6713c402660f69f32ef902dbdd79ede.png" src="_images/fca1dbefe339b6e289140e5464a5b8e6c6713c402660f69f32ef902dbdd79ede.png" />
+</div>
+</div>
+<p>😀 notice the difference between the two graphs?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
@@ -1138,23 +1284,119 @@ Done!
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="nnconv-neural-message-passing-convolution">
+<h2><span class="section-number">28.4. </span><strong>NNConv: Neural Message Passing Convolution</strong><a class="headerlink" href="#nnconv-neural-message-passing-convolution" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">NNConv</span></code> layer in <code class="docutils literal notranslate"><span class="pre">torch_geometric.nn</span></code> implements a <strong>continuous kernel-based convolution</strong> operator as introduced in the <a class="reference external" href="https://arxiv.org/abs/1704.01212">Neural Message Passing for Quantum Chemistry</a> paper.</p>
+<p>This layer is particularly designed for graph-structured data where the <strong>edges contain important information</strong>, such as molecular bonds or other edge features.</p>
+<section id="how-it-works">
+<h3><span class="section-number">28.4.1. </span>🔍 How it works<a class="headerlink" href="#how-it-works" title="Link to this heading">#</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">NNConv</span></code> generalizes the message passing framework by learning <strong>edge-conditioned filters</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_i' = \Theta \mathbf{x}_i + \sum_{j \in \mathcal{N}(i)} \mathbf{x}_j \cdot h_{\theta}(e_{i,j})
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>: Feature vector of node <span class="math notranslate nohighlight">\(i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{N}(i)\)</span>: Neighborhood of node <span class="math notranslate nohighlight">\(i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(e_{i,j}\)</span>: Edge features between node <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(h_{\theta}\)</span>: Neural network applied to edge features to generate convolution weights; it maps edge features <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">num_edge_features]</span></code> to shape <code class="docutils literal notranslate"><span class="pre">[-1,</span> <span class="pre">in_channels</span> <span class="pre">*</span> <span class="pre">out_channels]</span></code>, e.g., defined by <code class="docutils literal notranslate"><span class="pre">torch.nn.Sequential</span></code>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Theta\)</span>: Learnable transformation for self-node feature</p></li>
+</ul>
+</section>
+<section id="parameters">
+<h3><span class="section-number">28.4.2. </span>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">NNConv</span><span class="p">(</span>
+    <span class="n">in_channels</span><span class="p">,</span>        <span class="c1"># Input feature dimension</span>
+    <span class="n">out_channels</span><span class="p">,</span>       <span class="c1"># Output feature dimension</span>
+    <span class="n">nn</span><span class="p">,</span>                 <span class="c1"># A neural network mapping edge features to weight matrices</span>
+    <span class="n">aggr</span><span class="o">=</span><span class="s1">&#39;add&#39;</span><span class="p">,</span>         <span class="c1"># Aggregation method: &#39;add&#39;, &#39;mean&#39;, or &#39;max&#39;</span>
+    <span class="n">root_weight</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>   <span class="c1"># Whether to add a root transformation (Θ)</span>
+    <span class="n">bias</span><span class="o">=</span><span class="kc">True</span>           <span class="c1"># Include bias term</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="edge-conditioned-learning-with-nnconv">
+<h2><span class="section-number">28.5. </span><strong>Edge-Conditioned Learning with NNConv</strong><a class="headerlink" href="#edge-conditioned-learning-with-nnconv" title="Link to this heading">#</a></h2>
+<p>This notebook demonstrates a <strong>graph neural network (GNN)</strong> model using <strong>edge-conditioned convolutions</strong>. It’s particularly useful for tasks like molecular property prediction, where both <strong>node features</strong> (e.g., atom types) and <strong>edge features</strong> (e.g., bond types, bond lengths) carry important information.</p>
+<hr class="docutils" />
+<section id="what-is-nnconv-is-it-a-gcn">
+<h3><span class="section-number">28.5.1. </span>🤔 What is NNConv? Is it a GCN?<a class="headerlink" href="#what-is-nnconv-is-it-a-gcn" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>GCN</strong> (Kipf &amp; Welling) uses <strong>fixed weights shared across all edges</strong> — it doesn’t use edge features.</p></li>
+<li><p><strong>NNConv</strong> is a <strong>generalization of GCN</strong>, where each edge can have its own learnable weight matrix. These are computed dynamically from edge features via a neural network.</p></li>
+<li><p>This makes NNConv a <strong>message-passing GNN layer</strong> — still a type of graph convolution, but <strong>edge-aware</strong> and more expressive.</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="tensor-shapes">
+<h3><span class="section-number">28.5.2. </span>Tensor Shapes<a class="headerlink" href="#tensor-shapes" title="Link to this heading">#</a></h3>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">N</span></code></p></td>
+<td><p>Number of nodes</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">E</span></code></p></td>
+<td><p>Number of edges</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">F_in</span></code></p></td>
+<td><p>Input features per node</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">F_edge</span></code></p></td>
+<td><p>Input features per edge</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">B</span></code></p></td>
+<td><p>Batch size (number of graphs)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<hr class="docutils" />
+<section id="model-architecture">
+<h3><span class="section-number">28.5.3. </span>Model Architecture<a class="headerlink" href="#model-architecture" title="Link to this heading">#</a></h3>
+<p>This GNN does the following:</p>
+<ol class="arabic simple">
+<li><p><strong>Inputs</strong>: Node features and edge features.</p></li>
+<li><p><strong>GNN Layers</strong>: Two <code class="docutils literal notranslate"><span class="pre">NNConv</span></code> layers with neural networks to learn edge-conditioned weights.</p></li>
+<li><p><strong>Graph Pooling</strong>: Use <code class="docutils literal notranslate"><span class="pre">global_add_pool</span></code> to aggregate node features into a single graph-level representation.</p></li>
+<li><p><strong>Output</strong>: A <strong>scalar per graph</strong>, useful for regression tasks like predicting molecular energy.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="why-edge-conditioned">
+<h3><span class="section-number">28.5.4. </span>Why Edge-Conditioned?<a class="headerlink" href="#why-edge-conditioned" title="Link to this heading">#</a></h3>
+<p>Edge-conditioned learning allows <strong>message transformations</strong> to depend on edge-specific properties — such as bond types or lengths in a molecule. This results in <strong>more expressive models</strong> compared to traditional GCNs that ignore edge attributes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># num_nodes = N</span>
-<span class="c1"># num_edges = E</span>
-<span class="c1"># num_node_features = F_in (input features per node)</span>
-<span class="c1"># num_edge_features = F_edge (input features per edge)</span>
-<span class="c1"># batch_size = B (number of graphs in batch)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#############################################################################################################</span>
+<span class="c1"># Below an example of how to build a message passing network using PyTorch Geometric using the NNConv layer #</span>
+<span class="c1">#############################################################################################################</span>
+
 
 
 <span class="k">class</span> <span class="nc">ExampleNet</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">num_node_features</span><span class="p">,</span><span class="n">num_edge_features</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
+        <span class="c1"># Remember:</span>
+        <span class="c1"># x: Node features — shape [N, F_in]</span>
+        <span class="c1"># edge_index: Graph connectivity — shape [2, E]</span>
+        <span class="c1"># edge_attr: Edge features — shape [E, F_edge]</span>
 
+        <span class="c1"># The following are edge-aware layers</span>
         <span class="n">conv1_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">num_edge_features</span><span class="p">,</span> <span class="mi">32</span><span class="p">),</span>    <span class="c1"># [E, F_edge] → [E, 32]</span>
                                   <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
-                                  <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">num_node_features</span><span class="o">*</span><span class="mi">32</span><span class="p">))</span> <span class="c1"># [E, 32] → [E, F_in*32]</span>
+                                  <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">num_node_features</span><span class="o">*</span><span class="mi">32</span><span class="p">))</span> <span class="c1"># [E, 32] → [E, F_in*32] --- So each edge generates a [F_in × 32] transformation matrix</span>
+                                  <span class="c1"># N.b.: you don’t want an activation at the end: adding ReLU would restrict the weight matrix to non-negative values, which limits expressivity</span>
         <span class="c1"># Output shape before reshaping: [E, F_in * 32]</span>
         <span class="c1"># Reshaped by NNConv internally to: [E, F_in, 32]</span>
 
@@ -1164,6 +1406,8 @@ Done!
         <span class="c1"># Output shape before reshaping: [E, 32 * 16]</span>
         <span class="c1"># Reshaped by NNConv internally to: [E, 32, 16]</span>
 
+        <span class="c1"># Can you extend to a &quot;3rd layer&quot;?</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">NNConv</span><span class="p">(</span><span class="n">num_node_features</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="n">conv1_net</span><span class="p">)</span>
         <span class="c1"># Input:</span>
         <span class="c1">#   x: [N, F_in]</span>
@@ -1171,6 +1415,7 @@ Done!
         <span class="c1"># Output:</span>
         <span class="c1">#   x: [N, 32]</span>
 
+        <span class="c1"># Takes x from conv1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">NNConv</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="n">conv2_net</span><span class="p">)</span>
         <span class="c1"># Input:</span>
         <span class="c1">#   x: [N, 32]</span>
@@ -1181,6 +1426,8 @@ Done!
         <span class="c1"># N.B.: The more layers you stack, the further information can flow in the graph...</span>
         <span class="c1"># After 1 GNN layer (e.g., conv1), each node’s features are updated using its immediate neighbors&#39; features.</span>
         <span class="c1"># After 2 layers, each node has aggregated information from its neighbors and their neighbors (2-hop neighborhood)...</span>
+
+        <span class="c1">############################ Can you extend to a &quot;3rd layer&quot;? ###############################</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">fc_1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
 
@@ -1194,15 +1441,29 @@ Done!
         <span class="c1"># edge_index = data.edge_index     # Shape: [2, E]</span>
         <span class="c1"># edge_attr = data.edge_attr       # Shape: [E, F_edge]</span>
 
+
+        <span class="c1"># edge_weight_matrices = conv1_net(edge_attr) # [E, F_edge] -&gt; [E, F_in * 32] reshaped [E, F_in, 32]</span>
+        <span class="c1"># For each edge e, this gives a unique weight matrix W_e of shape [F_in, 32].</span>
+        <span class="c1">#</span>
+        <span class="c1">#   What does NNconv do?</span>
+        <span class="c1">#   0. Compute the weights = conv1_net(edge_attr)  # shape: [E, F_in * 32]</span>
+        <span class="c1">#   1. Fetch the feature vector x_j of the source node j: shape [F_in]</span>
+        <span class="c1">#   2. Multiply it by the edge-specific matrix W_e: W_e @ x_j  →  [F_in, 32] @ [F_in] = shape [32]</span>
+        <span class="c1">#   3. Aggregate messages at each target node i: x_i_new = sum_{j in N(i)} W_ij @ x_j = shape [32]</span>
+        <span class="c1">#   Do this for all aggregated output: shape [N, 32]</span>
+
+
         <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">,</span> <span class="n">edge_attr</span><span class="p">))</span>
-        <span class="c1"># x input: [N, F_in]</span>
-        <span class="c1"># edge_attr: [E, F_edge]</span>
+        <span class="c1"># input</span>
+        <span class="c1">#   x : [N, F_in]</span>
+        <span class="c1">#   edge_attr: [E, F_edge]</span>
         <span class="c1"># Output: [N, 32]</span>
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">,</span> <span class="n">edge_attr</span><span class="p">))</span>
-        <span class="c1"># x input: [N, 32]</span>
-        <span class="c1"># edge_attr: [E, F_edge]</span>
+        <span class="c1">#   x : [N, 32]</span>
+        <span class="c1">#   edge_attr: [E, F_edge]</span>
         <span class="c1"># Output: [N, 16]</span>
+
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">global_add_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">batch</span><span class="p">)</span>
         <span class="c1"># Input:</span>
@@ -1235,11 +1496,9 @@ Done!
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qm9_node_feats</span><span class="p">,</span> <span class="n">qm9_edge_feats</span> <span class="o">=</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">4</span>
-<span class="n">epochs</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">net</span> <span class="o">=</span> <span class="n">ExampleNet</span><span class="p">(</span><span class="n">qm9_node_feats</span><span class="p">,</span> <span class="n">qm9_edge_feats</span><span class="p">)</span>
 
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
-<span class="n">epochs</span> <span class="o">=</span> <span class="mi">4</span>
 <span class="n">target_idx</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># index position of the polarizability label</span>
 </pre></div>
 </div>
@@ -1273,22 +1532,29 @@ Done!
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">total_epochs</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="mi">10</span>
 
-    <span class="n">epoch_loss</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">train_loss_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">valid_loss_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+<span class="k">for</span> <span class="n">total_epochs</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">total_graphs</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
     <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">trainloader</span><span class="p">:</span>
         <span class="n">batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
         <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span> <span class="n">target_idx</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span> <span class="n">target_idx</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">#[num_graphs] -&gt; [num_graphs,1]</span>
         <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
-        <span class="n">epoch_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
-        <span class="n">total_graphs</span> <span class="o">+=</span> <span class="n">batch</span><span class="o">.</span><span class="n">num_graphs</span>
+        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">total_graphs</span> <span class="o">+=</span> <span class="n">batch</span><span class="o">.</span><span class="n">num_graphs</span>  <span class="c1">#internally defined in torch_geometric.data.Batch</span>
         <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 
-    <span class="n">train_avg_loss</span> <span class="o">=</span> <span class="n">epoch_loss</span> <span class="o">/</span> <span class="n">total_graphs</span>
+    <span class="n">train_avg_loss</span> <span class="o">=</span> <span class="n">train_loss</span> <span class="o">/</span> <span class="n">total_graphs</span>
+
     <span class="n">val_loss</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">total_graphs</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
@@ -1298,25 +1564,49 @@ Done!
         <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">batch</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span> <span class="n">target_idx</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
         <span class="n">val_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
         <span class="n">total_graphs</span> <span class="o">+=</span> <span class="n">batch</span><span class="o">.</span><span class="n">num_graphs</span>
+
     <span class="n">val_avg_loss</span> <span class="o">=</span> <span class="n">val_loss</span> <span class="o">/</span> <span class="n">total_graphs</span>
 
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epochs: </span><span class="si">{</span><span class="n">total_epochs</span><span class="si">}</span><span class="s2"> | epoch avg. loss: </span><span class="si">{</span><span class="n">train_avg_loss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> | validation avg. loss: </span><span class="si">{</span><span class="n">val_avg_loss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epochs: </span><span class="si">{</span><span class="n">total_epochs</span><span class="si">}</span><span class="s2"> | training avg. loss: </span><span class="si">{</span><span class="n">train_avg_loss</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> | validation avg. loss: </span><span class="si">{</span><span class="n">val_avg_loss</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">train_loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_avg_loss</span><span class="p">)</span>
+    <span class="n">valid_loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_avg_loss</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epochs: 0 | epoch avg. loss: 0.31 | validation avg. loss: 0.11
-Epochs: 1 | epoch avg. loss: 0.13 | validation avg. loss: 0.08
-Epochs: 2 | epoch avg. loss: 0.11 | validation avg. loss: 0.10
-Epochs: 3 | epoch avg. loss: 0.09 | validation avg. loss: 0.06
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epochs: 0 | training avg. loss: 0.421 | validation avg. loss: 0.367
+Epochs: 1 | training avg. loss: 0.141 | validation avg. loss: 0.082
+Epochs: 2 | training avg. loss: 0.101 | validation avg. loss: 0.071
+Epochs: 3 | training avg. loss: 0.088 | validation avg. loss: 0.076
+Epochs: 4 | training avg. loss: 0.086 | validation avg. loss: 0.075
+Epochs: 5 | training avg. loss: 0.082 | validation avg. loss: 0.069
+Epochs: 6 | training avg. loss: 0.081 | validation avg. loss: 0.081
+Epochs: 7 | training avg. loss: 0.079 | validation avg. loss: 0.056
+Epochs: 8 | training avg. loss: 0.076 | validation avg. loss: 0.064
+Epochs: 9 | training avg. loss: 0.075 | validation avg. loss: 0.061
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_loss_list</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">valid_loss_list</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b06fabb3b02881d65311e0610497514fe5158330b52f7d0b8567063423c3735c.png" src="_images/b06fabb3b02881d65311e0610497514fe5158330b52f7d0b8567063423c3735c.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span> <span class="c1"># model in evaluation mode; Disables things like Dropout and BatchNorm updates; does not disable gradient tracking</span>
 <span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">real</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -1337,23 +1627,238 @@ Epochs: 3 | epoch avg. loss: 0.09 | validation avg. loss: 0.06
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">real</span><span class="p">[:</span><span class="mi">500</span><span class="p">],</span><span class="n">predictions</span><span class="p">[:</span><span class="mi">500</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">real</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span><span class="n">predictions</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted isotropic polarizability&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Isotropic polarizability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+<span class="c1"># display as square</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Isotropic polarizability&#39;)
+<img alt="_images/81d4c03af5c9fb799bd0b6da393ca06afbe6ed9f5f8d31f38256a2652996387b.png" src="_images/81d4c03af5c9fb799bd0b6da393ca06afbe6ed9f5f8d31f38256a2652996387b.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">real</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span> <span class="n">predictions</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/8835fd2f68acfaa6f24792ad7436c25de1484dd4f6259ba822250a7e8c6daddc.png" src="_images/8835fd2f68acfaa6f24792ad7436c25de1484dd4f6259ba822250a7e8c6daddc.png" />
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R² Score: 0.9741
+</pre></div>
+</div>
 </div>
 </div>
 </section>
 </section>
-<section id="pointers-to-advanced-graph-neural-network-literature">
-<h2><span class="section-number">28.4. </span>Pointers to advanced graph neural network literature<a class="headerlink" href="#pointers-to-advanced-graph-neural-network-literature" title="Link to this heading">#</a></h2>
+<section id="extension-to-multiple-layers">
+<h2><span class="section-number">28.6. </span><strong>Extension to Multiple Layers</strong><a class="headerlink" href="#extension-to-multiple-layers" title="Link to this heading">#</a></h2>
+<p><strong>Exercise</strong>: Let’s extend the previous problem to three layers.</p>
+</section>
+<hr class="docutils" />
+<section id="the-non-edge-aware-case">
+<h2><span class="section-number">28.7. </span><strong>The Non Edge-Aware Case</strong><a class="headerlink" href="#the-non-edge-aware-case" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">######################################################################################</span>
+<span class="c1"># Below an example of how to build a message passing network which is not edge-aware #</span>
+<span class="c1">######################################################################################</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+<span class="kn">from</span> <span class="nn">torch_geometric.nn</span> <span class="kn">import</span> <span class="n">GCNConv</span><span class="p">,</span> <span class="n">global_add_pool</span>
+
+<span class="k">class</span> <span class="nc">ExampleGCN</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_node_features</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># No edge_attr needed!</span>
+        <span class="c1"># https://pytorch-geometric.readthedocs.io/en/2.5.2/generated/torch_geometric.nn.conv.GCNConv.html</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">GCNConv</span><span class="p">(</span><span class="n">num_node_features</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">GCNConv</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">GCNConv</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc_1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">32</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">,</span> <span class="n">batch</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">edge_index</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">batch</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">))</span>   <span class="c1"># [N, F_in] → [N, 32]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">))</span>   <span class="c1"># [N, 32] → [N, 16]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">edge_index</span><span class="p">))</span>   <span class="c1"># [N, 16] → [N, 8]</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">global_add_pool</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>           <span class="c1"># [N, 8] → [B, 8]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fc_1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>                <span class="c1"># [B, 8] → [B, 32]</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                    <span class="c1"># [B, 32] → [B, 1]</span>
+
+        <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">qm9_node_feats</span> <span class="o">=</span> <span class="mi">11</span>
+
+<span class="n">net_gcn</span> <span class="o">=</span> <span class="n">ExampleGCN</span><span class="p">(</span><span class="n">qm9_node_feats</span><span class="p">)</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">net_gcn</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+<span class="n">target_idx</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># index position of the polarizability label</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">device</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">device</span><span class="p">(</span><span class="s2">&quot;cuda:0&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<span class="n">net_gcn</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ExampleGCN(
+  (conv1): GCNConv(11, 32)
+  (conv2): GCNConv(32, 16)
+  (conv3): GCNConv(16, 8)
+  (fc_1): Linear(in_features=8, out_features=32, bias=True)
+  (out): Linear(in_features=32, out_features=1, bias=True)
+)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_loss_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">valid_loss_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">total_epochs</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+
+    <span class="n">train_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_graphs</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">trainloader</span><span class="p">:</span>
+        <span class="n">batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">net_gcn</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">batch</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span> <span class="n">target_idx</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="n">train_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">total_graphs</span> <span class="o">+=</span> <span class="n">batch</span><span class="o">.</span><span class="n">num_graphs</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+    <span class="n">train_avg_loss</span> <span class="o">=</span> <span class="n">train_loss</span> <span class="o">/</span> <span class="n">total_graphs</span>
+
+    <span class="n">val_loss</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total_graphs</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">validloader</span><span class="p">:</span>
+        <span class="n">batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">net_gcn</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span><span class="n">batch</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span> <span class="n">target_idx</span><span class="p">]</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">val_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="n">total_graphs</span> <span class="o">+=</span> <span class="n">batch</span><span class="o">.</span><span class="n">num_graphs</span>
+    <span class="n">val_avg_loss</span> <span class="o">=</span> <span class="n">val_loss</span> <span class="o">/</span> <span class="n">total_graphs</span>
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Epochs: </span><span class="si">{</span><span class="n">total_epochs</span><span class="si">}</span><span class="s2"> | train avg. loss: </span><span class="si">{</span><span class="n">train_avg_loss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> | validation avg. loss: </span><span class="si">{</span><span class="n">val_avg_loss</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">train_loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_avg_loss</span><span class="p">)</span>
+    <span class="n">valid_loss_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val_avg_loss</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Epochs: 0 | train avg. loss: 1.06 | validation avg. loss: 0.24
+Epochs: 1 | train avg. loss: 0.20 | validation avg. loss: 0.28
+Epochs: 2 | train avg. loss: 0.18 | validation avg. loss: 0.14
+Epochs: 3 | train avg. loss: 0.16 | validation avg. loss: 0.13
+Epochs: 4 | train avg. loss: 0.15 | validation avg. loss: 0.14
+Epochs: 5 | train avg. loss: 0.15 | validation avg. loss: 0.18
+Epochs: 6 | train avg. loss: 0.14 | validation avg. loss: 0.12
+Epochs: 7 | train avg. loss: 0.14 | validation avg. loss: 0.13
+Epochs: 8 | train avg. loss: 0.14 | validation avg. loss: 0.19
+Epochs: 9 | train avg. loss: 0.13 | validation avg. loss: 0.15
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_loss_list</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">valid_loss_list</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epochs&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/44feaff96a8b93c5de03fd434f8e2a2d272512a90e6a2acdb0350c308ca4733a.png" src="_images/44feaff96a8b93c5de03fd434f8e2a2d272512a90e6a2acdb0350c308ca4733a.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">net_gcn</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span> <span class="c1"># model in evaluation mode; Disables things like Dropout and BatchNorm updates; does not disable gradient tracking</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">real</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="n">testloader</span><span class="p">:</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">net_gcn</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">))</span>
+    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="n">real</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">y</span><span class="p">[:,</span> <span class="n">target_idx</span><span class="p">]</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+<span class="n">real</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">real</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">real</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span><span class="n">predictions</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted isotropic polarizability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Isotropic polarizability&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">120</span><span class="p">)</span>
+<span class="c1"># display as square</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">,</span> <span class="n">adjustable</span><span class="o">=</span><span class="s1">&#39;box&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fa928c616123e54842dec055c360989ec57d77704dc576050475df553d47edc0.png" src="_images/fa928c616123e54842dec055c360989ec57d77704dc576050475df553d47edc0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">real</span><span class="p">[:</span><span class="mi">2000</span><span class="p">],</span> <span class="n">predictions</span><span class="p">[:</span><span class="mi">2000</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;R² Score: </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R² Score: 0.9379
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
@@ -1434,7 +1939,20 @@ Epochs: 3 | epoch avg. loss: 0.09 | validation avg. loss: 0.06
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#name-molecule-name">28.3.8. <code class="docutils literal notranslate"><span class="pre">name</span></code> (Molecule Name)</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pointers-to-advanced-graph-neural-network-literature">28.4. Pointers to advanced graph neural network literature</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nnconv-neural-message-passing-convolution">28.4. <strong>NNConv: Neural Message Passing Convolution</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-it-works">28.4.1. 🔍 How it works</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters">28.4.2. Parameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#edge-conditioned-learning-with-nnconv">28.5. <strong>Edge-Conditioned Learning with NNConv</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-nnconv-is-it-a-gcn">28.5.1. 🤔 What is NNConv? Is it a GCN?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tensor-shapes">28.5.2. Tensor Shapes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-architecture">28.5.3. Model Architecture</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-edge-conditioned">28.5.4. Why Edge-Conditioned?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extension-to-multiple-layers">28.6. <strong>Extension to Multiple Layers</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-non-edge-aware-case">28.7. <strong>The Non Edge-Aware Case</strong></a></li>
 </ul>
   </nav></div>
 
