@@ -1,6 +1,6 @@
 # Welcome to Neural Networks and Deep Learning 2025 (NNDL-2025)
 
-(last update 4/20/2025)
+(last update 4/24/2025)
 
 This is the landing page for the course on Neural Networks and Deep Learning held at William & Mary during Spring 2025
 
@@ -23,4 +23,4 @@ This course is based on the following references: {cite:p}`raschka2022machine,be
 ```
 
 
-**Credits**: Material on git, VS-Code, and HPC prepared by K. Suresh
+**Credits**: Lectures on how to use git, VS-Code, and HPC prepared by K. Suresh
